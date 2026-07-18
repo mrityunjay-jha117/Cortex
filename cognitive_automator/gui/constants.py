@@ -56,8 +56,8 @@ NODE_CATEGORY_LABELS: dict[str, str] = {
 # Application palette
 APP_BG = "#FDFDFD"
 APP_SURFACE = "#FFFFFF"
-APP_SURFACE2 = "#F3F4F6"
-APP_BORDER = "#E5E7EB"
+APP_SURFACE2 = "#9CA3AF"
+APP_BORDER = "#6B7280"
 APP_TEXT = "#111827"
 APP_TEXT_DIM = "#6B7280"
 APP_ACCENT = "#111827"  # Black accent for B&W theme
