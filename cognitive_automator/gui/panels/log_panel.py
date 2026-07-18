@@ -59,16 +59,16 @@ class LogPanel(QWidget):
 
         if event.status == ExecutionStatus.NODE_ENTER:
             fmt.setForeground(QColor(APP_ACCENT))
-            self._append(f"▶  {event.node_label or event.node_id}", fmt)
+            self._append(f"  {event.node_label or event.node_id}", fmt)
         elif event.status == ExecutionStatus.NODE_SUCCESS:
             fmt.setForeground(QColor(APP_SUCCESS))
-            self._append(f"✓  {event.node_label or event.node_id}", fmt)
+            self._append(f"  {event.node_label or event.node_id}", fmt)
         elif event.status == ExecutionStatus.NODE_FAILED:
             fmt.setForeground(QColor(APP_ERROR))
-            self._append(f"✗  {event.node_label or event.node_id} — {event.message}", fmt)
+            self._append(f"  {event.node_label or event.node_id} — {event.message}", fmt)
         elif event.status == ExecutionStatus.NODE_INFO:
             fmt.setForeground(QColor("#A0A0A0"))
-            self._append(f"ℹ  [{event.node_label or event.node_id}] {event.message}", fmt)
+            self._append(f"  [{event.node_label or event.node_id}] {event.message}", fmt)
         elif event.status == ExecutionStatus.GRAPH_ABORTED:
             fmt.setForeground(QColor(APP_WARNING))
             self._append(f"↻  {event.node_label}  {event.message}", fmt)
@@ -77,7 +77,7 @@ class LogPanel(QWidget):
             self._append("═══  GRAPH COMPLETE  ═══", fmt)
         elif event.status == ExecutionStatus.GRAPH_ABORTED:
             fmt.setForeground(QColor(APP_ERROR))
-            self._append(f"✗✗✗  ABORTED: {event.message}", fmt)
+            self._append(f"  ABORTED: {event.message}", fmt)
         elif event.status == ExecutionStatus.STARTED:
             fmt.setForeground(QColor(APP_TEXT_DIM))
             self._append("─── Execution started ───", fmt)

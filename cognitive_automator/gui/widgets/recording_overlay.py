@@ -162,7 +162,7 @@ class RecordingOverlay(QWidget):
         btn_row1 = QHBoxLayout()
         btn_row1.setSpacing(5)
 
-        self._pause_btn = QPushButton("⏸ Pause")
+        self._pause_btn = QPushButton(" Pause")
         self._pause_btn.setToolTip("Toggle Pause/Resume (Ctrl+Alt+P)")
         self._pause_btn.clicked.connect(self._toggle_pause)
         btn_row1.addWidget(self._pause_btn)
@@ -172,7 +172,7 @@ class RecordingOverlay(QWidget):
         logic_btn.clicked.connect(self._add_logic_node)
         btn_row1.addWidget(logic_btn)
 
-        stop_btn = QPushButton("⏹ Stop")
+        stop_btn = QPushButton(" Stop")
         stop_btn.setToolTip("Stop recording and save (Ctrl+Alt+S)")
         stop_btn.setStyleSheet("background: rgba(255,100,100,180); border-color: #FF6B6B; color: white;")
         stop_btn.clicked.connect(self._stop_recording)
@@ -183,7 +183,7 @@ class RecordingOverlay(QWidget):
         btn_row2 = QHBoxLayout()
         btn_row2.setSpacing(5)
 
-        capture_btn = QPushButton("📷 Capture Image")
+        capture_btn = QPushButton(" Capture Image")
         capture_btn.setToolTip(
             "Draw a region on screen — creates an Image Search node. (Ctrl+Alt+I)\n"
             "At run-time PyAutoGUI will locate that image and click it."
@@ -192,7 +192,7 @@ class RecordingOverlay(QWidget):
         capture_btn.clicked.connect(self._start_image_capture)
         btn_row2.addWidget(capture_btn)
 
-        extract_btn = QPushButton("🔍 Extract Data")
+        extract_btn = QPushButton(" Extract Data")
         extract_btn.setToolTip(
             "Read clipboard text and extract structured data with an LLM. (Ctrl+Alt+D)\n"
             "Creates ClipboardRead + LLMExtraction nodes."
@@ -206,7 +206,7 @@ class RecordingOverlay(QWidget):
         btn_row3 = QHBoxLayout()
         btn_row3.setSpacing(5)
 
-        self._loop_btn = QPushButton("🔄 Image Loop")
+        self._loop_btn = QPushButton(" Image Loop")
         self._loop_btn.setToolTip(
             "Capture a reference image — the runtime finds ALL matches (Ctrl+Alt+L)\n"
             "and executes your recorded body for EACH one.\n"
@@ -216,7 +216,7 @@ class RecordingOverlay(QWidget):
         self._loop_btn.clicked.connect(self._toggle_image_loop)
         btn_row3.addWidget(self._loop_btn)
 
-        self._csv_loop_btn = QPushButton("📋 CSV Loop")
+        self._csv_loop_btn = QPushButton(" CSV Loop")
         self._csv_loop_btn.setToolTip(
             "Select a CSV or Excel file — the runtime iterates over each row (Ctrl+Alt+C)\n"
             "and executes your recorded body once per row.\n"
@@ -265,10 +265,10 @@ class RecordingOverlay(QWidget):
     def _toggle_pause(self) -> None:
         self._paused = not self._paused
         if self._paused:
-            self._pause_btn.setText("▶ Resume")
+            self._pause_btn.setText(" Resume")
             self._dot.setStyleSheet("color: #FFC107; font-size: 14px;")
         else:
-            self._pause_btn.setText("⏸ Pause")
+            self._pause_btn.setText(" Pause")
             self._dot.setStyleSheet("color: #FF4444; font-size: 14px;")
 
     def _check_events(self) -> None:
@@ -393,7 +393,7 @@ class RecordingOverlay(QWidget):
                     pyautogui.click(cx, cy)
                     time.sleep(0.15)
                     self._hooker.drain()
-                    self._stats_label.setText(f"Image found & clicked at ({cx},{cy}) ✓")
+                    self._stats_label.setText(f"Image found & clicked at ({cx},{cy}) ")
                 else:
                     self._stats_label.setText("Image captured (not found on screen yet — will retry at play-time)")
             finally:
@@ -504,7 +504,7 @@ class RecordingOverlay(QWidget):
                 "click": click_node,
             }
 
-            self._loop_btn.setText("⏹ End Loop Body")
+            self._loop_btn.setText(" End Loop Body")
             self._loop_btn.setStyleSheet(
                 "background: rgba(200,120,0,220); border-color: #FFC107; color: white; font-weight: bold;"
             )
@@ -522,11 +522,11 @@ class RecordingOverlay(QWidget):
         self._current_loop["end_idx"] = len(self._chronological_stream)
         self._loop_ranges.append(self._current_loop)
         self._current_loop = None
-        self._loop_btn.setText("🔄 Image Loop")
+        self._loop_btn.setText(" Image Loop")
         self._loop_btn.setStyleSheet(
             "background: rgba(80,60,0,200); border-color: #FFC107; color: #E0E0F0;"
         )
-        self._stats_label.setText(f"Loop body captured ✓  ({len(self._loop_ranges)} loop(s) total)")
+        self._stats_label.setText(f"Loop body captured   ({len(self._loop_ranges)} loop(s) total)")
 
     # ------------------------------------------------------------------
     # CSV Loop
@@ -569,7 +569,7 @@ class RecordingOverlay(QWidget):
                 "start_idx": len(self._chronological_stream),
                 "iter": iter_node,
             }
-            self._csv_loop_btn.setText("⏹ End CSV Loop")
+            self._csv_loop_btn.setText(" End CSV Loop")
             self._csv_loop_btn.setStyleSheet(
                 "background: rgba(0,100,200,220); border-color: #4CAFFF; color: white; font-weight: bold;"
             )
@@ -587,12 +587,12 @@ class RecordingOverlay(QWidget):
         self._current_csv_loop["end_idx"] = len(self._chronological_stream)
         self._csv_loop_ranges.append(self._current_csv_loop)
         self._current_csv_loop = None
-        self._csv_loop_btn.setText("📋 CSV Loop")
+        self._csv_loop_btn.setText(" CSV Loop")
         self._csv_loop_btn.setStyleSheet(
             "background: rgba(0,60,120,200); border-color: #4CAFFF; color: #E0E0F0;"
         )
         self._stats_label.setText(
-            f"CSV loop body captured ✓  ({len(self._csv_loop_ranges)} csv loop(s) total)"
+            f"CSV loop body captured   ({len(self._csv_loop_ranges)} csv loop(s) total)"
         )
 
     # ------------------------------------------------------------------
@@ -606,7 +606,7 @@ class RecordingOverlay(QWidget):
             nodes = dialog.get_nodes()
             if nodes:
                 self._chronological_stream.extend(nodes)
-                self._stats_label.setText("Extraction nodes added ✓")
+                self._stats_label.setText("Extraction nodes added ")
 
     # ------------------------------------------------------------------
     # Stop + graph assembly

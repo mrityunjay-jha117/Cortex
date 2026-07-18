@@ -162,101 +162,101 @@ class GraphView(QGraphicsView):
         
         selected_nodes = [i for i in scene_cast.selectedItems() if isinstance(i, NodeItem)]
         if selected_nodes:
-            menu.addAction("📋  Duplicate Node(s) [Ctrl+D]").triggered.connect(
+            menu.addAction("  Duplicate Node(s) [Ctrl+D]").triggered.connect(
                 self._duplicate_selected
             )
             menu.addSeparator()
 
         # --- Vision Nodes ---
-        vision_menu = menu.addMenu("👁  Vision")
-        vision_menu.addAction("🔍  Locate Image on Screen").triggered.connect(
+        vision_menu = menu.addMenu("  Vision")
+        vision_menu.addAction("  Locate Image on Screen").triggered.connect(
             lambda: _add(LocateElementNode(label="Find Element"))
         )
-        vision_menu.addAction("🎯  Locate and Click").triggered.connect(
+        vision_menu.addAction("  Locate and Click").triggered.connect(
             lambda: _add(LocateAndClickNode(label="Find & Click"))
         )
-        vision_menu.addAction("📝  Generative OCR (Text)").triggered.connect(
+        vision_menu.addAction("  Generative OCR (Text)").triggered.connect(
             lambda: _add(GenerativeOCRNode(label="Extract Text"))
         )
-        vision_menu.addAction("📊  Vision Extraction (Table/JSON)").triggered.connect(
+        vision_menu.addAction("  Vision Extraction (Table/JSON)").triggered.connect(
             lambda: _add(VisionExtractionNode(label="Extract Data"))
         )
 
         # --- LLM Nodes ---
-        llm_menu = menu.addMenu("🧠  LLM Logic")
-        llm_menu.addAction("⚖  LLM Judgment (Yes/No)").triggered.connect(
+        llm_menu = menu.addMenu("  LLM Logic")
+        llm_menu.addAction("  LLM Judgment (Yes/No)").triggered.connect(
             lambda: _add(LLMJudgmentNode(label="Decision"))
         )
-        llm_menu.addAction("🏗  LLM Extraction (Structured)").triggered.connect(
+        llm_menu.addAction("  LLM Extraction (Structured)").triggered.connect(
             lambda: _add(LLMExtractionNode(label="Extract JSON"))
         )
-        llm_menu.addAction("✍  LLM Generative (Text)").triggered.connect(
+        llm_menu.addAction("  LLM Generative (Text)").triggered.connect(
             lambda: _add(LLMGenerativeNode(label="Generate Text"))
         )
 
         # --- Flow & Loops ---
-        flow_menu = menu.addMenu("🔗  Flow & Loops")
-        flow_menu.addAction("🔁  For Loop (Counter)").triggered.connect(
+        flow_menu = menu.addMenu("  Flow & Loops")
+        flow_menu.addAction("  For Loop (Counter)").triggered.connect(
             lambda: _add(ForLoopNode(label="Counter Loop"))
         )
-        flow_menu.addAction("📑  Iterate (List/CSV)").triggered.connect(
+        flow_menu.addAction("  Iterate (List/CSV)").triggered.connect(
             lambda: _add(IterateNode(label="List Loop"))
         )
-        flow_menu.addAction("⚡  Dynamic Iterate (Context)").triggered.connect(
+        flow_menu.addAction("  Dynamic Iterate (Context)").triggered.connect(
             lambda: _add(DynamicIterateNode(label="Dynamic Loop"))
         )
-        flow_menu.addAction("🔀  Branch (Boolean)").triggered.connect(
+        flow_menu.addAction("  Branch (Boolean)").triggered.connect(
             lambda: _add(BranchNode(label="If/Else"))
         )
-        flow_menu.addAction("⚖  Compare (Condition)").triggered.connect(
+        flow_menu.addAction("  Compare (Condition)").triggered.connect(
             lambda: _add(CompareNode(label="Check Condition"))
         )
-        flow_menu.addAction("📦  Sub-Graph").triggered.connect(
+        flow_menu.addAction("  Sub-Graph").triggered.connect(
             lambda: _add(SubGraphNode(label="Call Subroutine"))
         )
-        flow_menu.addAction("⏱  Wait / Delay").triggered.connect(
+        flow_menu.addAction("  Wait / Delay").triggered.connect(
             lambda: _add(WaitNode(label="Wait"))
         )
 
         # --- Physical Input ---
-        input_menu = menu.addMenu("🖱  Input & IO")
-        input_menu.addAction("🖱  Mouse").triggered.connect(
+        input_menu = menu.addMenu("  Input & IO")
+        input_menu.addAction("  Mouse").triggered.connect(
             lambda: _add(MouseNode(label="Mouse Action"))
         )
-        input_menu.addAction("⌨  Keyboard").triggered.connect(
+        input_menu.addAction("  Keyboard").triggered.connect(
             lambda: _add(KeyboardNode(label="Keyboard Action"))
         )
-        input_menu.addAction("📋  Clipboard").triggered.connect(
+        input_menu.addAction("  Clipboard").triggered.connect(
             lambda: _add(ClipboardNode(label="Clipboard"))
         )
-        input_menu.addAction("🧭  Navigator (Scroll/Focus)").triggered.connect(
+        input_menu.addAction("  Navigator (Scroll/Focus)").triggered.connect(
             lambda: _add(NavigatorNode(label="Navigator"))
         )
-        input_menu.addAction("📁  File Drop / Upload").triggered.connect(
+        input_menu.addAction("  File Drop / Upload").triggered.connect(
             lambda: _add(FileDropNode(label="File Upload"))
         )
-        input_menu.addAction("📸  Screenshotter (Multi-Page)").triggered.connect(
+        input_menu.addAction("  Screenshotter (Multi-Page)").triggered.connect(
             lambda: _add(ScreenshotterNode(label="Capturing Pages"))
         )
-        input_menu.addAction("📂  Load CSV Data").triggered.connect(
+        input_menu.addAction("  Load CSV Data").triggered.connect(
             lambda: _add(CSVDataLoaderNode(label="Load Data"))
         )
 
         # --- System ---
-        sys_menu = menu.addMenu("⚙  System")
-        sys_menu.addAction("🏁  Global Start").triggered.connect(
+        sys_menu = menu.addMenu("  System")
+        sys_menu.addAction("  Global Start").triggered.connect(
             lambda: _add(GlobalStartNode(label="START"))
         )
-        sys_menu.addAction("🛑  Global End").triggered.connect(
+        sys_menu.addAction("  Global End").triggered.connect(
             lambda: _add(GlobalEndNode(label="END"))
         )
-        sys_menu.addAction("💾  Write to File").triggered.connect(
+        sys_menu.addAction("  Write to File").triggered.connect(
             lambda: _add(WriteFileNode(label="Save Output"))
         )
-        sys_menu.addAction("📊  Export to CSV").triggered.connect(
+        sys_menu.addAction("  Export to CSV").triggered.connect(
             lambda: _add(CSVWriterNode(label="CSV Writer"))
         )
-        sys_menu.addAction("📂  Load CSV Data").triggered.connect(
+        sys_menu.addAction("  Load CSV Data").triggered.connect(
             lambda: _add(CSVDataLoaderNode(label="Load Data"))
         )
 

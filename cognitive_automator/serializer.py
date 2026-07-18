@@ -1,5 +1,5 @@
 """
-serializer.py — Bidirectional JSON ↔ YAML codec for ActionGraph.
+serializer.py — Bidirectional JSON  YAML codec for ActionGraph.
 
 File extension .cogauto → YAML (human-readable, VCS-friendly).
 JSON used internally for IPC between recorder and GUI.

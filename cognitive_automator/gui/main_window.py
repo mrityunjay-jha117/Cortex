@@ -129,7 +129,7 @@ class MainWindow(QMainWindow):
         canvas_grid.addWidget(self._view, 0, 0)
 
         # Overlay button
-        self._ai_toggle_btn = QPushButton("🤖 AI Fallback: OFF", canvas_container)
+        self._ai_toggle_btn = QPushButton(" AI Fallback: OFF", canvas_container)
         self._ai_toggle_btn.setCheckable(True)
         self._ai_toggle_btn.setFixedWidth(160)
         self._ai_toggle_btn.setStyleSheet("""
@@ -231,18 +231,18 @@ class MainWindow(QMainWindow):
 
         # Run
         run_menu = mb.addMenu("&Run")
-        self._act_run = QAction("▶  Play", self)
+        self._act_run = QAction("  Play", self)
         self._act_run.setShortcut(QKeySequence("F5"))
         run_menu.addAction(self._act_run)
 
         self._act_step = QAction("Step Mode", self, checkable=True)
         run_menu.addAction(self._act_step)
 
-        self._act_pause = QAction("⏸  Pause", self)
+        self._act_pause = QAction("  Pause", self)
         self._act_pause.setEnabled(False)
         run_menu.addAction(self._act_pause)
 
-        self._act_stop = QAction("⏹  Stop", self)
+        self._act_stop = QAction("  Stop", self)
         self._act_stop.setShortcut(QKeySequence("F6"))
         self._act_stop.setEnabled(False)
         run_menu.addAction(self._act_stop)
@@ -406,12 +406,12 @@ class MainWindow(QMainWindow):
 
     def _pause_graph(self) -> None:
         if self._worker:
-            if self._act_pause.text().startswith("⏸"):
+            if self._act_pause.text().startswith(""):
                 self._worker.pause()
-                self._act_pause.setText("▶  Resume")
+                self._act_pause.setText("  Resume")
             else:
                 self._worker.resume()
-                self._act_pause.setText("⏸  Pause")
+                self._act_pause.setText("  Pause")
 
     def _stop_graph(self) -> None:
         if self._worker:
@@ -439,7 +439,7 @@ class MainWindow(QMainWindow):
 
     def _toggle_global_ai_fallback(self, checked: bool) -> None:
         state_text = "ON" if checked else "OFF"
-        self._ai_toggle_btn.setText(f"🤖 AI Fallback: {state_text}")
+        self._ai_toggle_btn.setText(f" AI Fallback: {state_text}")
         
         count = 0
         from cognitive_automator.graph_model import LLMProvider
@@ -460,7 +460,7 @@ class MainWindow(QMainWindow):
         self._act_run.setEnabled(True)
         self._act_stop.setEnabled(False)
         self._act_pause.setEnabled(False)
-        self._act_pause.setText("⏸  Pause")
+        self._act_pause.setText("  Pause")
         self._status.showMessage("Execution complete.")
         
         # Auto-save if changes occurred (like AI auto-heal)

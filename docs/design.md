@@ -1,6 +1,6 @@
 # Cognitive Automator - UI/UX Design System
 
-## 🎨 Theme & Concept
+##  Theme & Concept
 **"Modern Minimalist"**
 A clean, premium interface utilizing a stark white and soft-grey palette, accented by subtle shadows, rounded geometry, and a structured dot-grid canvas that gives a technical, graph-based feel.
 

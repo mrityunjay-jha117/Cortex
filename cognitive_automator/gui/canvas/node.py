@@ -84,14 +84,14 @@ class NodeItem(QGraphicsObject):
             body_port.setPos(NODE_W * 0.25, h)
             
             # Right: End (finished)
-            end_port = PortItem(self, is_output=True, label="✓ End", edge_label=EdgeLabel.LOOP_END, parent=self)
+            end_port = PortItem(self, is_output=True, label=" End", edge_label=EdgeLabel.LOOP_END, parent=self)
             end_port.setPos(NODE_W, h / 2)
             
             self._output_ports = [body_port, end_port]
         elif isinstance(node, (IterateNode, DynamicIterateNode)):
             body_port = PortItem(self, is_output=True, label="↻", edge_label=EdgeLabel.LOOP_BODY, parent=self)
             body_port.setPos(NODE_W, h * 0.35)
-            end_port = PortItem(self, is_output=True, label="✓", edge_label=EdgeLabel.LOOP_END, parent=self)
+            end_port = PortItem(self, is_output=True, label="", edge_label=EdgeLabel.LOOP_END, parent=self)
             end_port.setPos(NODE_W, h * 0.65)
             self._output_ports = [body_port, end_port]
         else:

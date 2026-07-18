@@ -139,7 +139,7 @@ class GraphScene(QGraphicsScene):
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(QBrush(QColor("#D1D5DB")))
         
-        radius = 3.0  # 6px diameter
+        radius = 2.0  # 6px diameter
         
         left = int(rect.left()) - (int(rect.left()) % GRID_SIZE)
         top = int(rect.top()) - (int(rect.top()) % GRID_SIZE)

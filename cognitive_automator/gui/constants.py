@@ -60,7 +60,7 @@ APP_SURFACE2 = "#F3F4F6"
 APP_BORDER = "#E5E7EB"
 APP_TEXT = "#111827"
 APP_TEXT_DIM = "#6B7280"
-APP_ACCENT = "#339AF0"
+APP_ACCENT = "#111827"  # Black accent for B&W theme
 APP_SUCCESS = "#20C997"
 APP_WARNING = "#FCC419"
 APP_ERROR = "#FA5252"
@@ -73,13 +73,13 @@ QMainWindow, QWidget {{
     font-size: 13px;
 }}
 QMenuBar {{
-    background-color: {APP_SURFACE};
+    background-color: {APP_SURFACE2};
     color: {APP_TEXT};
     border-bottom: 1px solid {APP_BORDER};
     padding: 2px;
 }}
 QMenuBar::item:selected {{
-    background-color: {APP_SURFACE2};
+    background-color: {APP_BORDER};
 }}
 QMenu {{
     background-color: {APP_SURFACE};
@@ -92,13 +92,13 @@ QMenu::item:selected {{
     color: white;
 }}
 QToolBar {{
-    background-color: {APP_SURFACE};
+    background-color: {APP_SURFACE2};
     border-bottom: 1px solid {APP_BORDER};
     spacing: 4px;
     padding: 4px;
 }}
 QStatusBar {{
-    background-color: {APP_SURFACE};
+    background-color: {APP_SURFACE2};
     color: {APP_TEXT_DIM};
     border-top: 1px solid {APP_BORDER};
 }}
@@ -140,7 +140,7 @@ QPushButton#success {{
 QPushButton#success:hover {{
     background-color: #12B886;
 }}
-QLineEdit, QTextEdit, QPlainTextEdit {{
+QLineEdit {{
     background-color: {APP_SURFACE};
     color: {APP_TEXT};
     border: 1px solid {APP_BORDER};
@@ -148,7 +148,15 @@ QLineEdit, QTextEdit, QPlainTextEdit {{
     padding: 6px;
     selection-background-color: {APP_ACCENT};
 }}
-QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus {{
+QTextEdit, QPlainTextEdit, QTreeWidget, QListWidget {{
+    background-color: {APP_SURFACE2};
+    color: {APP_TEXT};
+    border: 1px solid {APP_BORDER};
+    border-radius: 4px;
+    padding: 6px;
+    selection-background-color: {APP_ACCENT};
+}}
+QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QTreeWidget:focus, QListWidget:focus {{
     border-color: {APP_ACCENT};
 }}
 QComboBox {{
