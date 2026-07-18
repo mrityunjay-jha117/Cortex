@@ -36,10 +36,6 @@ dev = [
     "mypy>=1.7",
     "ruff>=0.1.0",
 ]
-build = [
-    "pyinstaller>=6.3",
-    "pyinstaller-hooks-contrib>=2024.0",
-]
 
 [project.scripts]
 cognitive-automator = "cognitive_automator.main:main"

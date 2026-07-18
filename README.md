@@ -32,16 +32,6 @@ cognitive-automator
 python -m cognitive_automator
 ```
 
-### Build the EXE
-
-```bash
-# Builds dist/CognitiveAutomator.exe
-# If Inno Setup 6 is installed, also builds Output/CognitiveAutomator-Setup-1.0.0.exe
-build.bat
-
-# Build EXE only, skipping installer
-build.bat --skip-installer
-```
 
 ---
 

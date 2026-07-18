@@ -41,7 +41,3 @@ Cognitive Automator is an LLM-powered Windows automation framework. It bridges t
 - All LLM client logic lives in `cognitive_automator/llm/client.py`.
 - Prompt templates are in `cognitive_automator/llm/templates.py`.
 
-##  Build & Release
-- Use `build.bat` for Windows builds.
-- Ensure `version_info.txt` is updated before a release.
-- Installer is generated via Inno Setup 6 using `CognitiveAutomator_Setup.iss`.
