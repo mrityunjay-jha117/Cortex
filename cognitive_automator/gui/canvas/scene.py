@@ -135,14 +135,19 @@ class GraphScene(QGraphicsScene):
     def drawBackground(self, painter: QPainter, rect: QRectF) -> None:
         super().drawBackground(painter, rect)
         # Dot grid
-        painter.setPen(QPen(QColor("#D1D5DB"), 2))
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(QBrush(QColor("#D1D5DB")))
+        
+        radius = 3.0  # 6px diameter
+        
         left = int(rect.left()) - (int(rect.left()) % GRID_SIZE)
         top = int(rect.top()) - (int(rect.top()) % GRID_SIZE)
         x = left
         while x < rect.right():
             y = top
             while y < rect.bottom():
-                painter.drawPoint(int(x), int(y))
+                painter.drawEllipse(QPointF(x, y), radius, radius)
                 y += GRID_SIZE
             x += GRID_SIZE
 
