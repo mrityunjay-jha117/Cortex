@@ -13,15 +13,17 @@ class NodeItem(QGraphicsObject):
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemSendsGeometryChanges)
+        self.setAcceptHoverEvents(True)
         self.setPos(node.x, node.y)
 
         from PyQt6.QtWidgets import QGraphicsDropShadowEffect
         shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(12)
-        shadow.setXOffset(0)
-        shadow.setYOffset(3)
-        shadow.setColor(QColor(0, 0, 0, 20))
-        self.setGraphicsEffect(shadow)
+        self.shadow = QGraphicsDropShadowEffect()
+        self.shadow.setBlurRadius(6)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(4)
+        self.shadow.setColor(QColor(0, 0, 0, 13))
+        self.setGraphicsEffect(self.shadow)
 
         # Dynamic height for complex nodes
         from cognitive_automator.graph_model import ForLoopNode
@@ -113,15 +115,17 @@ class NodeItem(QGraphicsObject):
 
         # Selection / execution state overrides border
         if self._executing:
-            painter.setPen(QPen(QColor("#FFFFFF"), 2.5, Qt.PenStyle.DashLine))
+            painter.setPen(QPen(QColor("#111827"), 2.0, Qt.PenStyle.DashLine))
         elif self.isSelected():
-            painter.setPen(QPen(QColor(APP_ACCENT), 2))
+            painter.setPen(QPen(QColor("#111827"), 2.0))
+        elif getattr(self, "_is_hovered", False):
+            painter.setPen(QPen(QColor("#D1D5DB"), 1.0))
         elif self._success is True:
             painter.setPen(QPen(QColor("#00C9A7"), 1.5))
         elif self._success is False:
             painter.setPen(QPen(QColor("#FF6B6B"), 1.5))
         else:
-            painter.setPen(QPen(border_color, 1.5))
+            painter.setPen(QPen(border_color, 1.0))
 
         # Background
         painter.setBrush(QBrush(QColor(colors["bg"])))
@@ -129,10 +133,7 @@ class NodeItem(QGraphicsObject):
 
         # Header stripe
         header_h = 24
-        header_grad = QLinearGradient(0, 0, NODE_W, 0)
-        header_grad.setColorAt(0, header_color)
-        header_grad.setColorAt(1, header_color.darker(110))
-        painter.setBrush(QBrush(header_grad))
+        painter.setBrush(QBrush(header_color))
         painter.setPen(Qt.PenStyle.NoPen)
 
         path = QPainterPath()
@@ -144,6 +145,9 @@ class NodeItem(QGraphicsObject):
         path.lineTo(0, 12)
         path.quadTo(0, 0, 12, 0)
         painter.drawPath(path)
+        
+        painter.setPen(QPen(QColor("#E5E7EB"), 1.0))
+        painter.drawLine(0, header_h, NODE_W, header_h)
 
         # Header text
         header_text_color = QColor("#FFFFFF")
@@ -249,3 +253,28 @@ class NodeItem(QGraphicsObject):
             from .scene import GraphScene
             cast_scene: GraphScene = self.scene()  # type: ignore[assignment]
             cast_scene.node_double_clicked.emit(self.node.id)
+
+
+    def hoverEnterEvent(self, event: Any) -> None:
+        self._is_hovered = True
+        self.shadow.setBlurRadius(15)
+        self.shadow.setYOffset(10)
+        self.shadow.setColor(QColor(0, 0, 0, 20))
+        
+        transform = QTransform()
+        transform.translate(NODE_W/2, self.node_h/2)
+        transform.scale(1.02, 1.02)
+        transform.translate(-NODE_W/2, -self.node_h/2)
+        self.setTransform(transform)
+        self.update()
+        super().hoverEnterEvent(event)
+
+    def hoverLeaveEvent(self, event: Any) -> None:
+        self._is_hovered = False
+        self.shadow.setBlurRadius(6)
+        self.shadow.setYOffset(4)
+        self.shadow.setColor(QColor(0, 0, 0, 13))
+        
+        self.setTransform(QTransform())
+        self.update()
+        super().hoverLeaveEvent(event)

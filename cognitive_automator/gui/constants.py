@@ -8,39 +8,39 @@ from __future__ import annotations
 NODE_COLORS: dict[str, dict[str, str]] = {
     "physical": {
         "bg": "#FFFFFF",
-        "border": "#20C997",
-        "header": "#20C997",
-        "header_text": "#FFFFFF",
+        "border": "#E5E7EB",
+        "header": "#FFFFFF",
+        "header_text": "#111827",
     },
     "vision": {
         "bg": "#FFFFFF",
-        "border": "#51CF66",
-        "header": "#51CF66",
-        "header_text": "#FFFFFF",
+        "border": "#E5E7EB",
+        "header": "#FFFFFF",
+        "header_text": "#111827",
     },
     "llm": {
         "bg": "#FFFFFF",
-        "border": "#845EF7",
-        "header": "#845EF7",
-        "header_text": "#FFFFFF",
+        "border": "#E5E7EB",
+        "header": "#FFFFFF",
+        "header_text": "#111827",
     },
     "flow": {
         "bg": "#FFFFFF",
-        "border": "#FCC419",
-        "header": "#FCC419",
-        "header_text": "#212529",
+        "border": "#E5E7EB",
+        "header": "#FFFFFF",
+        "header_text": "#111827",
     },
     "logic": {
         "bg": "#FFFFFF",
-        "border": "#339AF0",
-        "header": "#339AF0",
-        "header_text": "#FFFFFF",
+        "border": "#E5E7EB",
+        "header": "#FFFFFF",
+        "header_text": "#111827",
     },
     "system": {
         "bg": "#FFFFFF",
-        "border": "#20C997",
-        "header": "#20C997",
-        "header_text": "#FFFFFF",
+        "border": "#E5E7EB",
+        "header": "#F3F4F6", # subtle distinction for system nodes
+        "header_text": "#111827",
     },
 }
 

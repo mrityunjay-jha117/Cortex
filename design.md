@@ -22,7 +22,7 @@ The color scheme is completely desaturated (white, greys, and near-blacks) to ke
 ## 2. Background Canvas (The Dot Grid)
 
 To achieve the modern, spacious dot-grid background (similar to the image provided but with greater distance between the dots), we will use a CSS radial gradient with a generously spaced `background-size`. 
-
+with large sized dots 
 **CSS Implementation:**
 ```css
 body, .canvas-container {
