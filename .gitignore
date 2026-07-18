@@ -45,3 +45,7 @@ config.local.*
 *.cogauto
 # Logs
 *.log
+
+# Scripts
+refactor_*.py
+patch_*.py
