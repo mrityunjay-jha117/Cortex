@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/compare.py — Compare Node Executor
+
+This file contains the execution logic for the CompareNode.
+It evaluates a comparison operation (e.g., EQUALS, CONTAINS, NUM_GT) between two runtime operands and routes execution down TRUE or FALSE edges accordingly.
+"""
 from ..base import *
 
 def execute_compare(node: CompareNode, context: dict[str, Any]) -> NodeResult:

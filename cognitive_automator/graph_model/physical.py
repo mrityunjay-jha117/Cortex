@@ -1,3 +1,9 @@
+"""
+physical.py — Physical Input Action Nodes
+
+This file defines the schemas for nodes that interact directly with the host operating system.
+These nodes emulate human physical actions such as mouse clicks, keyboard typing, clipboard manipulation, OS-level file drops, and screenshot capturing.
+"""
 from typing import Literal
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, MouseAction, KeyboardAction, ClipboardAction, NavigationAction, ScreenshotMode, DetectionMode

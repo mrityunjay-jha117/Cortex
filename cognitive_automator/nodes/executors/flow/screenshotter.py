@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/screenshotter.py — Screenshotter Executor
+
+This file contains the execution logic for the ScreenshotterNode.
+It captures sequences of screenshots by automatically scrolling the screen. It can run a fixed number of times or until the bottom of a page is detected (using image hashing/diffing), and can optionally click UI elements as they appear during the scroll.
+"""
 from ..base import *
 
 def execute_screenshotter(node: ScreenshotterNode, context: dict[str, Any]) -> NodeResult:

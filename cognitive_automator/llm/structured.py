@@ -1,8 +1,8 @@
 """
-llm/structured.py — Structured output enforcement for LLM nodes.
-llm/ocr.py logic is also here for simplicity.
+structured.py — Structured output enforcement for LLM nodes.
 
-Guarantees deterministic bool/JSON from LLM calls.
+This file serves as the execution engine for all LLM-based intelligence nodes (Extraction, Judgment, OCR, and Vision Extraction).
+It bridges the gap between raw LLM string outputs and structured application data by enforcing JSON schemas, parsing markdown-wrapped JSON, and splitting large base64 images into overlapping tiles to improve Vision model accuracy.
 """
 
 from __future__ import annotations

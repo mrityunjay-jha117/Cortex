@@ -1,3 +1,9 @@
+"""
+gui/canvas/view.py — Canvas Graphics View
+
+This file defines the QGraphicsView widget.
+It provides the interactive viewport into the scene, managing panning (middle-click), zooming (scroll wheel), rubber-band selection, and background grid rendering.
+"""
 from .base import *
 from .scene import GraphScene
 class GraphView(QGraphicsView):

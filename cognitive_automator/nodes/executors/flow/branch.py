@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/branch.py — Branch Node Executor
+
+This file contains the execution logic for the BranchNode.
+It evaluates a boolean condition key stored in the execution context and directs the graph's execution flow down either the TRUE or FALSE edge.
+"""
 from ..base import *
 
 def execute_branch(node: BranchNode, context: dict[str, Any]) -> NodeResult:

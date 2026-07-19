@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/utils.py — Flow Execution Utilities
+
+This file provides helper functions for flow executors.
+It includes logic for loading and parsing specific columns from CSV or Excel (.xlsx) files to be used by iterator nodes.
+"""
 from ..base import *
 import csv
 

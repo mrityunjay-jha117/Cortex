@@ -1,8 +1,8 @@
 """
-llm/templates.py — Jinja2-based prompt template engine.
+templates.py — Jinja2-based prompt template engine.
 
-Variables injected from the execution context dict.
-Undefined variables raise an error at render time (fail fast).
+This file manages the interpolation of dynamic variables into LLM prompts.
+It utilizes Jinja2 to parse strings like "Extract data for {{ user_name }}" using runtime context variables. It features LRU caching to optimize template compilation speed and provides strict validation to fail fast if required variables are missing during execution.
 """
 
 from __future__ import annotations

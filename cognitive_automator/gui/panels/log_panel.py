@@ -1,7 +1,9 @@
 """
-gui/panels/log_panel.py — Bottom panel streaming live execution logs.
-"""
+gui/panels/log_panel.py — Execution Log Panel
 
+This file defines the UI panel that displays real-time execution logs.
+It listens for `ExecutionEvent` emissions from the background runner thread and formats them into readable, color-coded textual output for the user.
+"""
 from __future__ import annotations
 
 from PyQt6.QtGui import QColor, QTextCharFormat, QTextCursor

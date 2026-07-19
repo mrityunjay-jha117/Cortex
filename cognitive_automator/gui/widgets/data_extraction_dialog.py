@@ -1,10 +1,9 @@
 """
-gui/widgets/data_extraction_dialog.py — Dialog to configure clipboard → LLM extraction.
+gui/widgets/data_extraction_dialog.py — Data Extraction Dialog
 
-Creates a ClipboardNode(READ) + LLMExtractionNode pair that reads clipboard text
-and calls an LLM to pull out structured data into a named context variable.
+This file defines a popup modal for creating structured JSON schemas.
+It allows users to define expected data formats for LLM Extraction nodes using an interactive table instead of writing raw JSON schema.
 """
-
 from __future__ import annotations
 
 from PyQt6.QtWidgets import (

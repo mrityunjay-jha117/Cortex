@@ -1,7 +1,9 @@
 """
-gui/constants.py — Color palette, fonts, and shared style strings.
-"""
+gui/constants.py — GUI Configuration Constants
 
+This file defines static constants used throughout the PyQt6 user interface.
+It includes color palettes, Z-index values for canvas layers, geometry sizing constants, and shared stylistic properties.
+"""
 from __future__ import annotations
 
 # Node category colors

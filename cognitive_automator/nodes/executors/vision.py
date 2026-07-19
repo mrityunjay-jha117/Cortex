@@ -1,3 +1,9 @@
+"""
+nodes/executors/vision.py — Vision and OCR Execution Logic
+
+This file handles the runtime execution of computer vision tasks.
+It performs highly optimized, in-memory screen capturing and image matching using PyAutoGUI/PIL. It features robust fallback mechanisms where, if an element isn't found using standard template matching, it automatically captures the screen and utilizes a Vision Language Model (VLM) to semantically find the element. It also handles OCR and data extraction from images.
+"""
 from .base import *
 def execute_locate_element(node: LocateElementNode, context: dict[str, Any], 
                            abort_signal: Callable[[], bool] | None = None,

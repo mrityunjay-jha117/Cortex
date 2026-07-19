@@ -1,18 +1,9 @@
 """
-gui/main_window.py — Main application window.
+gui/main_window.py — Main Application Window
 
-Layout:
-  ┌─────────────────────────────────────────────────────┐
-  │  MenuBar + ToolBar                                  │
-  ├───────────────────────────────────┬─────────────────┤
-  │                                   │                 │
-  │   GraphView (canvas)              │  PropertyPanel  │
-  │                                   │                 │
-  ├───────────────────────────────────┴─────────────────┤
-  │  LogPanel (execution log)                           │
-  └─────────────────────────────────────────────────────┘
+This file constructs the primary GUI layout using PyQt6.
+It orchestrates the central Node Canvas, the Property Panel for editing nodes, the Execution Log Panel, and the top toolbar for overarching file operations (Save/Load) and playback control.
 """
-
 from __future__ import annotations
 
 import logging

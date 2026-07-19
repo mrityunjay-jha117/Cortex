@@ -1,3 +1,8 @@
+"""
+nodes/executors/flow/__init__.py — Flow Executors
+
+Initializes the flow control executors.
+"""
 from .branch import *
 from .compare import *
 from .csv_data_loader import *

@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/iterate.py — Iterate Executor
+
+This file contains the execution logic for the IterateNode.
+It manages stateful iteration over hardcoded item lists or loaded CSV columns, looping back to the LOOP_BODY edge until items are exhausted.
+"""
 from ..base import *
 from .utils import _load_csv_column
 

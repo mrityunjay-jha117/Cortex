@@ -1,4 +1,12 @@
 from ..base import *
+import csv
+
+"""
+nodes/executors/flow/csv_writer.py — CSV Writer Executor
+
+This file contains the execution logic for the CSVWriterNode.
+It extracts a data payload (dictionary or list) from the execution context and appends or writes it to a designated CSV file on disk, automatically handling headers.
+"""
 
 def execute_csv_writer(node: CSVWriterNode, context: dict[str, Any]) -> NodeResult:
     """Writes data (dict or list[dict]) to a CSV file."""

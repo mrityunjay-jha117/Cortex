@@ -1,10 +1,9 @@
 """
-gui/panels/property_panel.py — Right-side panel for editing node properties.
+gui/panels/property_panel/builders/llm.py — LLM Node Builders
 
-Uses a QStackedWidget to show the correct form for each node type.
-All changes immediately update the underlying Pydantic model.
+This file implements UI forms for configuring AI-powered nodes.
+It provides inputs for system prompts, AI provider selection (OpenRouter), model names, and fallback mechanisms.
 """
-
 from __future__ import annotations
 
 from typing import Any

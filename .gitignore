@@ -9,7 +9,8 @@ dist/
 build/
 .eggs/
 *.whl
-
+interview*
+interview/*
 # Virtual environments
 .venv/
 venv/

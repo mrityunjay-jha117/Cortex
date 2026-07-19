@@ -1,10 +1,8 @@
 """
-gui/canvas.py — Visual node graph editor using PyQt6 QGraphicsScene/View.
+gui/canvas/base.py — Base Canvas Utilities
 
-Nodes are rendered as draggable QGraphicsItems.
-Edges are drawn as bezier curves between port sockets.
+This file provides common utilities and base classes for the node-based visual programming canvas.
 """
-
 from __future__ import annotations
 
 import collections

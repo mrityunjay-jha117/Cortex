@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/wait.py — Wait Node Executor
+
+This file contains the execution logic for the WaitNode.
+It halts execution for either a static time duration or polls the screen continuously until a specific UI element (reference image) appears, respecting timeout thresholds.
+"""
 from ..base import *
 
 def execute_wait(node: WaitNode, context: dict[str, Any],

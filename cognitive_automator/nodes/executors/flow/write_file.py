@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/write_file.py — Write File Executor
+
+This file contains the execution logic for the WriteFileNode.
+It evaluates a Jinja prompt template against the current execution context and writes or appends the resulting string (or formatted JSON) to a local file.
+"""
 from ..base import *
 
 def execute_write_file(node: WriteFileNode, context: dict[str, Any]) -> NodeResult:

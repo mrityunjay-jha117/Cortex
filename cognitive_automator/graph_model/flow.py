@@ -1,3 +1,9 @@
+"""
+flow.py — Control Flow Node Definitions
+
+This file defines Pydantic schemas for nodes that control the execution path of the automation graph.
+It includes schemas for conditional branching (CompareNode, BranchNode), iterators and loops (IterateNode, ForLoopNode), timing delays (WaitNode), and subgraph orchestration.
+"""
 from typing import Literal
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, CompareOp

@@ -1,3 +1,9 @@
+"""
+gui/canvas/scene.py — Canvas Graphics Scene
+
+This file manages the QGraphicsScene which holds all nodes and edges.
+It tracks the overall graph topology in the UI, handles node deletion, edge creation routing, and synchronizes the visual representation with the underlying `ActionGraph` Python objects.
+"""
 from .base import *
 from .port import PortItem
 from .node import NodeItem

@@ -1,10 +1,9 @@
 """
-gui/panels/property_panel.py — Right-side panel for editing node properties.
+gui/panels/property_panel/builders/vision.py — Vision Node Builders
 
-Uses a QStackedWidget to show the correct form for each node type.
-All changes immediately update the underlying Pydantic model.
+This file implements UI forms for configuring computer vision nodes.
+It manages the UI for capturing screen regions, adjusting confidence thresholds, and rendering the embedded Base64 reference images.
 """
-
 from __future__ import annotations
 
 from typing import Any

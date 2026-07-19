@@ -1,3 +1,9 @@
+"""
+nodes/executors/physical.py — Physical Action Executors
+
+This file contains the runtime execution logic for physically emulating human interactions with the OS.
+It uses libraries like `pyautogui` and `pyperclip` to execute mouse clicks, dragging, scrolling, keyboard typing (including hotkeys and Jinja template evaluation), clipboard manipulation, and complex UI operations like file-dropping. It includes built-in timing stabilization to ensure OS UI elements register the automated inputs.
+"""
 from .base import *
 def execute_mouse(node: MouseNode, context: dict[str, Any]) -> NodeResult:
     try:

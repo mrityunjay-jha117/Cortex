@@ -1,10 +1,9 @@
 """
-gui/panels/property_panel.py — Right-side panel for editing node properties.
+gui/panels/property_panel/base.py — Property Panel Base
 
-Uses a QStackedWidget to show the correct form for each node type.
-All changes immediately update the underlying Pydantic model.
+This file defines the core container for the Node Property Panel on the right side of the main window.
+It dynamically clears and rebuilds its UI layout whenever a user selects a different node on the canvas.
 """
-
 from __future__ import annotations
 
 from typing import Any

@@ -1,3 +1,9 @@
+"""
+gui/canvas/node.py — Canvas Node Graphics
+
+This file defines the QGraphicsItem for individual nodes.
+It handles rendering the node body, title bar, category-specific coloring, dragging mechanics, and integrates the input/output connection ports (QGraphicsItems).
+"""
 from .base import *
 from .port import PortItem
 from .edge import EdgeItem

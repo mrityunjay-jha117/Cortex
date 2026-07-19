@@ -1,3 +1,9 @@
+"""
+nodes/executors/flow/dynamic_iterate.py — Dynamic Iterate Executor
+
+This file contains the execution logic for the DynamicIterateNode.
+It iterates over a runtime-resolved iterable (like a list) stored dynamically in the execution context, yielding one item per loop cycle until exhausted.
+"""
 from ..base import *
 
 def execute_dynamic_iterate(node: DynamicIterateNode, context: dict[str, Any]) -> NodeResult:

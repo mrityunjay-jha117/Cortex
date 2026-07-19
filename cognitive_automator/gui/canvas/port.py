@@ -1,3 +1,9 @@
+"""
+gui/canvas/port.py — Canvas Port Graphics
+
+This file defines the connection points (ports) attached to nodes.
+It handles the logic for clicking and dragging out new edges from outputs to inputs, enforcing connection rules and visually representing connection states.
+"""
 from .base import *
 class PortItem(QGraphicsItem):
     def __init__(self, node_item: "NodeItem", is_output: bool, label: str = "",

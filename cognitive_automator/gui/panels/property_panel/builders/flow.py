@@ -1,10 +1,9 @@
 """
-gui/panels/property_panel.py — Right-side panel for editing node properties.
+gui/panels/property_panel/builders/flow.py — Flow Node Builders
 
-Uses a QStackedWidget to show the correct form for each node type.
-All changes immediately update the underlying Pydantic model.
+This file implements UI forms for configuring control flow nodes.
+It builds inputs for iteration variables, conditional logic operators, and wait timings.
 """
-
 from __future__ import annotations
 
 from typing import Any

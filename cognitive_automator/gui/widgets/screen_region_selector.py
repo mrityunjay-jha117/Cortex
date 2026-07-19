@@ -1,10 +1,9 @@
 """
-gui/widgets/screen_region_selector.py — Full-screen transparent region selector.
+gui/widgets/screen_region_selector.py — Screen Region Selector
 
-The user drags/resizes a dotted rectangle over the area they want to capture.
-Emits region_selected(QRect) on confirm, cancelled() on abort.
+This file defines a full-screen, translucent overlay used for snipping tools.
+It allows the user to click and drag a bounding box over the desktop to capture targeted screenshots for Vision nodes.
 """
-
 from __future__ import annotations
 
 from PyQt6.QtCore import Qt, QRect, QPoint, pyqtSignal

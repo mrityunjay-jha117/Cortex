@@ -1,10 +1,8 @@
 """
-gui/panels/property_panel.py — Right-side panel for editing node properties.
+gui/panels/property_panel/builders/data.py — Data Node Builders
 
-Uses a QStackedWidget to show the correct form for each node type.
-All changes immediately update the underlying Pydantic model.
+This file implements UI forms for configuring data manipulation nodes (like CSV loading or File Writing).
 """
-
 from __future__ import annotations
 
 from typing import Any

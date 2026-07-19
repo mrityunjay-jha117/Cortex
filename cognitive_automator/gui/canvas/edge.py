@@ -1,3 +1,9 @@
+"""
+gui/canvas/edge.py — Canvas Edge Graphics
+
+This file defines the QGraphicsPathItem responsible for rendering connecting lines (edges) between nodes on the canvas.
+It handles bezier curve calculations, color coding based on edge types (e.g. TRUE/FALSE/DEFAULT), and visual interactions like selection.
+"""
 from .base import *
 from .port import PortItem
 class EdgeItem(QGraphicsPathItem):

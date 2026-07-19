@@ -1,10 +1,9 @@
 """
-gui/panels/property_panel.py — Right-side panel for editing node properties.
+gui/panels/property_panel/helpers.py — Property Panel UI Helpers
 
-Uses a QStackedWidget to show the correct form for each node type.
-All changes immediately update the underlying Pydantic model.
+This file contains modular PyQt6 widget generators.
+It provides standardized functions for creating labeled text inputs, combo boxes, checkboxes, and numerical spinboxes, ensuring a unified aesthetic across all property forms.
 """
-
 from __future__ import annotations
 
 from typing import Any

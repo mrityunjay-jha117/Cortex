@@ -1,3 +1,9 @@
+"""
+nodes/executors/llm.py — LLM Executor Definitions
+
+This file contains the runtime execution logic for AI-based nodes.
+It wraps the underlying LLM client calls (Judgment, Extraction, Generative) inside the standard node execution pattern, safely handling API exceptions and formatting the results into `NodeResult` objects to inject AI outputs directly into the graph's execution context.
+"""
 from .base import *
 def execute_judgment(node: LLMJudgmentNode, context: dict[str, Any],
                      llm_config: LLMConfig) -> NodeResult:

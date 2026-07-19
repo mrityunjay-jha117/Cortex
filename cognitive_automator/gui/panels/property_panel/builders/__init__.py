@@ -1,3 +1,8 @@
+"""
+gui/panels/property_panel/builders/__init__.py — Node Form Builders
+
+This package contains individual builder classes that generate specific UI layouts for different node categories.
+"""
 from .flow import FlowBuilders
 from .data import DataBuilders
 from .physical import PhysicalBuilders

@@ -1,7 +1,8 @@
 """
-gui/widgets/logic_inject_dialog.py — Dialog to inject an LLM logic node mid-recording.
-"""
+gui/widgets/logic_inject_dialog.py — Logic Injector Dialog
 
+This file defines a popup modal for quickly injecting conditional nodes (like Branches) between existing nodes on the canvas.
+"""
 from __future__ import annotations
 
 from PyQt6.QtWidgets import (

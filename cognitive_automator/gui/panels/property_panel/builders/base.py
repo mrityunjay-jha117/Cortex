@@ -1,10 +1,9 @@
 """
-gui/panels/property_panel.py — Right-side panel for editing node properties.
+gui/panels/property_panel/builders/base.py — Property Builder Interfaces
 
-Uses a QStackedWidget to show the correct form for each node type.
-All changes immediately update the underlying Pydantic model.
+This file defines the abstract base classes and registry for Property Builders.
+A Builder is responsible for constructing the specific UI form required to edit a particular node type (e.g. LLM vs Mouse).
 """
-
 from __future__ import annotations
 
 from typing import Any

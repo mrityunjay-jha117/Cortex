@@ -1,3 +1,9 @@
+"""
+system.py — System and File I/O Node Definitions
+
+This file defines the schemas for nodes that handle system-level interactions.
+It includes capabilities for external data loading and saving (CSV reading/writing, File writing), as well as global graph lifecycle markers (GlobalStartNode and GlobalEndNode).
+"""
 from typing import Literal
 from pydantic import BaseModel, Field
 from .enums import NodeCategory

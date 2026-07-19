@@ -1,10 +1,9 @@
 """
-nodes/executors.py — Execution logic for every node type.
+nodes/executors/base.py — Executor Base Infrastructure
 
-Each executor receives the node model + the mutable execution context dict.
-Returns NodeResult(success, output_key, output_value, next_edge_label).
-
-PyAutoGUI calls are wrapped with FAILSAFE guard.
+This file acts as the foundational interface for the node execution engine. 
+It defines `NodeResult`, the standard data structure returned by every node execution, which dictates whether the step succeeded, which edge to follow next, and what data (output_key/value) should be injected into the graph's shared memory context.
+It also enforces safety parameters, such as the PyAutoGUI FAILSAFE mechanism, ensuring global emergency stops are respected across all physical automation tasks.
 """
 
 import base64

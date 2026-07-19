@@ -1,9 +1,8 @@
 """
-llm/client.py — Provider-agnostic LLM client (OpenRouter only).
+client.py — Provider-agnostic LLM client (OpenRouter only).
 
-All calls are routed through OpenRouter.
-All calls are synchronous; wrap in asyncio.run_in_executor for async use.
-Retry via tenacity with exponential backoff.
+This file handles all outbound network communication with Large Language Models.
+It routes all calls through OpenRouter's OpenAI-compatible endpoint. It handles API key resolution, HTTP session management, schema injection for structured responses, and utilizes the `tenacity` library to provide exponential backoff retries for network resilience.
 """
 
 from __future__ import annotations
