@@ -65,6 +65,76 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
         self._locate_full_pixmap: QPixmap | None = None
         self._locate_img_label: QLabel | None = None
 
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #111827;
+                color: #FFFFFF;
+            }
+            QScrollArea, QStackedWidget {
+                background-color: transparent;
+                border: none;
+            }
+            QLabel, QCheckBox {
+                color: #FFFFFF;
+                background-color: transparent;
+            }
+            QCheckBox::indicator {
+                background-color: #374151;
+                border: 1px solid #4B5563;
+                width: 14px;
+                height: 14px;
+                border-radius: 2px;
+            }
+            QCheckBox::indicator:checked {
+                background-color: #F7C76B;
+            }
+            QLineEdit, QSpinBox, QDoubleSpinBox, QComboBox, QPlainTextEdit {
+                background-color: #1F2937;
+                color: #FFFFFF;
+                border: 1px solid #374151;
+                padding: 4px;
+                border-radius: 4px;
+            }
+            QPushButton {
+                background-color: #1F2937;
+                color: #FFFFFF;
+                border: 2px solid #FFFFFF;
+                border-right: 4px solid #FFFFFF;
+                border-bottom: 4px solid #FFFFFF;
+                border-radius: 0px;
+                padding: 4px 12px;
+                font-family: "Courier New";
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #F7C76B;
+                color: #000000;
+                border-color: #F7C76B;
+            }
+            QPushButton:pressed {
+                background-color: #F7C76B;
+                color: #000000;
+                border-top: 4px solid #F7C76B;
+                border-left: 4px solid #F7C76B;
+                border-right: 2px solid #F7C76B;
+                border-bottom: 2px solid #F7C76B;
+            }
+            QSlider::groove:horizontal {
+                border: 1px solid #374151;
+                height: 8px;
+                background: #1F2937;
+                margin: 2px 0;
+                border-radius: 4px;
+            }
+            QSlider::handle:horizontal {
+                background: #F7C76B;
+                border: 1px solid #E3B357;
+                width: 14px;
+                margin: -4px 0;
+                border-radius: 7px;
+            }
+        """)
+
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
@@ -72,31 +142,32 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
         # Header
         self._header = QLabel("Select a node to configure")
         self._header.setStyleSheet(
-            f"background:{APP_SURFACE}; color:{APP_TEXT}; "
-            f"padding:12px 16px; border-bottom:1px solid {APP_BORDER}; "
-            "font-weight:bold; font-size:13px;"
+            f"background:#111827; color:#FFFFFF; "
+            f"padding:12px 16px; border-bottom:2px solid {APP_BORDER}; "
+            "font-weight:bold; font-size:14px;"
         )
         layout.addWidget(self._header)
 
-        # Scroll area wrapping stacked widget
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
-        scroll.setStyleSheet(f"border:none; background:{APP_BG};")
+        scroll.setStyleSheet(f"border:none; background:transparent;")
 
         self._stacked = QStackedWidget()
-        self._stacked.setStyleSheet(f"background:{APP_BG};")
+        self._stacked.setStyleSheet(f"background:transparent;")
 
         # Blank page
         blank = QWidget()
+        blank.setObjectName("propPage")
         blank_layout = QVBoxLayout(blank)
         hint = QLabel("Click a node on the canvas\nto view its properties.")
         hint.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        hint.setStyleSheet(f"color:{APP_TEXT_DIM}; font-size:12px;")
+        hint.setStyleSheet(f"color:#FFFFFF; font-size:14px; font-weight:bold;")
         blank_layout.addWidget(hint)
         self._stacked.addWidget(blank)   # index 0
 
         # Generic page (for all node types)
         self._form_widget = QWidget()
+        self._form_widget.setObjectName("propPage")
         self._form_layout = QFormLayout(self._form_widget)
         self._form_layout.setContentsMargins(16, 16, 16, 16)
         self._form_layout.setSpacing(10)
@@ -108,11 +179,10 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
         layout.addWidget(scroll, stretch=1)
 
         self.setFixedWidth(350)
-        self.setStyleSheet(f"background:{APP_BG};")
 
     def _add_hint(self, text: str) -> None:
         hint = QLabel(text)
-        hint.setStyleSheet(f"color:{APP_TEXT_DIM}; font-size:11px;")
+        hint.setStyleSheet(f"color:#CCCCCC; font-size:12px; font-weight:bold;")
         hint.setWordWrap(True)
         self._form_layout.addRow("", hint)
 

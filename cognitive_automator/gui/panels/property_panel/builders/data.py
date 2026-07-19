@@ -74,6 +74,21 @@ class DataBuilders:
         self._form_layout.addRow("Status Key", self._line_edit(node.output_key, lambda v: self._set(node, "output_key", v)))
         self._add_hint("Writes context data (dict or list[dict]) to CSV.")
 
+    def _build_write_file(self, node: WriteFileNode) -> None:
+        self._form_layout.addRow("File Path", self._line_edit(node.file_path, lambda v: self._set(node, "file_path", v)))
+        
+        content_edit = self._plain_text(node.content, lambda v: self._set(node, "content", v))
+        content_edit.setMinimumHeight(60)
+        self._form_layout.addRow("Content", content_edit)
+        
+        append_cb = QCheckBox()
+        append_cb.setChecked(node.append)
+        append_cb.toggled.connect(lambda v: self._set(node, "append", v))
+        self._form_layout.addRow("Append", append_cb)
+        
+        self._form_layout.addRow("Output Key", self._line_edit(node.output_key, lambda v: self._set(node, "output_key", v)))
+        self._add_hint("Writes text to a file. Supports {template} variables in the content.")
+
     def _build_file_drop(self, node: FileDropNode) -> None:
         self._form_layout.addRow("File Path", self._line_edit(node.file_path, lambda v: self._set(node, "file_path", v)))
         

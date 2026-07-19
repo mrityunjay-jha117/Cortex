@@ -28,15 +28,15 @@ class EdgeItem(QGraphicsPathItem):
         self._update_path()
 
         edge_colors = {
-            EdgeLabel.DEFAULT: "#555577",
-            EdgeLabel.TRUE: "#00C9A7",
-            EdgeLabel.FALSE: "#FF6B6B",
-            EdgeLabel.LOOP_BODY: "#FFC107",
-            EdgeLabel.LOOP_END: "#7B61FF",
-            EdgeLabel.DATA_BIND: "#00BCD4",
+            EdgeLabel.DEFAULT: "#000000",
+            EdgeLabel.TRUE: "#000000",
+            EdgeLabel.FALSE: "#000000",
+            EdgeLabel.LOOP_BODY: "#000000",
+            EdgeLabel.LOOP_END: "#000000",
+            EdgeLabel.DATA_BIND: "#000000",
             EdgeLabel.ERROR: "#FF4444",
         }
-        color = edge_colors.get(label, "#555577")
+        color = edge_colors.get(label, "#000000")
         self._base_pen = QPen(QColor(color), 2, Qt.PenStyle.SolidLine)
         self.setPen(self._base_pen)
         self.setToolTip("Select + Delete to remove this connection")

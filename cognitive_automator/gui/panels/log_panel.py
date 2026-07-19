@@ -33,21 +33,21 @@ class LogPanel(QWidget):
 
         # Header bar
         header = QWidget()
-        header.setStyleSheet(f"background:{APP_SURFACE}; border-top:1px solid {APP_BORDER};")
+        header.setStyleSheet(f"background:#444444; border-top:2px solid {APP_BORDER}; border-bottom:2px solid {APP_BORDER};")
         header_layout = QHBoxLayout(header)
         header_layout.setContentsMargins(12, 6, 12, 6)
 
         title = QLabel("EXECUTION LOG")
-        title.setStyleSheet(f"color:{APP_ACCENT}; font-size:10px; font-weight:bold; letter-spacing:2px;")
+        title.setStyleSheet(f"color:#FFFFFF; font-size:12px; font-weight:bold; letter-spacing:2px;")
         header_layout.addWidget(title)
         header_layout.addStretch()
 
         clear_btn = QPushButton("Clear")
         clear_btn.setFixedHeight(24)
         clear_btn.setStyleSheet(
-            f"background:transparent; color:{APP_TEXT_DIM}; "
-            f"border:1px solid {APP_BORDER}; border-radius:3px; "
-            "padding:2px 8px; font-size:11px;"
+            f"background:transparent; color:#FFFFFF; "
+            f"border:2px solid #000000; border-radius:0px; "
+            "padding:2px 8px; font-size:12px; font-weight:bold;"
         )
         clear_btn.clicked.connect(self.clear_log)
         header_layout.addWidget(clear_btn)
@@ -57,9 +57,9 @@ class LogPanel(QWidget):
         self._log = QTextEdit()
         self._log.setReadOnly(True)
         self._log.setStyleSheet(
-            f"background:{APP_BG}; color:#C0C0D0; "
+            f"background:#333333; color:#FFFFFF; "
             "font-family:'Consolas','Courier New',monospace; "
-            f"font-size:12px; border:none; padding:8px;"
+            f"font-size:13px; border:none; padding:8px;"
         )
         layout.addWidget(self._log)
         self.setMaximumHeight(220)

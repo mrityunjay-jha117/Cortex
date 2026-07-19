@@ -35,11 +35,11 @@ class PortItem(QGraphicsItem):
     def paint(self, painter: QPainter, option: QStyleOptionGraphicsItem,
               widget: QWidget | None = None) -> None:
         colors = NODE_COLORS.get(self.node_item.node.category.value, NODE_COLORS["physical"])
-        color = QColor(colors["border"])
+        color = QColor("#000000") # thick black border for retro style
         
         # Visual distinction
         painter.setPen(QPen(color, 2))
-        painter.setBrush(QBrush(color if self._hovered else QColor(APP_BG)))
+        painter.setBrush(QBrush(QColor("#333333") if self._hovered else QColor("#FFFFFF")))
         
         if self.is_output:
             painter.drawEllipse(QRectF(-PORT_RADIUS, -PORT_RADIUS, PORT_RADIUS * 2, PORT_RADIUS * 2))

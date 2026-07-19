@@ -24,10 +24,11 @@ class GraphScene(QGraphicsScene):
 
     def __init__(self, parent: QObject | None = None) -> None:
         super().__init__(parent)
+        self.setSceneRect(-5000, -5000, 10000, 10000)
         self._graph: ActionGraph | None = None
         self._node_items: dict[str, NodeItem] = {}
         self._edge_items: list[EdgeItem] = []
-        self.setBackgroundBrush(QBrush(QColor(APP_BG)))
+        self.setBackgroundBrush(QBrush(QColor("#FFFFFF")))
         self._drag_port: PortItem | None = None
         self._temp_edge: QGraphicsPathItem | None = None
 
@@ -149,12 +150,11 @@ class GraphScene(QGraphicsScene):
 
     def drawBackground(self, painter: QPainter, rect: QRectF) -> None:
         super().drawBackground(painter, rect)
-        # Dot grid
         painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(QBrush(QColor("#D1D5DB")))
+        painter.setBrush(QBrush(QColor("#000000")))
         
-        radius = 2.0  # 6px diameter
+        size = 4.0  # dot size
         
         left = int(rect.left()) - (int(rect.left()) % GRID_SIZE)
         top = int(rect.top()) - (int(rect.top()) % GRID_SIZE)
@@ -162,7 +162,7 @@ class GraphScene(QGraphicsScene):
         while x < rect.right():
             y = top
             while y < rect.bottom():
-                painter.drawEllipse(QPointF(x, y), radius, radius)
+                painter.drawRect(QRectF(x - size/2, y - size/2, size, size))
                 y += GRID_SIZE
             x += GRID_SIZE
 
@@ -173,7 +173,7 @@ class GraphScene(QGraphicsScene):
             if port_hits:
                 self._drag_port = port_hits[0]
                 self._temp_edge = QGraphicsPathItem()
-                self._temp_edge.setPen(QPen(QColor("#AAAAFF"), 2, Qt.PenStyle.DashLine))
+                self._temp_edge.setPen(QPen(QColor("#000000"), 2, Qt.PenStyle.SolidLine))
                 self._temp_edge.setZValue(10)
                 self.addItem(self._temp_edge)
                 event.accept()

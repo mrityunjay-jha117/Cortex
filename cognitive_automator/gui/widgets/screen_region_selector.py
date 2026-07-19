@@ -73,7 +73,7 @@ class ScreenRegionSelector(QWidget):
         self._dim_lbl = QLabel(self)
         self._dim_lbl.setStyleSheet(
             "color:white; background:rgba(0,0,0,160);"
-            "padding:3px 8px; border-radius:4px; font-size:12px; font-family:Consolas;"
+            "padding:3px 8px; border-radius:4px; font-size:12px; font-family:\"Courier New\";"
         )
 
         # Buttons

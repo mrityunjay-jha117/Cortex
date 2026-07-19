@@ -19,39 +19,39 @@ from __future__ import annotations
 NODE_COLORS: dict[str, dict[str, str]] = {
     "physical": {
         "bg": "#FFFFFF",
-        "border": "#E5E7EB",
+        "border": "#000000",
         "header": "#FFFFFF",
-        "header_text": "#111827",
+        "header_text": "#000000",
     },
     "vision": {
         "bg": "#FFFFFF",
-        "border": "#E5E7EB",
+        "border": "#000000",
         "header": "#FFFFFF",
-        "header_text": "#111827",
+        "header_text": "#000000",
     },
     "llm": {
         "bg": "#FFFFFF",
-        "border": "#E5E7EB",
+        "border": "#000000",
         "header": "#FFFFFF",
-        "header_text": "#111827",
+        "header_text": "#000000",
     },
     "flow": {
         "bg": "#FFFFFF",
-        "border": "#E5E7EB",
+        "border": "#000000",
         "header": "#FFFFFF",
-        "header_text": "#111827",
+        "header_text": "#000000",
     },
     "logic": {
         "bg": "#FFFFFF",
-        "border": "#E5E7EB",
+        "border": "#000000",
         "header": "#FFFFFF",
-        "header_text": "#111827",
+        "header_text": "#000000",
     },
     "system": {
         "bg": "#FFFFFF",
-        "border": "#E5E7EB",
-        "header": "#F3F4F6", # subtle distinction for system nodes
-        "header_text": "#111827",
+        "border": "#000000",
+        "header": "#FFFFFF",
+        "header_text": "#000000",
     },
 }
 
@@ -65,135 +65,180 @@ NODE_CATEGORY_LABELS: dict[str, str] = {
 }
 
 # Application palette
-APP_BG = "#FDFDFD"
-APP_SURFACE = "#FFFFFF"
-APP_SURFACE2 = "#9CA3AF"
-APP_BORDER = "#6B7280"
-APP_TEXT = "#111827"
-APP_TEXT_DIM = "#6B7280"
-APP_ACCENT = "#111827"  # Black accent for B&W theme
-APP_SUCCESS = "#20C997"
-APP_WARNING = "#FCC419"
-APP_ERROR = "#FA5252"
+APP_BG = "#0B0F19"
+APP_SURFACE = "#111827"
+APP_SURFACE2 = "#1F2937"
+APP_BORDER = "#374151"
+APP_TEXT = "#F9FAFB"
+APP_TEXT_DIM = "#9CA3AF"
+APP_ACCENT = "#F7C76B"
+APP_SUCCESS = "#10B981"
+APP_WARNING = "#F59E0B"
+APP_ERROR = "#EF4444"
 
 MAIN_STYLESHEET = f"""
 QMainWindow, QWidget {{
     background-color: {APP_BG};
     color: {APP_TEXT};
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    font-size: 13px;
+    font-family: "Courier New";
+    font-size: 12px;
+}}
+#propPanel, #propPanel QScrollArea, #propPanel QStackedWidget, QWidget#propPanel, QWidget#propPage {{
+    background-color: #333333;
+}}
+#propPanel QLabel, #propPanel QCheckBox, #propPanel QGroupBox, #propPanel QRadioButton {{
+    color: #FFFFFF;
+    font-weight: bold;
+}}
+#propPanel QLabel#section {{
+    color: #FFFFFF;
+    font-size: 14px;
+    text-decoration: underline;
+}}
+#propPanel QGroupBox::title {{
+    background-color: #333333;
+    color: #FFFFFF;
 }}
 QMenuBar {{
     background-color: {APP_SURFACE2};
     color: {APP_TEXT};
-    border-bottom: 1px solid {APP_BORDER};
+    border-bottom: 2px solid {APP_BORDER};
     padding: 2px;
 }}
 QMenuBar::item:selected {{
-    background-color: {APP_BORDER};
+    background-color: {APP_ACCENT};
+    color: #111827;
 }}
 QMenu {{
     background-color: {APP_SURFACE};
     color: {APP_TEXT};
-    border: 1px solid {APP_BORDER};
-    border-radius: 4px;
+    border: 2px solid {APP_BORDER};
+    border-radius: 0px;
 }}
 QMenu::item:selected {{
     background-color: {APP_ACCENT};
-    color: white;
+    color: #111827;
 }}
 QToolBar {{
     background-color: {APP_SURFACE2};
-    border-bottom: 1px solid {APP_BORDER};
-    spacing: 4px;
-    padding: 4px;
+    border-bottom: 2px solid {APP_BORDER};
+    spacing: 15px;
+    padding: 10px;
+}}
+QToolBar QToolButton {{
+    padding: 6px 12px;
+    margin: 0px 4px;
+    font-weight: bold;
 }}
 QStatusBar {{
     background-color: {APP_SURFACE2};
-    color: {APP_TEXT_DIM};
-    border-top: 1px solid {APP_BORDER};
+    color: {APP_TEXT};
+    border-top: 2px solid {APP_BORDER};
+    font-weight: bold;
 }}
 QPushButton {{
-    background-color: {APP_SURFACE};
-    color: {APP_TEXT};
-    border: 1px solid {APP_BORDER};
-    border-radius: 6px;
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 2px solid #000000;
+    border-right: 4px solid #000000;
+    border-bottom: 4px solid #000000;
+    border-radius: 0px;
     padding: 6px 16px;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: bold;
 }}
 QPushButton:hover {{
     background-color: {APP_ACCENT};
-    border-color: {APP_ACCENT};
-    color: white;
+    color: #000000;
 }}
 QPushButton:pressed {{
-    background-color: #228BE6;
+    background-color: {APP_ACCENT};
+    border-top: 4px solid #000000;
+    border-left: 4px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
 }}
 QPushButton:disabled {{
     color: {APP_TEXT_DIM};
-    border-color: {APP_BORDER};
-    background-color: {APP_SURFACE2};
+    border: 2px dashed {APP_TEXT_DIM};
+    background-color: {APP_BG};
 }}
 QPushButton#danger {{
-    border-color: {APP_ERROR};
-    color: {APP_ERROR};
+    background-color: {APP_ERROR};
+    color: #FFFFFF;
 }}
 QPushButton#danger:hover {{
-    background-color: {APP_ERROR};
-    color: white;
+    background-color: #FFFFFF;
+    color: {APP_ERROR};
+    border-color: {APP_ERROR};
 }}
 QPushButton#success {{
     background-color: {APP_SUCCESS};
-    color: white;
-    border-color: {APP_SUCCESS};
-    font-weight: bold;
+    color: #FFFFFF;
 }}
 QPushButton#success:hover {{
-    background-color: #12B886;
+    background-color: #FFFFFF;
+    color: {APP_SUCCESS};
+    border-color: {APP_SUCCESS};
 }}
 QLineEdit {{
     background-color: {APP_SURFACE};
     color: {APP_TEXT};
-    border: 1px solid {APP_BORDER};
-    border-radius: 4px;
-    padding: 6px;
+    border: 2px solid {APP_BORDER};
+    border-radius: 0px;
+    padding: 8px;
     selection-background-color: {APP_ACCENT};
+    selection-color: {APP_SURFACE};
 }}
 QTextEdit, QPlainTextEdit, QTreeWidget, QListWidget {{
-    background-color: {APP_SURFACE2};
+    background-color: {APP_SURFACE};
     color: {APP_TEXT};
-    border: 1px solid {APP_BORDER};
-    border-radius: 4px;
-    padding: 6px;
+    border: 2px solid {APP_BORDER};
+    border-radius: 0px;
+    padding: 8px;
     selection-background-color: {APP_ACCENT};
+    selection-color: {APP_SURFACE};
 }}
 QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QTreeWidget:focus, QListWidget:focus {{
-    border-color: {APP_ACCENT};
+    background-color: #F5F5F5;
+    border: 2px solid {APP_ACCENT};
 }}
 QComboBox {{
     background-color: {APP_SURFACE};
     color: {APP_TEXT};
-    border: 1px solid {APP_BORDER};
-    border-radius: 4px;
+    border: 2px solid {APP_BORDER};
+    border-radius: 0px;
     padding: 5px 8px;
     min-width: 80px;
+    font-weight: bold;
 }}
 QComboBox::drop-down {{
-    border: none;
+    border-left: 2px solid {APP_BORDER};
     width: 20px;
+    background-color: {APP_SURFACE2};
 }}
 QComboBox QAbstractItemView {{
     background-color: {APP_SURFACE};
     color: {APP_TEXT};
     selection-background-color: {APP_ACCENT};
-    border: 1px solid {APP_BORDER};
+    selection-color: {APP_SURFACE};
+    border: 2px solid {APP_BORDER};
 }}
 QSpinBox, QDoubleSpinBox {{
     background-color: {APP_SURFACE};
     color: {APP_TEXT};
-    border: 1px solid {APP_BORDER};
-    border-radius: 4px;
-    padding: 5px;
+    border: 2px solid {APP_BORDER};
+    border-radius: 0px;
+    padding: 4px 6px;
+    font-weight: bold;
+}}
+QSpinBox::up-button, QDoubleSpinBox::up-button, QSpinBox::down-button, QDoubleSpinBox::down-button {{
+    width: 16px;
+    border-left: 2px solid {APP_BORDER};
+    background: {APP_SURFACE2};
+}}
+QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover, QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {{
+    background: {APP_TEXT_DIM};
 }}
 QLabel {{
     color: {APP_TEXT};
@@ -204,82 +249,87 @@ QLabel#dim {{
 }}
 QLabel#section {{
     color: {APP_ACCENT};
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
     letter-spacing: 1px;
+    text-transform: uppercase;
 }}
 QScrollBar:vertical {{
     background: {APP_BG};
-    width: 8px;
-    border: none;
+    width: 12px;
+    border-left: 2px solid {APP_BORDER};
 }}
 QScrollBar::handle:vertical {{
     background: {APP_BORDER};
-    border-radius: 4px;
     min-height: 20px;
+    border: 1px solid {APP_SURFACE};
 }}
 QScrollBar::handle:vertical:hover {{
-    background: {APP_TEXT_DIM};
+    background: {APP_ACCENT};
 }}
 QSplitter::handle {{
     background: {APP_BORDER};
-    width: 1px;
+    width: 2px;
 }}
 QTabWidget::pane {{
-    border: 1px solid {APP_BORDER};
+    border: 2px solid {APP_BORDER};
     background: {APP_SURFACE};
-    border-radius: 4px;
+    border-radius: 0px;
 }}
 QTabBar::tab {{
     background: {APP_SURFACE2};
-    color: {APP_TEXT_DIM};
+    color: {APP_TEXT};
     padding: 8px 16px;
-    border: 1px solid {APP_BORDER};
+    border: 2px solid {APP_BORDER};
     border-bottom: none;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
     margin-right: 2px;
+    font-weight: bold;
 }}
 QTabBar::tab:selected {{
     background: {APP_SURFACE};
     color: {APP_ACCENT};
-    border-bottom: 2px solid {APP_ACCENT};
+    border-top: 4px solid {APP_ACCENT};
 }}
 QGroupBox {{
-    border: 1px solid {APP_BORDER};
-    border-radius: 6px;
-    margin-top: 8px;
-    padding-top: 8px;
-    color: {APP_TEXT_DIM};
-    font-size: 11px;
+    border: 2px solid {APP_ACCENT};
+    border-radius: 0px;
+    margin-top: 20px;
+    padding-top: 15px;
+    color: {APP_TEXT};
+    font-size: 12px;
+    font-weight: bold;
 }}
 QGroupBox::title {{
     subcontrol-origin: margin;
     left: 8px;
-    padding: 0 4px;
+    top: -10px;
+    padding: 0 6px;
+    background-color: {APP_BG};
+    color: {APP_ACCENT};
 }}
 QSlider::groove:horizontal {{
-    background: {APP_SURFACE2};
+    background: {APP_BORDER};
     height: 4px;
-    border-radius: 2px;
 }}
 QSlider::handle:horizontal {{
     background: {APP_ACCENT};
+    border: 2px solid {APP_BORDER};
     width: 14px;
     height: 14px;
-    border-radius: 7px;
-    margin: -5px 0;
+    margin: -7px 0;
 }}
 QCheckBox::indicator {{
-    width: 16px;
-    height: 16px;
-    border: 1px solid {APP_BORDER};
-    border-radius: 3px;
+    width: 14px;
+    height: 14px;
+    border: 2px solid {APP_BORDER};
     background: {APP_SURFACE};
 }}
 QCheckBox::indicator:checked {{
     background: {APP_ACCENT};
-    border-color: {APP_ACCENT};
+}}
+QRubberBand {{
+    background-color: rgba(128, 128, 128, 100);
+    border: 2px dashed #000000;
 }}
 """
 

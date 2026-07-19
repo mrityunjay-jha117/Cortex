@@ -26,7 +26,9 @@ class GraphView(QGraphicsView):
         self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorViewCenter)
         self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
-        self.setStyleSheet(f"border: none; background: {APP_BG};")
+        self.setStyleSheet(f"border: none; background: #FFFFFF;")
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         
         self._is_panning = False
         self._last_pan_pos = QPointF()
@@ -45,9 +47,9 @@ class GraphView(QGraphicsView):
 
     def mousePressEvent(self, event: Any) -> None:
         # Blender-style Pan: Ctrl + Left Click OR Middle Click
-        is_ctrl = event.modifiers() & Qt.KeyboardModifier.ControlModifier
+        is_shift = event.modifiers() & Qt.KeyboardModifier.ShiftModifier
         if event.button() == Qt.MouseButton.MiddleButton or \
-           (event.button() == Qt.MouseButton.LeftButton and is_ctrl):
+           (event.button() == Qt.MouseButton.LeftButton and is_shift):
             self._is_panning = True
             self._last_pan_pos = event.position()
             self.setCursor(Qt.CursorShape.ClosedHandCursor)

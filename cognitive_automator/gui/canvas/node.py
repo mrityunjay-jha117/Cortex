@@ -35,10 +35,10 @@ class NodeItem(QGraphicsObject):
         from PyQt6.QtWidgets import QGraphicsDropShadowEffect
         shadow = QGraphicsDropShadowEffect()
         self.shadow = QGraphicsDropShadowEffect()
-        self.shadow.setBlurRadius(6)
-        self.shadow.setXOffset(0)
+        self.shadow.setBlurRadius(15)
+        self.shadow.setXOffset(4)
         self.shadow.setYOffset(4)
-        self.shadow.setColor(QColor(0, 0, 0, 13))
+        self.shadow.setColor(QColor(0, 0, 0, 60))
         self.setGraphicsEffect(self.shadow)
 
         # Dynamic height for complex nodes
@@ -131,11 +131,11 @@ class NodeItem(QGraphicsObject):
 
         # Selection / execution state overrides border
         if self._executing:
-            painter.setPen(QPen(QColor("#111827"), 2.0, Qt.PenStyle.DashLine))
+            painter.setPen(QPen(QColor("#000000"), 2.0, Qt.PenStyle.DashLine))
         elif self.isSelected():
-            painter.setPen(QPen(QColor("#111827"), 2.0))
+            painter.setPen(QPen(QColor("#000000"), 3.0)) # thicker black for selection
         elif getattr(self, "_is_hovered", False):
-            painter.setPen(QPen(QColor("#D1D5DB"), 1.0))
+            painter.setPen(QPen(QColor("#000000"), 2.0)) # thicker black for hover
         elif self._success is True:
             painter.setPen(QPen(QColor("#00C9A7"), 1.5))
         elif self._success is False:
@@ -145,7 +145,7 @@ class NodeItem(QGraphicsObject):
 
         # Background
         painter.setBrush(QBrush(QColor(colors["bg"])))
-        painter.drawRoundedRect(QRectF(0, 0, NODE_W, h), 12, 12)
+        painter.drawRect(QRectF(0, 0, NODE_W, h))
 
         # Header stripe
         header_h = 24
@@ -153,13 +153,11 @@ class NodeItem(QGraphicsObject):
         painter.setPen(Qt.PenStyle.NoPen)
 
         path = QPainterPath()
-        path.moveTo(12, 0)
-        path.lineTo(NODE_W - 12, 0)
-        path.quadTo(NODE_W, 0, NODE_W, 12)
+        path.moveTo(0, 0)
+        path.lineTo(NODE_W, 0)
         path.lineTo(NODE_W, header_h)
         path.lineTo(0, header_h)
-        path.lineTo(0, 12)
-        path.quadTo(0, 0, 12, 0)
+        path.lineTo(0, 0)
         painter.drawPath(path)
         
         painter.setPen(QPen(QColor("#E5E7EB"), 1.0))
@@ -171,15 +169,15 @@ class NodeItem(QGraphicsObject):
             header_text_color = QColor("#1A1A1A")
         painter.setPen(header_text_color)
         
-        font = QFont("Segoe UI", 8, QFont.Weight.Bold)
+        font = QFont("Courier New", 10, QFont.Weight.Bold)
         painter.setFont(font)
         type_name = type(self.node).__name__.replace("Node", "").upper()
-        painter.drawText(QRectF(12, 2, NODE_W - 24, header_h - 4),
+        painter.drawText(QRectF(8, 2, NODE_W - 16, header_h - 4),
                          Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft, type_name)
 
         # Node label
-        painter.setPen(QColor("#495057"))
-        font2 = QFont("Segoe UI", 10)
+        painter.setPen(QColor("#000000"))
+        font2 = QFont("Courier New", 11, QFont.Weight.Bold)
         painter.setFont(font2)
         label = self.node.label or self.node.id[:8]
         label_w = NODE_W - 16
@@ -197,7 +195,7 @@ class NodeItem(QGraphicsObject):
                              Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft,
                              _elide(label, label_w - 8))
             painter.setPen(QColor(APP_ACCENT))
-            painter.setFont(QFont("Segoe UI", 9, QFont.Weight.Normal))
+            painter.setFont(QFont("Courier New", 10, QFont.Weight.Normal))
             painter.drawText(QRectF(8, header_h + 22, label_w, 20),
                              Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft,
                              param_str)
@@ -210,11 +208,11 @@ class NodeItem(QGraphicsObject):
         if not self.node.enabled:
             painter.setBrush(QBrush(QColor(0, 0, 0, 100)))
             painter.setPen(Qt.PenStyle.NoPen)
-            painter.drawRoundedRect(QRectF(0, 0, NODE_W, h), 12, 12)
+            painter.drawRect(QRectF(0, 0, NODE_W, h))
 
         # Port labels for multi-port nodes
-        painter.setPen(QColor("#999"))
-        label_font = QFont("Segoe UI", 8)
+        painter.setPen(QColor("#000000"))
+        label_font = QFont("Courier New", 9, QFont.Weight.Bold)
         painter.setFont(label_font)
         for port in self._output_ports + self._input_ports:
             if port.label:
@@ -271,9 +269,8 @@ class NodeItem(QGraphicsObject):
 
     def hoverEnterEvent(self, event: Any) -> None:
         self._is_hovered = True
-        self.shadow.setBlurRadius(15)
-        self.shadow.setYOffset(10)
-        self.shadow.setColor(QColor(0, 0, 0, 20))
+        self.shadow.setXOffset(6)
+        self.shadow.setYOffset(6)
         
         transform = QTransform()
         transform.translate(NODE_W/2, self.node_h/2)
@@ -285,9 +282,8 @@ class NodeItem(QGraphicsObject):
 
     def hoverLeaveEvent(self, event: Any) -> None:
         self._is_hovered = False
-        self.shadow.setBlurRadius(6)
+        self.shadow.setXOffset(4)
         self.shadow.setYOffset(4)
-        self.shadow.setColor(QColor(0, 0, 0, 13))
         
         self.setTransform(QTransform())
         self.update()

@@ -130,25 +130,25 @@ class MainWindow(QMainWindow):
         # Overlay button
         self._ai_toggle_btn = QPushButton(" AI Fallback: OFF", canvas_container)
         self._ai_toggle_btn.setCheckable(True)
-        self._ai_toggle_btn.setFixedWidth(160)
+        self._ai_toggle_btn.setFixedWidth(200)
         self._ai_toggle_btn.setStyleSheet("""
             QPushButton {
-                background: #2a2d2e;
-                color: #cccccc;
-                border: 1px solid #454545;
-                border-radius: 4px;
-                padding: 6px;
+                background: #444444;
+                color: #FFFFFF;
+                border: 2px solid #000000;
+                border-radius: 0px;
+                padding: 8px;
+                font-family: "Courier New";
                 font-weight: bold;
-                margin: 10px;
+                margin-top: 15px;
+                margin-right: 15px;
             }
             QPushButton:hover {
-                background: #3c3f41;
-                border-color: #555555;
+                background: #555555;
             }
             QPushButton:checked {
-                background: #007acc;
+                background: #000000;
                 color: white;
-                border-color: #0098ff;
             }
         """)
         self._ai_toggle_btn.clicked.connect(self._toggle_global_ai_fallback)
@@ -158,6 +158,7 @@ class MainWindow(QMainWindow):
 
         # Property panel
         self._prop_panel = PropertyPanel()
+        self._prop_panel.setObjectName("propPanel")
         h_splitter.addWidget(self._prop_panel)
         h_splitter.setSizes([1050, 300])
 
