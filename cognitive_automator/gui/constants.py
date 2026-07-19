@@ -126,18 +126,42 @@ QToolBar {{
     padding: 10px;
 }}
 QToolBar QToolButton {{
+    background-color: {APP_ACCENT};
+    color: #000000;
+    border: 2px solid #000000;
+    border-right: 4px solid #000000;
+    border-bottom: 4px solid #000000;
+    border-radius: 0px;
     padding: 6px 12px;
     margin: 0px 4px;
     font-weight: bold;
 }}
+QToolBar QToolButton:hover {{
+    background-color: #FDE49E;
+    color: #000000;
+}}
+QToolBar QToolButton:pressed {{
+    background-color: #E0AD4C;
+    border-top: 4px solid #000000;
+    border-left: 4px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    padding-top: 8px;
+    padding-left: 14px;
+    padding-bottom: 4px;
+    padding-right: 10px;
+}}
 QStatusBar {{
-    background-color: {APP_SURFACE2};
+    background-color: {APP_SURFACE};
     color: {APP_TEXT};
-    border-top: 2px solid {APP_BORDER};
-    font-weight: bold;
+    border-top: 1px solid {APP_BORDER};
+}}
+QRubberBand {{
+    background-color: rgba(247, 199, 107, 80);
+    border: 2px solid {APP_ACCENT};
 }}
 QPushButton {{
-    background-color: #FFFFFF;
+    background-color: {APP_ACCENT};
     color: #000000;
     border: 2px solid #000000;
     border-right: 4px solid #000000;
@@ -148,15 +172,19 @@ QPushButton {{
     font-weight: bold;
 }}
 QPushButton:hover {{
-    background-color: {APP_ACCENT};
+    background-color: #FDE49E;
     color: #000000;
 }}
 QPushButton:pressed {{
-    background-color: {APP_ACCENT};
+    background-color: #E0AD4C;
     border-top: 4px solid #000000;
     border-left: 4px solid #000000;
     border-right: 2px solid #000000;
     border-bottom: 2px solid #000000;
+    padding-top: 8px;
+    padding-left: 18px;
+    padding-bottom: 4px;
+    padding-right: 14px;
 }}
 QPushButton:disabled {{
     color: {APP_TEXT_DIM};
@@ -168,18 +196,24 @@ QPushButton#danger {{
     color: #FFFFFF;
 }}
 QPushButton#danger:hover {{
-    background-color: #FFFFFF;
-    color: {APP_ERROR};
-    border-color: {APP_ERROR};
+    background-color: #F87171;
+    color: #FFFFFF;
+    border-color: #000000;
+}}
+QPushButton#danger:pressed {{
+    background-color: #DC2626;
 }}
 QPushButton#success {{
     background-color: {APP_SUCCESS};
     color: #FFFFFF;
 }}
 QPushButton#success:hover {{
-    background-color: #FFFFFF;
-    color: {APP_SUCCESS};
-    border-color: {APP_SUCCESS};
+    background-color: #34D399;
+    color: #FFFFFF;
+    border-color: #000000;
+}}
+QPushButton#success:pressed {{
+    background-color: #059669;
 }}
 QLineEdit {{
     background-color: {APP_SURFACE};
@@ -326,10 +360,6 @@ QCheckBox::indicator {{
 }}
 QCheckBox::indicator:checked {{
     background: {APP_ACCENT};
-}}
-QRubberBand {{
-    background-color: rgba(128, 128, 128, 100);
-    border: 2px dashed #000000;
 }}
 """
 

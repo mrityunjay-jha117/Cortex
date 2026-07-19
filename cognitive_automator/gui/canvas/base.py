@@ -21,7 +21,7 @@ from typing import Any
 from PyQt6.QtCore import Qt, QPointF, QRectF, pyqtSignal, QObject
 from PyQt6.QtGui import (
     QColor, QFont, QPainter, QPainterPath, QPen, QBrush,
-    QLinearGradient, QCursor, QTransform,
+    QLinearGradient, QCursor, QTransform, QPixmap,
 )
 from PyQt6.QtWidgets import (
     QGraphicsItem, QGraphicsObject, QGraphicsScene, QGraphicsView,

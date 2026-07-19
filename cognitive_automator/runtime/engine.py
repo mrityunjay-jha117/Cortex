@@ -125,7 +125,8 @@ class GraphExecutor:
                         if e.label in label_to_exec:
                             queue.append((e.target_id, True, is_be))
                         elif skip_others:
-                            queue.append((e.target_id, False, is_be))
+                            if not is_be:
+                                queue.append((e.target_id, False, is_be))
 
                 if not should_execute or not node.enabled:
                     if not node.enabled:

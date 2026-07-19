@@ -28,7 +28,16 @@ class GraphScene(QGraphicsScene):
         self._graph: ActionGraph | None = None
         self._node_items: dict[str, NodeItem] = {}
         self._edge_items: list[EdgeItem] = []
-        self.setBackgroundBrush(QBrush(QColor("#FFFFFF")))
+        bg_pixmap = QPixmap(GRID_SIZE, GRID_SIZE)
+        bg_pixmap.fill(QColor("#FFFFFF"))
+        p = QPainter(bg_pixmap)
+        p.setBrush(QBrush(QColor("#000000")))
+        p.setPen(Qt.PenStyle.NoPen)
+        size = 4.0
+        p.drawRect(QRectF(0, 0, size, size))
+        p.end()
+        
+        self.setBackgroundBrush(QBrush(bg_pixmap))
         self._drag_port: PortItem | None = None
         self._temp_edge: QGraphicsPathItem | None = None
 
@@ -148,23 +157,7 @@ class GraphScene(QGraphicsScene):
         for item in self._node_items.values():
             item.reset_state()
 
-    def drawBackground(self, painter: QPainter, rect: QRectF) -> None:
-        super().drawBackground(painter, rect)
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
-        painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(QBrush(QColor("#000000")))
-        
-        size = 4.0  # dot size
-        
-        left = int(rect.left()) - (int(rect.left()) % GRID_SIZE)
-        top = int(rect.top()) - (int(rect.top()) % GRID_SIZE)
-        x = left
-        while x < rect.right():
-            y = top
-            while y < rect.bottom():
-                painter.drawRect(QRectF(x - size/2, y - size/2, size, size))
-                y += GRID_SIZE
-            x += GRID_SIZE
+
 
     def mousePressEvent(self, event: Any) -> None:
         if event.button() == Qt.MouseButton.LeftButton:

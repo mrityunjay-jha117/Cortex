@@ -43,12 +43,6 @@ class LogPanel(QWidget):
         header_layout.addStretch()
 
         clear_btn = QPushButton("Clear")
-        clear_btn.setFixedHeight(24)
-        clear_btn.setStyleSheet(
-            f"background:transparent; color:#FFFFFF; "
-            f"border:2px solid #000000; border-radius:0px; "
-            "padding:2px 8px; font-size:12px; font-weight:bold;"
-        )
         clear_btn.clicked.connect(self.clear_log)
         header_layout.addWidget(clear_btn)
         layout.addWidget(header)

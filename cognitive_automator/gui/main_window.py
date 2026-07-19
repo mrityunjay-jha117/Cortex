@@ -133,9 +133,11 @@ class MainWindow(QMainWindow):
         self._ai_toggle_btn.setFixedWidth(200)
         self._ai_toggle_btn.setStyleSheet("""
             QPushButton {
-                background: #444444;
-                color: #FFFFFF;
+                background: #F7C76B;
+                color: #000000;
                 border: 2px solid #000000;
+                border-right: 4px solid #000000;
+                border-bottom: 4px solid #000000;
                 border-radius: 0px;
                 padding: 8px;
                 font-family: "Courier New";
@@ -144,11 +146,31 @@ class MainWindow(QMainWindow):
                 margin-right: 15px;
             }
             QPushButton:hover {
-                background: #555555;
+                background: #FDE49E;
+                color: #000000;
+            }
+            QPushButton:pressed {
+                background: #E0AD4C;
+                border-top: 4px solid #000000;
+                border-left: 4px solid #000000;
+                border-right: 2px solid #000000;
+                border-bottom: 2px solid #000000;
+                padding-top: 10px;
+                padding-left: 10px;
+                padding-bottom: 6px;
+                padding-right: 6px;
             }
             QPushButton:checked {
-                background: #000000;
-                color: white;
+                background: #E0AD4C;
+                color: #000000;
+                border-top: 4px solid #000000;
+                border-left: 4px solid #000000;
+                border-right: 2px solid #000000;
+                border-bottom: 2px solid #000000;
+                padding-top: 10px;
+                padding-left: 10px;
+                padding-bottom: 6px;
+                padding-right: 6px;
             }
         """)
         self._ai_toggle_btn.clicked.connect(self._toggle_global_ai_fallback)
@@ -399,6 +421,10 @@ class MainWindow(QMainWindow):
         self._worker.moveToThread(self._exec_thread)
 
         self._exec_thread.started.connect(self._worker.run)
+        self._worker.finished.connect(self._exec_thread.quit)
+        self._worker.finished.connect(self._worker.deleteLater)
+        self._exec_thread.finished.connect(self._exec_thread.deleteLater)
+        self._exec_thread.finished.connect(self._on_thread_finished)
         self._worker.finished.connect(self._on_execution_finished)
         self._worker.event_received.connect(self._on_execution_event)
 
@@ -463,13 +489,13 @@ class MainWindow(QMainWindow):
         self._act_pause.setText("  Pause")
         self._status.showMessage("Execution complete.")
         
-        # Auto-save if changes occurred (like AI auto-heal)
         if self._modified and self._current_file:
             log.info("Auto-saving healed graph to %s", self._current_file)
             self._do_save(self._current_file)
-            
-        if self._exec_thread:
-            self._exec_thread.quit()
+
+    def _on_thread_finished(self) -> None:
+        self._exec_thread = None
+        self._worker = None
 
     # ------------------------------------------------------------------
     # Canvas refresh

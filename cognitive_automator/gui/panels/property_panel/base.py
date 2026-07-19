@@ -96,28 +96,28 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
                 border-radius: 4px;
             }
             QPushButton {
-                background-color: #1F2937;
-                color: #FFFFFF;
-                border: 2px solid #FFFFFF;
-                border-right: 4px solid #FFFFFF;
-                border-bottom: 4px solid #FFFFFF;
+                background-color: #F7C76B;
+                color: #000000;
+                border: 2px solid #000000;
+                border-right: 4px solid #000000;
+                border-bottom: 4px solid #000000;
                 border-radius: 0px;
                 padding: 4px 12px;
                 font-family: "Courier New";
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #F7C76B;
+                background-color: #FFFFFF;
                 color: #000000;
-                border-color: #F7C76B;
+                border-color: #000000;
             }
             QPushButton:pressed {
-                background-color: #F7C76B;
+                background-color: #FFFFFF;
                 color: #000000;
-                border-top: 4px solid #F7C76B;
-                border-left: 4px solid #F7C76B;
-                border-right: 2px solid #F7C76B;
-                border-bottom: 2px solid #F7C76B;
+                border-top: 4px solid #000000;
+                border-left: 4px solid #000000;
+                border-right: 2px solid #000000;
+                border-bottom: 2px solid #000000;
             }
             QSlider::groove:horizontal {
                 border: 1px solid #374151;
