@@ -164,7 +164,10 @@ class GraphView(QGraphicsView):
             GenerativeOCRNode, VisionExtractionNode, LLMJudgmentNode, LLMExtractionNode,
             LLMGenerativeNode, BranchNode, IterateNode, DynamicIterateNode, SubGraphNode,
             ClipboardNode, WriteFileNode, CSVWriterNode, ScreenshotterNode,
+            ForLoopNode, FileDropNode, CSVDataLoaderNode, GlobalStartNode, GlobalEndNode
         )
+        from .animated_menu import AnimatedMenu
+
         scene_cast: GraphScene = self.scene()  # type: ignore[assignment]
         if not scene_cast or not scene_cast._graph:
             return
@@ -177,113 +180,66 @@ class GraphView(QGraphicsView):
             scene_cast.load_graph(scene_cast._graph)  # type: ignore[arg-type]
             scene_cast.graph_modified.emit()
 
-        menu = QMenu()
+        from PyQt6.QtWidgets import QMenu
+        
+        menu = QMenu(self)
+        menu.setObjectName("canvasMenu")
+        
+        def _add_menu(parent_menu: QMenu, title: str) -> QMenu:
+            sub = parent_menu.addMenu(title)
+            sub.setObjectName("canvasMenu")
+            return sub
         
         selected_nodes = [i for i in scene_cast.selectedItems() if isinstance(i, NodeItem)]
         if selected_nodes:
-            menu.addAction("  Duplicate Node(s) [Ctrl+D]").triggered.connect(
-                self._duplicate_selected
-            )
+            menu.addAction("Duplicate Node(s) [Ctrl+D]", self._duplicate_selected)
             menu.addSeparator()
 
         # --- Vision Nodes ---
-        vision_menu = menu.addMenu("  Vision")
-        vision_menu.addAction("  Locate Image on Screen").triggered.connect(
-            lambda: _add(LocateElementNode(label="Find Element"))
-        )
-        vision_menu.addAction("  Locate and Click").triggered.connect(
-            lambda: _add(LocateAndClickNode(label="Find & Click"))
-        )
-        vision_menu.addAction("  Generative OCR (Text)").triggered.connect(
-            lambda: _add(GenerativeOCRNode(label="Extract Text"))
-        )
-        vision_menu.addAction("  Vision Extraction (Table/JSON)").triggered.connect(
-            lambda: _add(VisionExtractionNode(label="Extract Data"))
-        )
+        vision_menu = _add_menu(menu, "Vision")
+        vision_menu.addAction("Locate Image on Screen", lambda: _add(LocateElementNode(label="Find Element")))
+        vision_menu.addAction("Locate and Click", lambda: _add(LocateAndClickNode(label="Find & Click")))
+        vision_menu.addAction("Generative OCR (Text)", lambda: _add(GenerativeOCRNode(label="Extract Text")))
+        vision_menu.addAction("Vision Extraction (Table/JSON)", lambda: _add(VisionExtractionNode(label="Extract Data")))
 
         # --- LLM Nodes ---
-        llm_menu = menu.addMenu("  LLM Logic")
-        llm_menu.addAction("  LLM Judgment (Yes/No)").triggered.connect(
-            lambda: _add(LLMJudgmentNode(label="Decision"))
-        )
-        llm_menu.addAction("  LLM Extraction (Structured)").triggered.connect(
-            lambda: _add(LLMExtractionNode(label="Extract JSON"))
-        )
-        llm_menu.addAction("  LLM Generative (Text)").triggered.connect(
-            lambda: _add(LLMGenerativeNode(label="Generate Text"))
-        )
+        llm_menu = _add_menu(menu, "LLM Logic")
+        llm_menu.addAction("LLM Judgment (Yes/No)", lambda: _add(LLMJudgmentNode(label="Decision")))
+        llm_menu.addAction("LLM Extraction (Structured)", lambda: _add(LLMExtractionNode(label="Extract JSON")))
+        llm_menu.addAction("LLM Generative (Text)", lambda: _add(LLMGenerativeNode(label="Generate Text")))
 
         # --- Flow & Loops ---
-        flow_menu = menu.addMenu("  Flow & Loops")
-        flow_menu.addAction("  For Loop (Counter)").triggered.connect(
-            lambda: _add(ForLoopNode(label="Counter Loop"))
-        )
-        flow_menu.addAction("  Iterate (List/CSV)").triggered.connect(
-            lambda: _add(IterateNode(label="List Loop"))
-        )
-        flow_menu.addAction("  Dynamic Iterate (Context)").triggered.connect(
-            lambda: _add(DynamicIterateNode(label="Dynamic Loop"))
-        )
-        flow_menu.addAction("  Branch (Boolean)").triggered.connect(
-            lambda: _add(BranchNode(label="If/Else"))
-        )
-        flow_menu.addAction("  Compare (Condition)").triggered.connect(
-            lambda: _add(CompareNode(label="Check Condition"))
-        )
-        flow_menu.addAction("  Sub-Graph").triggered.connect(
-            lambda: _add(SubGraphNode(label="Call Subroutine"))
-        )
-        flow_menu.addAction("  Wait / Delay").triggered.connect(
-            lambda: _add(WaitNode(label="Wait"))
-        )
+        flow_menu = _add_menu(menu, "Flow & Loops")
+        flow_menu.addAction("For Loop (Counter)", lambda: _add(ForLoopNode(label="Counter Loop")))
+        flow_menu.addAction("Iterate (List/CSV)", lambda: _add(IterateNode(label="List Loop")))
+        flow_menu.addAction("Dynamic Iterate (Context)", lambda: _add(DynamicIterateNode(label="Dynamic Loop")))
+        flow_menu.addAction("Branch (Boolean)", lambda: _add(BranchNode(label="If/Else")))
+        flow_menu.addAction("Compare (Condition)", lambda: _add(CompareNode(label="Check Condition")))
+        flow_menu.addAction("Sub-Graph", lambda: _add(SubGraphNode(label="Call Subroutine")))
+        flow_menu.addAction("Wait / Delay", lambda: _add(WaitNode(label="Wait")))
 
         # --- Physical Input ---
-        input_menu = menu.addMenu("  Input & IO")
-        input_menu.addAction("  Mouse").triggered.connect(
-            lambda: _add(MouseNode(label="Mouse Action"))
-        )
-        input_menu.addAction("  Keyboard").triggered.connect(
-            lambda: _add(KeyboardNode(label="Keyboard Action"))
-        )
-        input_menu.addAction("  Clipboard").triggered.connect(
-            lambda: _add(ClipboardNode(label="Clipboard"))
-        )
-        input_menu.addAction("  Navigator (Scroll/Focus)").triggered.connect(
-            lambda: _add(NavigatorNode(label="Navigator"))
-        )
-        input_menu.addAction("  File Drop / Upload").triggered.connect(
-            lambda: _add(FileDropNode(label="File Upload"))
-        )
-        input_menu.addAction("  Screenshotter (Multi-Page)").triggered.connect(
-            lambda: _add(ScreenshotterNode(label="Capturing Pages"))
-        )
-        input_menu.addAction("  Load CSV Data").triggered.connect(
-            lambda: _add(CSVDataLoaderNode(label="Load Data"))
-        )
+        input_menu = _add_menu(menu, "Input & IO")
+        input_menu.addAction("Mouse", lambda: _add(MouseNode(label="Mouse Action")))
+        input_menu.addAction("Keyboard", lambda: _add(KeyboardNode(label="Keyboard Action")))
+        input_menu.addAction("Clipboard", lambda: _add(ClipboardNode(label="Clipboard")))
+        input_menu.addAction("Navigator (Scroll/Focus)", lambda: _add(NavigatorNode(label="Navigator")))
+        input_menu.addAction("File Drop / Upload", lambda: _add(FileDropNode(label="File Upload")))
+        input_menu.addAction("Screenshotter (Multi-Page)", lambda: _add(ScreenshotterNode(label="Capturing Pages")))
+        input_menu.addAction("Load CSV Data", lambda: _add(CSVDataLoaderNode(label="Load Data")))
 
         # --- System ---
-        sys_menu = menu.addMenu("  System")
-        sys_menu.addAction("  Global Start").triggered.connect(
-            lambda: _add(GlobalStartNode(label="START"))
-        )
-        sys_menu.addAction("  Global End").triggered.connect(
-            lambda: _add(GlobalEndNode(label="END"))
-        )
-        sys_menu.addAction("  Write to File").triggered.connect(
-            lambda: _add(WriteFileNode(label="Save Output"))
-        )
-        sys_menu.addAction("  Export to CSV").triggered.connect(
-            lambda: _add(CSVWriterNode(label="CSV Writer"))
-        )
-        sys_menu.addAction("  Load CSV Data").triggered.connect(
-            lambda: _add(CSVDataLoaderNode(label="Load Data"))
-        )
+        sys_menu = _add_menu(menu, "System")
+        sys_menu.addAction("Global Start", lambda: _add(GlobalStartNode(label="START")))
+        sys_menu.addAction("Global End", lambda: _add(GlobalEndNode(label="END")))
+        sys_menu.addAction("Write to File", lambda: _add(WriteFileNode(label="Save Output")))
+        sys_menu.addAction("Export to CSV", lambda: _add(CSVWriterNode(label="CSV Writer")))
+        sys_menu.addAction("Load CSV Data", lambda: _add(CSVDataLoaderNode(label="Load Data")))
 
         menu.addSeparator()
-        menu.addAction("Fit View  [F]").triggered.connect(
-            lambda: self.fitInView(
-                self.scene().itemsBoundingRect(),  # type: ignore[union-attr]
-                Qt.AspectRatioMode.KeepAspectRatio,
-            )
-        )
+        menu.addAction("Fit View  [F]", lambda: self.fitInView(
+            self.scene().itemsBoundingRect(),  # type: ignore[union-attr]
+            Qt.AspectRatioMode.KeepAspectRatio,
+        ))
+        
         menu.exec(event.globalPos())

@@ -110,14 +110,40 @@ QMenuBar::item:selected {{
     color: #111827;
 }}
 QMenu {{
-    background-color: {APP_SURFACE};
-    color: {APP_TEXT};
-    border: 2px solid {APP_BORDER};
-    border-radius: 0px;
+    background-color: #222222;
+    color: #FFFFFF;
+    border: 4px solid #000000;
+    padding: 8px;
+}}
+QMenu::item {{
+    background-color: {APP_ACCENT};
+    color: #000000;
+    padding: 8px 24px 8px 16px;
+    margin: 4px 2px;
+    font-weight: bold;
+    border: 2px solid #000000;
+    border-right: 4px solid #000000;
+    border-bottom: 4px solid #000000;
 }}
 QMenu::item:selected {{
-    background-color: {APP_ACCENT};
-    color: #111827;
+    background-color: #FFFFFF;
+}}
+QMenu::item:pressed {{
+    background-color: #E0AD4C;
+    border-top: 4px solid #000000;
+    border-left: 4px solid #000000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    padding: 10px 22px 6px 18px;
+}}
+QMenu#canvasMenu::item {{
+    background-color: #FFFFFF;
+}}
+QMenu#canvasMenu::item:selected {{
+    background-color: #F0F0F0;
+}}
+QMenu#canvasMenu::item:pressed {{
+    background-color: #E0E0E0;
 }}
 QToolBar {{
     background-color: {APP_SURFACE2};
@@ -289,18 +315,14 @@ QLabel#section {{
     text-transform: uppercase;
 }}
 QScrollBar:vertical {{
-    background: {APP_BG};
-    width: 12px;
-    border-left: 2px solid {APP_BORDER};
+    background: {APP_ACCENT};
+    width: 16px;
+    
 }}
 QScrollBar::handle:vertical {{
-    background: {APP_BORDER};
     min-height: 20px;
-    border: 1px solid {APP_SURFACE};
 }}
-QScrollBar::handle:vertical:hover {{
-    background: {APP_ACCENT};
-}}
+
 QSplitter::handle {{
     background: {APP_BORDER};
     width: 2px;

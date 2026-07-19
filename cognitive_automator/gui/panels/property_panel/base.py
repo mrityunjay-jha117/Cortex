@@ -65,38 +65,38 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
         self._locate_full_pixmap: QPixmap | None = None
         self._locate_img_label: QLabel | None = None
 
-        self.setStyleSheet("""
-            QWidget {
+        self.setStyleSheet(f"""
+            #propPanel {{
                 background-color: #111827;
                 color: #FFFFFF;
-            }
-            QScrollArea, QStackedWidget {
+            }}
+            QScrollArea, QStackedWidget {{
                 background-color: transparent;
                 border: none;
-            }
-            QLabel, QCheckBox {
+            }}
+            QLabel, QCheckBox {{
                 color: #FFFFFF;
                 background-color: transparent;
-            }
-            QCheckBox::indicator {
+            }}
+            QCheckBox::indicator {{
                 background-color: #374151;
                 border: 1px solid #4B5563;
                 width: 14px;
                 height: 14px;
                 border-radius: 2px;
-            }
-            QCheckBox::indicator:checked {
-                background-color: #F7C76B;
-            }
-            QLineEdit, QSpinBox, QDoubleSpinBox, QComboBox, QPlainTextEdit {
+            }}
+            QCheckBox::indicator:checked {{
+                background-color: {APP_ACCENT};
+            }}
+            QLineEdit, QSpinBox, QDoubleSpinBox, QComboBox, QPlainTextEdit {{
                 background-color: #1F2937;
                 color: #FFFFFF;
                 border: 1px solid #374151;
                 padding: 4px;
                 border-radius: 4px;
-            }
-            QPushButton {
-                background-color: #F7C76B;
+            }}
+            QPushButton {{
+                background-color: {APP_ACCENT};
                 color: #000000;
                 border: 2px solid #000000;
                 border-right: 4px solid #000000;
@@ -105,34 +105,64 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
                 padding: 4px 12px;
                 font-family: "Courier New";
                 font-weight: bold;
-            }
-            QPushButton:hover {
+            }}
+            QPushButton:hover {{
                 background-color: #FFFFFF;
                 color: #000000;
                 border-color: #000000;
-            }
-            QPushButton:pressed {
+            }}
+            QPushButton:pressed {{
                 background-color: #FFFFFF;
                 color: #000000;
                 border-top: 4px solid #000000;
                 border-left: 4px solid #000000;
                 border-right: 2px solid #000000;
                 border-bottom: 2px solid #000000;
-            }
-            QSlider::groove:horizontal {
+            }}
+            QSlider::groove:horizontal {{
                 border: 1px solid #374151;
                 height: 8px;
                 background: #1F2937;
                 margin: 2px 0;
                 border-radius: 4px;
-            }
-            QSlider::handle:horizontal {
-                background: #F7C76B;
-                border: 1px solid #E3B357;
+            }}
+            QSlider::handle:horizontal {{
+                background: {APP_ACCENT};
+                border: 1px solid {APP_ACCENT};
                 width: 14px;
                 margin: -4px 0;
                 border-radius: 7px;
-            }
+            }}
+            QScrollBar:vertical {{
+                background: #111827;
+                width: 12px;
+                border: none;
+            }}
+            QScrollBar::handle:vertical {{
+                background: {APP_ACCENT};
+                min-height: 20px;
+                border: none;
+                border-radius: 4px;
+                margin: 2px;
+            }}
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
+                height: 0px;
+            }}
+            QScrollBar:horizontal {{
+                background: #111827;
+                height: 12px;
+                border: none;
+            }}
+            QScrollBar::handle:horizontal {{
+                background: {APP_ACCENT};
+                min-width: 20px;
+                border: none;
+                border-radius: 4px;
+                margin: 2px;
+            }}
+            QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {{
+                width: 0px;
+            }}
         """)
 
         layout = QVBoxLayout(self)
@@ -175,10 +205,10 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
         self._stacked.addWidget(self._form_widget)  # index 1
 
         scroll.setWidget(self._stacked)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         layout.addWidget(scroll, stretch=1)
 
-        self.setFixedWidth(350)
+        self.setMinimumWidth(300)
 
     def _add_hint(self, text: str) -> None:
         hint = QLabel(text)
@@ -218,6 +248,10 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
 
         self._updating = True
 
+        desc_label = QLabel(self._get_node_desc(node))
+        desc_label.setWordWrap(True)
+        desc_label.setStyleSheet(f"color: {APP_TEXT_DIM}; font-size: 11px; font-style: italic; margin-bottom: 10px;")
+        self._form_layout.addRow(desc_label)
         # ── Common fields ──
         self._add_section("General")
         label_edit = self._line_edit(node.label, lambda v: setattr(node, "label", v))
@@ -292,3 +326,32 @@ class PropertyPanel(PropertyPanelBuilders, PropertyPanelHelpers, QWidget):
 
         self._updating = False
 
+    def _get_node_desc(self, node: AnyNode) -> str:
+        descs = {
+            "MouseNode": "Simulates physical mouse movements, clicks, and scrolling on the screen. Used to interact with elements at specific coordinates.",
+            "KeyboardNode": "Simulates physical keyboard key presses and text typing. Useful for entering data into forms or triggering shortcuts.",
+            "ClipboardNode": "Reads from or writes to the system clipboard. Allows copying text to paste elsewhere or extracting copied data.",
+            "NavigatorNode": "Performs scrolling or focus actions, optionally centering the screen on a provided reference image. Helpful for navigating large pages.",
+            "FileDropNode": "Simulates dragging and dropping a specific file into a target application or window to automate file uploads.",
+            "ScreenshotterNode": "Captures screenshots of the screen. Can scroll and capture multiple pages, stitching them together if needed.",
+            "CSVDataLoaderNode": "Loads data from a CSV file line by line to feed into the workflow. Great for batch processing tasks.",
+            "WriteFileNode": "Writes or appends generated text or data into a local text file for logging or output generation.",
+            "CSVWriterNode": "Appends structured row data into a CSV file. Useful for saving extracted information into a spreadsheet format.",
+            "LocateElementNode": "Uses computer vision (template matching or AI) to find the screen coordinates of a reference image or text.",
+            "LocateAndClickNode": "Finds a specific image or text on the screen using computer vision and immediately clicks its center point.",
+            "GenerativeOCRNode": "Uses a Vision Language Model (VLM) to read and extract text from the screen or a specific region.",
+            "VisionExtractionNode": "Uses a Vision Language Model to analyze the screen and extract structured data, like tables or JSON.",
+            "LLMJudgmentNode": "Asks an LLM a yes/no question based on provided context. Used to make intelligent logical branching decisions.",
+            "LLMExtractionNode": "Uses an LLM to parse unstructured text and extract specific data points into a structured JSON format.",
+            "LLMGenerativeNode": "Uses an LLM to generate creative text, summarize content, or answer questions based on the provided prompt.",
+            "BranchNode": "Routes the workflow execution down one of two paths based on a true/false condition or previous judgment.",
+            "CompareNode": "Compares two variables (e.g., equals, greater than, contains) and outputs a boolean true/false result for branching.",
+            "ForLoopNode": "Executes a sequence of connected nodes a specific number of times. Perfect for repetitive, fixed-count actions.",
+            "IterateNode": "Loops over a list of items (like a CSV row or JSON array), running the connected nodes for each item.",
+            "DynamicIterateNode": "Uses an LLM to dynamically determine how to iterate over unstructured context, handling complex repeating patterns intelligently.",
+            "SubGraphNode": "Calls another saved automation workflow as a subroutine. Useful for modularizing and reusing common automation tasks.",
+            "WaitNode": "Pauses the execution of the workflow for a specified number of seconds before continuing to the next node.",
+            "GlobalStartNode": "The mandatory starting point of the automation workflow. Execution always begins from this node.",
+            "GlobalEndNode": "The final endpoint of the automation workflow. Reaching this node terminates the current execution path gracefully."
+        }
+        return descs.get(type(node).__name__, "No description available for this node.")

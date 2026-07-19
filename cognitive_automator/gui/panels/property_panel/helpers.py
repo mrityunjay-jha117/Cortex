@@ -37,7 +37,7 @@ from cognitive_automator.graph_model import (
     ScreenshotterNode, ScreenshotMode, DetectionMode,
 )
 from cognitive_automator.gui.constants import (
-    APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
+    APP_SURFACE, APP_SURFACE2, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
 
 class ImageViewer(QDialog):
@@ -208,11 +208,13 @@ class PropertyPanelHelpers:
         btn_layout.setContentsMargins(0,0,0,0)
         
         change_btn = QPushButton("Set Image...")
+        change_btn.setStyleSheet(f"background: {APP_SURFACE2}; color: #FFFFFF; border: 1px solid {APP_BORDER};")
         change_btn.clicked.connect(lambda: self._change_image(node, "reference_image_b64"))
         btn_layout.addWidget(change_btn)
 
         if node.reference_image_b64:
             clear_btn = QPushButton("Clear")
+            clear_btn.setStyleSheet(f"background: {APP_SURFACE2}; color: #FFFFFF; border: 1px solid {APP_BORDER};")
             clear_btn.clicked.connect(lambda: [self._set(node, "reference_image_b64", ""), self._rebuild_form(node)])
             btn_layout.addWidget(clear_btn)
         

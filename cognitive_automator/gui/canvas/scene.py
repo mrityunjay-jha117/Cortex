@@ -29,7 +29,7 @@ class GraphScene(QGraphicsScene):
         self._node_items: dict[str, NodeItem] = {}
         self._edge_items: list[EdgeItem] = []
         bg_pixmap = QPixmap(GRID_SIZE, GRID_SIZE)
-        bg_pixmap.fill(QColor("#FFFFFF"))
+        bg_pixmap.fill(QColor("#c5c2b2"))
         p = QPainter(bg_pixmap)
         p.setBrush(QBrush(QColor("#000000")))
         p.setPen(Qt.PenStyle.NoPen)

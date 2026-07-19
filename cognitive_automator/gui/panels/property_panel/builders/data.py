@@ -77,7 +77,7 @@ class DataBuilders:
     def _build_write_file(self, node: WriteFileNode) -> None:
         self._form_layout.addRow("File Path", self._line_edit(node.file_path, lambda v: self._set(node, "file_path", v)))
         
-        content_edit = self._plain_text(node.content, lambda v: self._set(node, "content", v))
+        content_edit = self._plain_text(node.content_template, lambda v: self._set(node, "content_template", v))
         content_edit.setMinimumHeight(60)
         self._form_layout.addRow("Content", content_edit)
         

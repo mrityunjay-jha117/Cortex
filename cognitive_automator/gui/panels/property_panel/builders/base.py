@@ -37,7 +37,7 @@ from cognitive_automator.graph_model import (
     ScreenshotterNode, ScreenshotMode, DetectionMode,
 )
 from cognitive_automator.gui.constants import (
-    APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
+    APP_SURFACE, APP_SURFACE2, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
 
 class BaseBuilders:
@@ -49,9 +49,16 @@ class BaseBuilders:
         self._form_layout.addRow("", lbl)
 
     def _build_visual_style(self, node: BaseNode) -> None:
-        color_btn = QPushButton(node.color or "Default")
+        row = QWidget()
+        row_layout = QHBoxLayout(row)
+        row_layout.setContentsMargins(0,0,0,0)
+        
+        color_btn = QPushButton("Change Color..." if node.color else "Set Color...")
+        
         if node.color:
-            color_btn.setStyleSheet(f"background: {node.color}; color: {'#000' if QColor(node.color).lightness() > 128 else '#fff'};")
+            color_btn.setStyleSheet(f"background: {node.color}; color: {'#000000' if QColor(node.color).lightness() > 128 else '#FFFFFF'}; border: 1px solid {APP_BORDER};")
+        else:
+            color_btn.setStyleSheet(f"background: {APP_SURFACE2}; color: #FFFFFF; border: 1px solid {APP_BORDER};")
         
         def on_color() -> None:
             initial = QColor(node.color) if node.color else QColor(APP_ACCENT)
@@ -59,24 +66,20 @@ class BaseBuilders:
             if color.isValid():
                 hex_color = color.name()
                 self._set(node, "color", hex_color)
-                color_btn.setText(hex_color)
-                color_btn.setStyleSheet(f"background: {hex_color}; color: {'#000' if color.lightness() > 128 else '#fff'};")
+                # Rebuild happens automatically via _set
         
         color_btn.clicked.connect(on_color)
-        
-        reset_btn = QPushButton("Reset")
-        reset_btn.setFixedWidth(60)
-        def on_reset() -> None:
-            self._set(node, "color", None)
-            color_btn.setText("Default")
-            color_btn.setStyleSheet("")
-        reset_btn.clicked.connect(on_reset)
-
-        row = QWidget()
-        row_layout = QHBoxLayout(row)
-        row_layout.setContentsMargins(0,0,0,0)
         row_layout.addWidget(color_btn)
-        row_layout.addWidget(reset_btn)
+        
+        if node.color:
+            reset_btn = QPushButton("Reset")
+            reset_btn.setFixedWidth(60)
+            reset_btn.setStyleSheet(f"background: {APP_SURFACE2}; color: #FFFFFF; border: 1px solid {APP_BORDER};")
+            def on_reset() -> None:
+                self._set(node, "color", None)
+            reset_btn.clicked.connect(on_reset)
+            row_layout.addWidget(reset_btn)
+            
         self._form_layout.addRow("Color Override", row)
 
     def _build_error_handling(self, node: BaseNode) -> None:

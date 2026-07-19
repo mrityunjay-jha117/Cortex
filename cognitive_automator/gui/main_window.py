@@ -182,7 +182,7 @@ class MainWindow(QMainWindow):
         self._prop_panel = PropertyPanel()
         self._prop_panel.setObjectName("propPanel")
         h_splitter.addWidget(self._prop_panel)
-        h_splitter.setSizes([1050, 300])
+        h_splitter.setSizes([990, 360])
 
         # Vertical splitter: canvas area | log
         v_splitter = QSplitter(Qt.Orientation.Vertical)
@@ -224,32 +224,6 @@ class MainWindow(QMainWindow):
         self._act_quit = QAction("&Quit", self)
         self._act_quit.setShortcut(QKeySequence.StandardKey.Quit)
         file_menu.addAction(self._act_quit)
-
-        # Edit — add node types
-        edit_menu = mb.addMenu("&Edit")
-        add_node_menu = edit_menu.addMenu("Add Node")
-
-        physical_menu = add_node_menu.addMenu("Physical IO")
-        physical_menu.addAction("Mouse Node").triggered.connect(lambda: self._add_node(MouseNode(label="Mouse Click")))
-        physical_menu.addAction("Keyboard Node").triggered.connect(lambda: self._add_node(KeyboardNode(label="Type Text")))
-        physical_menu.addAction("Navigator Node").triggered.connect(lambda: self._add_node(NavigatorNode(label="Focus & Scroll")))
-        physical_menu.addAction("Clipboard Node").triggered.connect(lambda: self._add_node(ClipboardNode(label="Read Clipboard")))
-        vision_menu = add_node_menu.addMenu("Vision")
-        vision_menu.addAction("Locate Element").triggered.connect(lambda: self._add_node(LocateElementNode(label="Find Element")))
-        vision_menu.addAction("Generative OCR").triggered.connect(lambda: self._add_node(GenerativeOCRNode(label="OCR Screen")))
-
-        llm_menu = add_node_menu.addMenu("LLM Logic")
-        llm_menu.addAction("LLM Judgment").triggered.connect(lambda: self._add_node(LLMJudgmentNode(label="Classify")))
-        llm_menu.addAction("LLM Extraction").triggered.connect(lambda: self._add_node(LLMExtractionNode(label="Extract JSON")))
-        llm_menu.addAction("LLM Generative").triggered.connect(lambda: self._add_node(LLMGenerativeNode(label="Generate Text")))
-
-        flow_menu = add_node_menu.addMenu("Flow Control")
-        flow_menu.addAction("Wait / Delay").triggered.connect(lambda: self._add_node(WaitNode(label="Wait")))
-        flow_menu.addAction("Branch").triggered.connect(lambda: self._add_node(BranchNode(label="Branch")))
-        flow_menu.addAction("Compare / Logic").triggered.connect(lambda: self._add_node(CompareNode(label="Compare")))
-        flow_menu.addAction("Iterate (Loop)").triggered.connect(lambda: self._add_node(IterateNode(label="For Each")))
-        flow_menu.addAction("Dynamic Iterate").triggered.connect(lambda: self._add_node(DynamicIterateNode(label="For Each (Dynamic)")))
-        flow_menu.addAction("Sub-Graph").triggered.connect(lambda: self._add_node(SubGraphNode(label="Sub-Graph")))
 
         # Run
         run_menu = mb.addMenu("&Run")

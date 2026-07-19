@@ -33,12 +33,13 @@ class LogPanel(QWidget):
 
         # Header bar
         header = QWidget()
-        header.setStyleSheet(f"background:#444444; border-top:2px solid {APP_BORDER}; border-bottom:2px solid {APP_BORDER};")
+        header.setObjectName("logHeader")
+        header.setStyleSheet(f"#logHeader {{ background:#444444; border-top:2px solid {APP_BORDER}; border-bottom:2px solid {APP_BORDER}; }}")
         header_layout = QHBoxLayout(header)
         header_layout.setContentsMargins(12, 6, 12, 6)
 
         title = QLabel("EXECUTION LOG")
-        title.setStyleSheet(f"color:#FFFFFF; font-size:12px; font-weight:bold; letter-spacing:2px;")
+        title.setStyleSheet(f"color:#FFFFFF; font-size:12px; font-weight:bold; letter-spacing:2px; padding:10px")
         header_layout.addWidget(title)
         header_layout.addStretch()
 
