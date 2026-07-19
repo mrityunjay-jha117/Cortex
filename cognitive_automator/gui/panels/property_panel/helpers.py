@@ -1,9 +1,18 @@
 """
-gui/panels/property_panel/helpers.py — Property Panel UI Helpers
+=============================================================================
+ PROPERTY PANEL HELPERS
+=============================================================================
+This module provides utility functions for the property panel.
+It contains recurring UI generation patterns and generic formatting tools.
 
-This file contains modular PyQt6 widget generators.
-It provides standardized functions for creating labeled text inputs, combo boxes, checkboxes, and numerical spinboxes, ensuring a unified aesthetic across all property forms.
+Key Features:
+1. Abstracts repetitive PyQt widget setups.
+2. Formats variable names into human-readable labels.
+
+Think of this module as the toolkit of screwdrivers and wrenches for the UI builders.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -41,9 +50,7 @@ class ImageViewer(QDialog):
         layout.addWidget(lbl)
         self.setModal(True)
 
-
 class PropertyPanelHelpers:
-
 
     def _add_section(self, title: str) -> None:
         lbl = QLabel(title.upper())

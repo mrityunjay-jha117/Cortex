@@ -1,7 +1,16 @@
 """
-main.py — Application entry point.
-Sets up high-DPI, creates QApplication, launches MainWindow.
-This is the entry point for command `python -m cognitive_automator`
+=============================================================================
+ MAIN SCRIPT
+=============================================================================
+This script handles the core startup and initialization of the Cognitive Automator.
+It sets up the graphical user interface, initializes the runtime engine, and ties everything together.
+
+Key Features:
+1. Initializes the QApplication and main window.
+2. Orchestrates the startup sequence and connects core systems.
+
+Think of this file as the conductor raising their baton to start the orchestra.
+=============================================================================
 """
 
 from __future__ import annotations
@@ -44,7 +53,6 @@ def _load_dotenv() -> None:
     except ImportError:
         import logging
         logging.getLogger(__name__).warning("python-dotenv not installed. Skipping .env loading.")
-
 
 """Sets up the basic instance of the GUI window, on top of which the widgets will be added."""
 def main() -> None:
@@ -95,7 +103,6 @@ def _resource_path(relative: str) -> str:
     # Development: assets are now inside the package folder
     base = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(base, relative)
-
 
 if __name__ == "__main__":
     main()

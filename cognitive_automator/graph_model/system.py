@@ -1,9 +1,18 @@
 """
-system.py — System and File I/O Node Definitions
+=============================================================================
+ SYSTEM NODES
+=============================================================================
+This module defines nodes that interact with the host operating system.
+It covers tasks like file operations, running commands, and process management.
 
-This file defines the schemas for nodes that handle system-level interactions.
-It includes capabilities for external data loading and saving (CSV reading/writing, File writing), as well as global graph lifecycle markers (GlobalStartNode and GlobalEndNode).
+Key Features:
+1. Defines models for system-level actions (e.g., executing scripts).
+2. Manages properties related to file paths and environment configurations.
+
+Think of this module as the automator's bridge to the host computer's OS.
+=============================================================================
 """
+
 from typing import Literal
 from pydantic import BaseModel, Field
 from .enums import NodeCategory

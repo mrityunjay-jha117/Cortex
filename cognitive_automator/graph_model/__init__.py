@@ -1,8 +1,18 @@
 """
-graph_model/__init__.py — Graph Schema Models
+=============================================================================
+ GRAPH MODEL INITIALIZATION
+=============================================================================
+This module initializes the graph model subpackage.
+It exposes the fundamental data structures representing nodes and edges.
 
-This package defines all Pydantic schemas representing the automation workflows, nodes, and connections.
+Key Features:
+1. Groups related graph schema components into a single namespace.
+2. Simplifies imports for the rest of the application.
+
+Think of this module as the table of contents for the graph data structures.
+=============================================================================
 """
+
 from .enums import *
 from .base import *
 from .physical import *

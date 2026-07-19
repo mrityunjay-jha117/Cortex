@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/screenshotter.py — Screenshotter Executor
+=============================================================================
+ SCREENSHOT EXECUTOR
+=============================================================================
+This module handles the capture of the host machine's screen.
+It stores the visual data for later processing by vision or LLM nodes.
 
-This file contains the execution logic for the ScreenshotterNode.
-It captures sequences of screenshots by automatically scrolling the screen. It can run a fixed number of times or until the bottom of a page is detected (using image hashing/diffing), and can optionally click UI elements as they appear during the scroll.
+Key Features:
+1. Interacts with OS APIs to capture the display buffer.
+2. Can crop images based on defined region-of-interest bounding boxes.
+
+Think of this module as the polaroid camera snapping the current state of the screen.
+=============================================================================
 """
+
 from ..base import *
 
 def execute_screenshotter(node: ScreenshotterNode, context: dict[str, Any]) -> NodeResult:

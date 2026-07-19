@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/wait.py — Wait Node Executor
+=============================================================================
+ WAIT EXECUTOR
+=============================================================================
+This module introduces artificial delays into the graph execution.
+It pauses the engine for a specified number of seconds to allow the OS to catch up.
 
-This file contains the execution logic for the WaitNode.
-It halts execution for either a static time duration or polls the screen continuously until a specific UI element (reference image) appears, respecting timeout thresholds.
+Key Features:
+1. Blocks the thread safely without freezing the UI (if async).
+2. Uses variable-driven or static delay values.
+
+Think of this module as hitting the snooze button on the execution engine.
+=============================================================================
 """
+
 from ..base import *
 
 def execute_wait(node: WaitNode, context: dict[str, Any],

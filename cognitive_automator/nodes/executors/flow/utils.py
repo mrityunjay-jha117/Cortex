@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/utils.py — Flow Execution Utilities
+=============================================================================
+ FLOW UTILITIES
+=============================================================================
+This module provides helper functions for execution logic.
+It handles common tasks like dictionary merging or variable extraction.
 
-This file provides helper functions for flow executors.
-It includes logic for loading and parsing specific columns from CSV or Excel (.xlsx) files to be used by iterator nodes.
+Key Features:
+1. Parses string templates to inject variables at runtime.
+2. Provides safe type casting for dynamic inputs.
+
+Think of this module as the Swiss army knife for node executors.
+=============================================================================
 """
+
 from ..base import *
 import csv
 
@@ -19,7 +28,6 @@ def _load_csv_column(path: str, column: str) -> list[str]:
             elif not column:
                 items.append(next(iter(row.values()), ""))
     return items
-
 
 def _load_excel_column(path: str, column: str) -> list[str]:
     try:

@@ -1,9 +1,18 @@
 """
-gui/panels/property_panel/builders/llm.py — LLM Node Builders
+=============================================================================
+ LLM PROPERTY BUILDERS
+=============================================================================
+This module generates UI forms specifically for LLM nodes.
+It provides specialized large text areas for prompt engineering.
 
-This file implements UI forms for configuring AI-powered nodes.
-It provides inputs for system prompts, AI provider selection (OpenRouter), model names, and fallback mechanisms.
+Key Features:
+1. Renders multi-line text boxes for System and User prompts.
+2. Provides sliders/dropdowns for model selection and temperature.
+
+Think of this module as the interface for programming the AI's brain.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -30,8 +39,6 @@ from cognitive_automator.graph_model import (
 from cognitive_automator.gui.constants import (
     APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
-
-
 
 class LlmBuilders:
 

@@ -1,9 +1,18 @@
 """
-gui/canvas/port.py — Canvas Port Graphics
+=============================================================================
+ CANVAS PORTS
+=============================================================================
+This module defines the connection points (pins) on nodes.
+It allows users to drag edges from one node's port to another.
 
-This file defines the connection points (ports) attached to nodes.
-It handles the logic for clicking and dragging out new edges from outputs to inputs, enforcing connection rules and visually representing connection states.
+Key Features:
+1. Differentiates between data ports and execution flow ports.
+2. Handles mouse events for initiating new edge connections.
+
+Think of this module as the sockets and plugs on an electronic switchboard.
+=============================================================================
 """
+
 from .base import *
 class PortItem(QGraphicsItem):
     def __init__(self, node_item: "NodeItem", is_output: bool, label: str = "",

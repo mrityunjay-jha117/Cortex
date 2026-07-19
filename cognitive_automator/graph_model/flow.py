@@ -1,9 +1,18 @@
 """
-flow.py — Control Flow Node Definitions
+=============================================================================
+ FLOW NODES
+=============================================================================
+This module defines nodes responsible for control flow logic.
+It models branches, loops, and conditions in the action graph.
 
-This file defines Pydantic schemas for nodes that control the execution path of the automation graph.
-It includes schemas for conditional branching (CompareNode, BranchNode), iterators and loops (IterateNode, ForLoopNode), timing delays (WaitNode), and subgraph orchestration.
+Key Features:
+1. Defines logic nodes like `BranchNode` and `ForLoopNode`.
+2. Models standard procedural execution concepts visually.
+
+Think of this module as the traffic lights directing the flow of execution.
+=============================================================================
 """
+
 from typing import Literal
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, CompareOp

@@ -1,8 +1,16 @@
 """
-client.py — Provider-agnostic LLM client (OpenRouter only).
+=============================================================================
+ LLM CLIENT
+=============================================================================
+This module implements the HTTP clients used to communicate with AI providers.
+It manages API keys, network requests, and handles timeouts or retries.
 
-This file handles all outbound network communication with Large Language Models.
-It routes all calls through OpenRouter's OpenAI-compatible endpoint. It handles API key resolution, HTTP session management, schema injection for structured responses, and utilizes the `tenacity` library to provide exponential backoff retries for network resilience.
+Key Features:
+1. Translates internal prompt structures into provider-specific API payloads.
+2. Handles asynchronous network requests to OpenAI, Anthropic, or OpenRouter.
+
+Think of this module as the diplomat negotiating with foreign AI servers.
+=============================================================================
 """
 
 from __future__ import annotations
@@ -24,7 +32,6 @@ from cognitive_automator.graph_model import LLMProvider
 
 log = logging.getLogger(__name__)
 
-
 # ---------------------------------------------------------------------------
 # Result type
 # ---------------------------------------------------------------------------
@@ -37,7 +44,6 @@ class LLMResponse:
     prompt_tokens: int = 0
     completion_tokens: int = 0
     raw: dict[str, Any] = field(default_factory=dict)
-
 
 # ---------------------------------------------------------------------------
 # Base client
@@ -62,7 +68,6 @@ class BaseLLMClient(ABC):
         images_b64: list[str] | None = None,
     ) -> LLMResponse:
         ...
-
 
 # ---------------------------------------------------------------------------
 # OpenRouter adapter (OpenAI-compatible, multi-model)
@@ -159,7 +164,6 @@ class OpenRouterClient(BaseLLMClient):
             completion_tokens=response.usage.completion_tokens if response.usage else 0,
             raw=response.model_dump(),
         )
-
 
 # ---------------------------------------------------------------------------
 # Factory

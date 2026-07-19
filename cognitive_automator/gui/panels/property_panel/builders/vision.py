@@ -1,9 +1,18 @@
 """
-gui/panels/property_panel/builders/vision.py — Vision Node Builders
+=============================================================================
+ VISION PROPERTY BUILDERS
+=============================================================================
+This module generates UI forms for computer vision nodes.
+It handles properties like confidence thresholds and bounding boxes.
 
-This file implements UI forms for configuring computer vision nodes.
-It manages the UI for capturing screen regions, adjusting confidence thresholds, and rendering the embedded Base64 reference images.
+Key Features:
+1. Builds inputs for region-of-interest selection.
+2. Provides tuning sliders for visual matching sensitivity.
+
+Think of this module as the optometrist's toolkit for calibrating the digital eyes.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -30,8 +39,6 @@ from cognitive_automator.graph_model import (
 from cognitive_automator.gui.constants import (
     APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
-
-
 
 class VisionBuilders:
 

@@ -1,8 +1,18 @@
 """
-runtime/engine.py — Core Graph Executor Engine
+=============================================================================
+ RUNTIME ENGINE
+=============================================================================
+This module defines the core execution loop that traverses the Action Graph.
+It manages state, calls node executors, and determines the next node to run.
 
-This file implements the topological walking algorithm and node execution lifecycle.
+Key Features:
+1. Maintains the `RuntimeContext` holding all variable state.
+2. Resolves edges based on executor results (e.g., branching).
+
+Think of this module as the heartbeat and brain stem of the running automation.
+=============================================================================
 """
+
 from __future__ import annotations
 import logging
 import traceback

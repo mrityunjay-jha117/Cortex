@@ -1,9 +1,18 @@
 """
-gui/main_window.py — Main Application Window
+=============================================================================
+ MAIN WINDOW
+=============================================================================
+This module defines the primary application window shell.
+It manages menus, toolbars, docking panels, and the central canvas view.
 
-This file constructs the primary GUI layout using PyQt6.
-It orchestrates the central Node Canvas, the Property Panel for editing nodes, the Execution Log Panel, and the top toolbar for overarching file operations (Save/Load) and playback control.
+Key Features:
+1. Orchestrates the layout of the Property Panel, Log Panel, and Canvas.
+2. Handles global actions like Save, Load, and Run Flow.
+
+Think of this module as the dashboard housing all the controls and screens.
+=============================================================================
 """
+
 from __future__ import annotations
 
 import logging
@@ -70,7 +79,6 @@ class ExecutionWorker(QObject):
     def resume(self) -> None:
         if self._executor:
             self._executor.resume()
-
 
 # ---------------------------------------------------------------------------
 # Main Window

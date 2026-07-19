@@ -1,8 +1,18 @@
 """
-serializer/ipc/from_json.py — IPC Deserialization
+=============================================================================
+ IPC DESERIALIZATION
+=============================================================================
+This module parses raw JSON strings back into Python objects rapidly.
+It is optimized for passing messages rather than saving to disk.
 
-This file provides a highly optimized helper function to decode an `ActionGraph` from a compact JSON string sent over IPC channels.
+Key Features:
+1. Reconstructs execution results or status updates from background threads.
+2. Bypasses heavy validation used in file loading for speed.
+
+Think of this module as the receiver decoding a fast telegram.
+=============================================================================
 """
+
 from __future__ import annotations
 import json
 from cognitive_automator.graph_model import ActionGraph

@@ -1,9 +1,18 @@
 """
-Pydantic's Field function helps enforce type safety and data constraints.
-For example, `age: int = Field(default=18, ge=18)` enforces that the value must be greater than or equal to 18, throwing a validation error for something like `Student(age=10)`.
+=============================================================================
+ BASE GRAPH NODES
+=============================================================================
+This module defines the foundational classes for all nodes in the action graph.
+It sets up the Pydantic models that every specific node inherits from.
 
-In this class, we use `default_factory=lambda: str(uuid.uuid4())` to guarantee that every newly instantiated node receives a globally unique ID.
+Key Features:
+1. Defines the `BaseNode` with common properties like `id`, `x`, `y`, and `title`.
+2. Establishes the standard interface for node serialization and properties.
+
+Think of this module as the generic clay from which every specific node is sculpted.
+=============================================================================
 """
+
 import uuid
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, OnErrorAction

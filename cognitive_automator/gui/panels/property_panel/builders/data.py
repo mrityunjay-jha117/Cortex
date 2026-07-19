@@ -1,8 +1,18 @@
 """
-gui/panels/property_panel/builders/data.py — Data Node Builders
+=============================================================================
+ DATA PROPERTY BUILDERS
+=============================================================================
+This module generates UI forms specifically for Data handling nodes.
+It handles properties like file paths, schemas, and variables.
 
-This file implements UI forms for configuring data manipulation nodes (like CSV loading or File Writing).
+Key Features:
+1. Provides specialized file picker widgets.
+2. Simplifies configuring inputs for CSV loaders and data extractors.
+
+Think of this module as the settings menu for filing cabinets.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -29,8 +39,6 @@ from cognitive_automator.graph_model import (
 from cognitive_automator.gui.constants import (
     APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
-
-
 
 class DataBuilders:
 

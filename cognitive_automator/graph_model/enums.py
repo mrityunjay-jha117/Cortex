@@ -1,3 +1,18 @@
+"""
+=============================================================================
+ GRAPH ENUMS
+=============================================================================
+This module contains standard enumerations used across the graph system.
+It ensures consistency for node categories, edge types, and statuses.
+
+Key Features:
+1. Defines `NodeCategory` and `EdgeLabel`.
+2. Standardizes strings into rigid programmatic types.
+
+Think of this module as the official dictionary for the graph's vocabulary.
+=============================================================================
+"""
+
 from enum import Enum
 """
 Enums are used explicitly here because without them, 

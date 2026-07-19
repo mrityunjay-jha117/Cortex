@@ -1,8 +1,18 @@
 """
-serializer/factory/new.py — Graph Factory
+=============================================================================
+ NEW FACTORY
+=============================================================================
+This module creates fresh, default instances of Action Graphs.
+It ensures new projects start with a valid `GlobalStartNode`.
 
-This file provides a helper factory function to create a brand new, empty automation graph populated with default metadata and timestamps.
+Key Features:
+1. Injects mandatory nodes into an empty graph structure.
+2. Provides a standard reset point for the UI.
+
+Think of this module as the factory line that builds a new blank canvas.
+=============================================================================
 """
+
 from __future__ import annotations
 from cognitive_automator.graph_model import ActionGraph
 from cognitive_automator.serializer.utils import _now_iso

@@ -1,3 +1,18 @@
+"""
+=============================================================================
+ CSV WRITER EXECUTOR
+=============================================================================
+This module executes the logic for appending or writing data to CSV files.
+It extracts variables from memory and commits them to persistent storage.
+
+Key Features:
+1. Formats dicts and lists into tabular rows.
+2. Handles file creation and appending safely without overwriting.
+
+Think of this module as the shipping department boxing up the final products.
+=============================================================================
+"""
+
 from ..base import *
 import csv
 

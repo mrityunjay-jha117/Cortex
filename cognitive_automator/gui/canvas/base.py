@@ -1,8 +1,18 @@
 """
-gui/canvas/base.py — Base Canvas Utilities
+=============================================================================
+ CANVAS BASE CLASSES
+=============================================================================
+This module defines abstract graphics classes used on the canvas.
+It provides common utilities for drawing, selection, and hovering effects.
 
-This file provides common utilities and base classes for the node-based visual programming canvas.
+Key Features:
+1. Handles standard QGraphicsItem event logic.
+2. Ensures all visual items share a consistent styling baseline.
+
+Think of this module as the foundational canvas material every drawing relies on.
+=============================================================================
 """
+
 from __future__ import annotations
 
 import collections
@@ -11,7 +21,7 @@ from typing import Any
 from PyQt6.QtCore import Qt, QPointF, QRectF, pyqtSignal, QObject
 from PyQt6.QtGui import (
     QColor, QFont, QPainter, QPainterPath, QPen, QBrush,
-    QLinearGradient, QCursor,
+    QLinearGradient, QCursor, QTransform,
 )
 from PyQt6.QtWidgets import (
     QGraphicsItem, QGraphicsObject, QGraphicsScene, QGraphicsView,

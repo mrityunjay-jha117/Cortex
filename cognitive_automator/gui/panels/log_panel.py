@@ -1,9 +1,18 @@
 """
-gui/panels/log_panel.py — Execution Log Panel
+=============================================================================
+ LOG PANEL
+=============================================================================
+This module defines the widget that displays runtime logs and output.
+It provides a scrolling text area showing execution progress and errors.
 
-This file defines the UI panel that displays real-time execution logs.
-It listens for `ExecutionEvent` emissions from the background runner thread and formats them into readable, color-coded textual output for the user.
+Key Features:
+1. Captures and renders structured log messages with color coding.
+2. Allows users to debug flows by reading real-time feedback.
+
+Think of this module as the application's internal diary and megaphone.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from PyQt6.QtGui import QColor, QTextCharFormat, QTextCursor
@@ -14,7 +23,6 @@ from cognitive_automator.gui.constants import (
     APP_SUCCESS, APP_ERROR, APP_WARNING, APP_TEXT_DIM,
 )
 from cognitive_automator.runtime.executor import ExecutionEvent, ExecutionStatus
-
 
 class LogPanel(QWidget):
     def __init__(self, parent: QWidget | None = None) -> None:

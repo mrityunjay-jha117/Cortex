@@ -1,8 +1,18 @@
 """
-nodes/executors/flow/__init__.py — Flow Executors
+=============================================================================
+ FLOW EXECUTORS INITIALIZATION
+=============================================================================
+This module initializes the executors responsible for control flow logic.
+It exposes nodes that manage branching, looping, and timing.
 
-Initializes the flow control executors.
+Key Features:
+1. Groups control execution handlers into one location.
+2. Allows easy registration of flow-based node types.
+
+Think of this module as the dispatcher's desk for traffic control workers.
+=============================================================================
 """
+
 from .branch import *
 from .compare import *
 from .csv_data_loader import *

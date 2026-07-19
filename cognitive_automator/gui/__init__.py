@@ -1,5 +1,15 @@
 """
-gui/__init__.py — GUI Package
+=============================================================================
+ GUI INITIALIZATION
+=============================================================================
+This module initializes the Graphical User Interface subpackage.
+It exposes the top-level windows and layout components for the desktop app.
 
-This package contains the entire PyQt6 graphical user interface for the Cognitive Automator application.
+Key Features:
+1. Groups related UI components into a clean namespace.
+2. Serves as the entry point for PyQt/PySide widget creation.
+
+Think of this module as the front desk of the application's visual interface.
+=============================================================================
 """
+

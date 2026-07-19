@@ -1,9 +1,18 @@
 """
-nodes/executors/physical.py — Physical Action Executors
+=============================================================================
+ PHYSICAL EXECUTOR
+=============================================================================
+This module executes commands that interact with the mouse and keyboard.
+It uses libraries like PyAutoGUI to simulate human input on the host machine.
 
-This file contains the runtime execution logic for physically emulating human interactions with the OS.
-It uses libraries like `pyautogui` and `pyperclip` to execute mouse clicks, dragging, scrolling, keyboard typing (including hotkeys and Jinja template evaluation), clipboard manipulation, and complex UI operations like file-dropping. It includes built-in timing stabilization to ensure OS UI elements register the automated inputs.
+Key Features:
+1. Moves the mouse, clicks, and drags based on node parameters.
+2. Simulates keystrokes and shortcuts (e.g., Ctrl+C).
+
+Think of this module as the ghost in the machine typing on your keyboard.
+=============================================================================
 """
+
 from .base import *
 def execute_mouse(node: MouseNode, context: dict[str, Any]) -> NodeResult:
     try:
@@ -55,7 +64,6 @@ def execute_mouse(node: MouseNode, context: dict[str, Any]) -> NodeResult:
     except Exception as exc:  # noqa: BLE001
         return NodeResult(success=False, error=str(exc))
 
-
 def execute_navigator(node: NavigatorNode, context: dict[str, Any]) -> NodeResult:
     try:
         # 1. Optional Focus Step
@@ -93,7 +101,6 @@ def execute_navigator(node: NavigatorNode, context: dict[str, Any]) -> NodeResul
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
 
-
 def execute_keyboard(node: KeyboardNode, context: dict[str, Any]) -> NodeResult:
     try:
         from cognitive_automator.llm.templates import render_prompt
@@ -129,8 +136,6 @@ def execute_keyboard(node: KeyboardNode, context: dict[str, Any]) -> NodeResult:
         raise
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
-
-
 
 def execute_file_drop(node: FileDropNode, context: dict[str, Any]) -> NodeResult:
     try:
@@ -176,7 +181,6 @@ def execute_file_drop(node: FileDropNode, context: dict[str, Any]) -> NodeResult
         raise
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
-
 
 def execute_clipboard(node: ClipboardNode, context: dict[str, Any]) -> NodeResult:
     try:

@@ -1,8 +1,16 @@
 """
-templates.py — Jinja2-based prompt template engine.
+=============================================================================
+ LLM TEMPLATES
+=============================================================================
+This module stores the standard prompt templates used across the application.
+It provides f-string compatible skeletons for dynamically injecting context.
 
-This file manages the interpolation of dynamic variables into LLM prompts.
-It utilizes Jinja2 to parse strings like "Extract data for {{ user_name }}" using runtime context variables. It features LRU caching to optimize template compilation speed and provides strict validation to fail fast if required variables are missing during execution.
+Key Features:
+1. Centralizes hardcoded prompts for extraction, reasoning, and judgment.
+2. Ensures consistency in how the system speaks to the LLMs.
+
+Think of this module as the recipe book for talking to artificial intelligence.
+=============================================================================
 """
 
 from __future__ import annotations
@@ -10,7 +18,6 @@ from __future__ import annotations
 from typing import Any
 
 from jinja2 import Environment, StrictUndefined, TemplateError, UndefinedError
-
 
 _env = Environment(undefined=StrictUndefined)
 
@@ -46,7 +53,6 @@ def render_prompt(template_str: str, context: dict[str, Any]) -> str:
     except TemplateError as exc:
         raise TemplateRenderError(f"Prompt template syntax error: {exc}") from exc
 
-
 def validate_template(template_str: str) -> list[str]:
     """
     Parse a template and return a list of variable names it references.
@@ -59,7 +65,6 @@ def validate_template(template_str: str) -> list[str]:
         return []
     from jinja2 import meta  # type: ignore
     return sorted(meta.find_undeclared_variables(ast))
-
 
 class TemplateRenderError(RuntimeError):
     pass

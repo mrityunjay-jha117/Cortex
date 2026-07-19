@@ -1,15 +1,24 @@
+"""
+=============================================================================
+ CSV LOADER EXECUTOR
+=============================================================================
+This module executes the logic for reading data from CSV files.
+It parses external files and injects rows into the graph's working memory.
+
+Key Features:
+1. Handles file I/O operations safely.
+2. Converts tabular CSV data into iterables for loops.
+
+Think of this module as the forklift bringing pallets of data into the factory.
+=============================================================================
+"""
+
+import csv
 from ..base import *
 
 def execute_csv_data_loader(node: CSVDataLoaderNode, context: dict[str, Any]) -> NodeResult:
     """Loads CSV into list of dicts."""
     try:
-        """
-nodes/executors/flow/csv_data_loader.py — CSV Data Loader Executor
-
-This file contains the execution logic for the CSVDataLoaderNode.
-It reads a CSV file from disk and parses it into a structured list of dictionaries in the execution context, allowing downstream nodes to iterate over or process the data.
-"""
-import csv
         if not node.file_path:
             raise ValueError("CSVDataLoader: file_path is empty")
             

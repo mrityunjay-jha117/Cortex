@@ -1,9 +1,18 @@
 """
-nodes/executors/llm.py — LLM Executor Definitions
+=============================================================================
+ LLM EXECUTOR
+=============================================================================
+This module runs the logic for interacting with Large Language Models.
+It orchestrates prompt building, network requests, and response parsing.
 
-This file contains the runtime execution logic for AI-based nodes.
-It wraps the underlying LLM client calls (Judgment, Extraction, Generative) inside the standard node execution pattern, safely handling API exceptions and formatting the results into `NodeResult` objects to inject AI outputs directly into the graph's execution context.
+Key Features:
+1. Injects context variables into the `prompt_template`.
+2. Calls the LLM client and saves the generated string back into memory.
+
+Think of this module as the mouthpiece that actually talks to the AI brain.
+=============================================================================
 """
+
 from .base import *
 def execute_judgment(node: LLMJudgmentNode, context: dict[str, Any],
                      llm_config: LLMConfig) -> NodeResult:
@@ -22,7 +31,6 @@ def execute_judgment(node: LLMJudgmentNode, context: dict[str, Any],
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
 
-
 def execute_extraction(node: LLMExtractionNode, context: dict[str, Any],
                        llm_config: LLMConfig) -> NodeResult:
     try:
@@ -30,7 +38,6 @@ def execute_extraction(node: LLMExtractionNode, context: dict[str, Any],
         return NodeResult(success=True, output_key=node.output_key, output_value=data)
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
-
 
 def execute_generative(node: LLMGenerativeNode, context: dict[str, Any],
                        llm_config: LLMConfig) -> NodeResult:

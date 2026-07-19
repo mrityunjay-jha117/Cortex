@@ -1,9 +1,18 @@
 """
-gui/panels/property_panel/builders/base.py — Property Builder Interfaces
+=============================================================================
+ BASE PROPERTY BUILDER
+=============================================================================
+This module defines the foundational logic for generating UI forms.
+It parses Pydantic models to automatically create text boxes, sliders, and checkboxes.
 
-This file defines the abstract base classes and registry for Property Builders.
-A Builder is responsible for constructing the specific UI form required to edit a particular node type (e.g. LLM vs Mouse).
+Key Features:
+1. Provides standard methods for generating input fields from schema fields.
+2. Automates the two-way binding between UI widgets and data models.
+
+Think of this module as the assembly line building generic switches and knobs.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -30,8 +39,6 @@ from cognitive_automator.graph_model import (
 from cognitive_automator.gui.constants import (
     APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
-
-
 
 class BaseBuilders:
 

@@ -1,10 +1,18 @@
 """
-Defines the GraphEdge class, which represents a directional link 
-between a source node and a target node.
-It utilizes Pydantic for data validation and strict typing.
-The edge label is restricted to the predefined 
-EdgeLabel enumerations.
+=============================================================================
+ GRAPH EDGES
+=============================================================================
+This module defines the structures that connect nodes together.
+It handles the logic and schema for directional flow between actions.
+
+Key Features:
+1. Defines the `GraphEdge` model linking a source node to a target node.
+2. Supports typed connections (e.g., branching paths).
+
+Think of this module as the wiring diagram that connects all the functional components.
+=============================================================================
 """
+
 from pydantic import BaseModel
 from .enums import EdgeLabel
 

@@ -1,8 +1,18 @@
 """
-runtime/registry.py — Executor Dispatch Registry
+=============================================================================
+ RUNTIME REGISTRY
+=============================================================================
+This module maintains a dictionary mapping Node types to Executor types.
+It allows the engine to look up how to run a node based on its class name.
 
-This file maintains an O(1) lookup table mapping node types to their corresponding execution functions.
+Key Features:
+1. Provides a central `register_executor` pattern.
+2. Decouples graph definition schemas from their execution logic.
+
+Think of this module as the yellow pages linking jobs to contractors.
+=============================================================================
 """
+
 from __future__ import annotations
 from typing import Callable
 from cognitive_automator.graph_model import *

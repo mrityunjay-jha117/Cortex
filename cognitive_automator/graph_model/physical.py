@@ -1,9 +1,18 @@
 """
-physical.py — Physical Input Action Nodes
+=============================================================================
+ PHYSICAL INTERACTION NODES
+=============================================================================
+This module defines nodes for automating physical device inputs.
+It handles the models for mouse movements, clicks, and keyboard presses.
 
-This file defines the schemas for nodes that interact directly with the host operating system.
-These nodes emulate human physical actions such as mouse clicks, keyboard typing, clipboard manipulation, OS-level file drops, and screenshot capturing.
+Key Features:
+1. Defines models for hardware-level automation tasks.
+2. Contains properties for target coordinates, keycodes, and timing.
+
+Think of this module as the digital hands of the automator.
+=============================================================================
 """
+
 from typing import Literal
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, MouseAction, KeyboardAction, ClipboardAction, NavigationAction, ScreenshotMode, DetectionMode

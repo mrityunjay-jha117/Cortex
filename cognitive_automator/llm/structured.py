@@ -1,8 +1,16 @@
 """
-structured.py — Structured output enforcement for LLM nodes.
+=============================================================================
+ STRUCTURED LLM OUTPUTS
+=============================================================================
+This module ensures that LLM responses adhere to strict JSON formats.
+It handles schema validation and parses raw text into programmatic data structures.
 
-This file serves as the execution engine for all LLM-based intelligence nodes (Extraction, Judgment, OCR, and Vision Extraction).
-It bridges the gap between raw LLM string outputs and structured application data by enforcing JSON schemas, parsing markdown-wrapped JSON, and splitting large base64 images into overlapping tiles to improve Vision model accuracy.
+Key Features:
+1. Injects JSON-forcing instructions into prompts.
+2. Validates AI outputs against Pydantic models to prevent runtime crashes.
+
+Think of this module as the strict schoolteacher grading the AI's homework.
+=============================================================================
 """
 
 from __future__ import annotations
@@ -34,7 +42,6 @@ _TASK_MODEL_ENV = {
     "logical": "LOGICAL_MODEL_ID",
 }
 
-
 def _make_client(node: Any, task_type: str, llm_config: LLMConfig) -> BaseLLMClient:
     """Always returns an OpenRouter client."""
     return create_client(
@@ -47,7 +54,6 @@ def _make_client(node: Any, task_type: str, llm_config: LLMConfig) -> BaseLLMCli
         openrouter_api_key_env=llm_config.openrouter_api_key_env,
     )
 
-
 # JSON Schema for judgment responses — strict, no additional properties
 JUDGMENT_SCHEMA: dict[str, Any] = {
     "type": "object",
@@ -59,7 +65,6 @@ JUDGMENT_SCHEMA: dict[str, Any] = {
     "required": ["result", "confidence", "reasoning"],
     "additionalProperties": False,
 }
-
 
 def _get_images_from_context(node: Any, context: dict[str, Any]) -> list[str] | None:
     """Collect base64 images from context keys listed in image_context_keys."""
@@ -76,7 +81,6 @@ def _get_images_from_context(node: Any, context: dict[str, Any]) -> list[str] | 
                 if isinstance(item, str):
                     images.extend(_tile_image_if_large(item))
     return images if images else None
-
 
 def _tile_image_if_large(b64_data: str, max_dimension: int = 3000) -> list[str]:
     """
@@ -120,7 +124,6 @@ def _tile_image_if_large(b64_data: str, max_dimension: int = 3000) -> list[str]:
         log.warning("Image tiling failed: %s", exc)
         return [b64_data]
 
-
 # ---------------------------------------------------------------------------
 # Judgment
 # ---------------------------------------------------------------------------
@@ -144,7 +147,6 @@ def run_judgment(
         images_b64=images,
     )
     return _parse_judgment(response.text)
-
 
 def _parse_judgment(text: str) -> dict[str, Any]:
     text = text.strip()
@@ -171,7 +173,6 @@ def _parse_judgment(text: str) -> dict[str, Any]:
     data.setdefault("confidence", 1.0)
     data.setdefault("reasoning", "")
     return data
-
 
 # ---------------------------------------------------------------------------
 # Extraction
@@ -217,7 +218,6 @@ def run_extraction(
     except json.JSONDecodeError as exc:
         raise ValueError(f"LLM extraction did not return valid JSON: {response.text[:200]}") from exc
 
-
 # ---------------------------------------------------------------------------
 # Generative
 # ---------------------------------------------------------------------------
@@ -231,7 +231,6 @@ def run_generative(
     prompt = render_prompt(node.prompt_template, context)
     response = client.complete(user_prompt=prompt, system_prompt=node.system_prompt)
     return response.text
-
 
 # ---------------------------------------------------------------------------
 # Generative OCR
@@ -257,7 +256,6 @@ def run_ocr(
         images_b64=[image_b64],
     )
     return response.text.strip()
-
 
 def run_vision_extraction(
     node: VisionExtractionNode,
@@ -287,7 +285,6 @@ def run_vision_extraction(
         return json.loads(text)
     except json.JSONDecodeError as exc:
         raise ValueError(f"Vision extraction did not return valid JSON: {response.text[:200]}") from exc
-
 
 def _capture_region_b64(bbox: tuple[int, int, int, int]) -> str:
     """Capture a screen region and return as base64-encoded PNG."""

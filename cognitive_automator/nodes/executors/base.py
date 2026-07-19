@@ -1,9 +1,16 @@
 """
-nodes/executors/base.py — Executor Base Infrastructure
+=============================================================================
+ BASE EXECUTOR
+=============================================================================
+This module defines the abstract base class for all node executors.
+It mandates the interface that every action node must implement to run.
 
-This file acts as the foundational interface for the node execution engine. 
-It defines `NodeResult`, the standard data structure returned by every node execution, which dictates whether the step succeeded, which edge to follow next, and what data (output_key/value) should be injected into the graph's shared memory context.
-It also enforces safety parameters, such as the PyAutoGUI FAILSAFE mechanism, ensuring global emergency stops are respected across all physical automation tasks.
+Key Features:
+1. Defines the `execute()` method signature requiring context and state.
+2. Handles standard pre-execution and post-execution logging or setup.
+
+Think of this module as the standard contract every worker must sign before acting.
+=============================================================================
 """
 
 import base64
@@ -71,7 +78,6 @@ log = logging.getLogger(__name__)
 # Enforce PyAutoGUI FAILSAFE at import time — non-negotiable
 pyautogui.FAILSAFE = True
 pyautogui.PAUSE = 0.15   # Increased for better stability between focus/type transitions
-
 
 @dataclass
 class NodeResult:

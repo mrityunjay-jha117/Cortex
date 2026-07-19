@@ -1,5 +1,15 @@
 """
-gui/widgets/__init__.py — Custom UI Widgets
+=============================================================================
+ GUI WIDGETS INITIALIZATION
+=============================================================================
+This module initializes standalone custom UI widgets.
+It groups dialogs and popups that are used outside the main docking panels.
 
-This package contains standalone dialogs, custom interactive widgets, and full-screen overlays.
+Key Features:
+1. Exposes specialized configuration windows.
+2. Simplifies importing dialogs across the application.
+
+Think of this module as the catalog of specialized popup menus.
+=============================================================================
 """
+

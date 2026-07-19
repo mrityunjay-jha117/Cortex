@@ -1,9 +1,18 @@
 """
-gui/canvas/edge.py — Canvas Edge Graphics
+=============================================================================
+ CANVAS EDGES
+=============================================================================
+This module handles the visual rendering of connections between nodes.
+It draws cubic bezier curves or lines linking output ports to input ports.
 
-This file defines the QGraphicsPathItem responsible for rendering connecting lines (edges) between nodes on the canvas.
-It handles bezier curve calculations, color coding based on edge types (e.g. TRUE/FALSE/DEFAULT), and visual interactions like selection.
+Key Features:
+1. Renders smooth paths mapping data and flow execution.
+2. Manages dynamic updates when connected nodes are moved.
+
+Think of this module as the digital string connecting the cans.
+=============================================================================
 """
+
 from .base import *
 from .port import PortItem
 class EdgeItem(QGraphicsPathItem):

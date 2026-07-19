@@ -1,9 +1,18 @@
 """
-nodes/executors/vision.py — Vision and OCR Execution Logic
+=============================================================================
+ VISION EXECUTOR
+=============================================================================
+This module runs computer vision tasks on captured images.
+It handles template matching to find buttons or icons on the screen.
 
-This file handles the runtime execution of computer vision tasks.
-It performs highly optimized, in-memory screen capturing and image matching using PyAutoGUI/PIL. It features robust fallback mechanisms where, if an element isn't found using standard template matching, it automatically captures the screen and utilizes a Vision Language Model (VLM) to semantically find the element. It also handles OCR and data extraction from images.
+Key Features:
+1. Uses OpenCV to locate images within a larger screenshot.
+2. Returns coordinates that can be passed to physical mouse nodes.
+
+Think of this module as the detective looking for clues in a photograph.
+=============================================================================
 """
+
 from .base import *
 def execute_locate_element(node: LocateElementNode, context: dict[str, Any], 
                            abort_signal: Callable[[], bool] | None = None,
@@ -12,6 +21,8 @@ def execute_locate_element(node: LocateElementNode, context: dict[str, Any],
                            llm_config: LLMConfig | None = None) -> NodeResult:
     import io
     from PIL import ImageGrab, Image
+    import win32api
+    import win32con
 
     if not node.reference_image_b64:
         return NodeResult(success=False, error="No reference image set on LocateElementNode")
@@ -204,7 +215,6 @@ def execute_locate_element(node: LocateElementNode, context: dict[str, Any],
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
 
-
 def execute_locate_and_click(node: LocateAndClickNode, context: dict[str, Any], 
                            abort_signal: Callable[[], bool] | None = None,
                            emit_info: Callable[[str], None] | None = None,
@@ -255,7 +265,6 @@ def _perform_mouse_action(node: LocateAndClickNode, x: int, y: int) -> None:
         # but we could add it if needed. For now we use 0 or skip.
         pass
     time.sleep(node.wait_after_click)
-
 
 def run_vlm_fallback(img_b64: str, prompt: str,
                      provider: LLMProvider, model: str, config: LLMConfig) -> dict[str, tuple[float, float]] | None:
@@ -328,7 +337,6 @@ def run_vlm_fallback(img_b64: str, prompt: str,
         log.error("Failed to parse VLM fallback response: %s", e)
         return None
 
-
 def execute_vision_image(node: VisionImageNode, context: dict[str, Any]) -> NodeResult:
     """Loads an image file and returns base64."""
     import base64
@@ -346,7 +354,6 @@ def execute_vision_image(node: VisionImageNode, context: dict[str, Any]) -> Node
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
 
-
 def execute_generative_ocr(node: GenerativeOCRNode, context: dict[str, Any],
                            llm_config: LLMConfig) -> NodeResult:
     try:
@@ -354,7 +361,6 @@ def execute_generative_ocr(node: GenerativeOCRNode, context: dict[str, Any],
         return NodeResult(success=True, output_key=node.output_key, output_value=text)
     except Exception as exc:
         return NodeResult(success=False, error=str(exc))
-
 
 def execute_vision_extraction(node: VisionExtractionNode, context: dict[str, Any],
                               llm_config: LLMConfig) -> NodeResult:

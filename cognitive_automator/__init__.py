@@ -1,8 +1,16 @@
 """
-Cognitive Automator — LLM-Powered Windows Automation Framework
+=============================================================================
+ COGNITIVE AUTOMATOR INITIALIZATION
+=============================================================================
+This module initializes the core Cognitive Automator package.
+It establishes the top-level namespace for the application.
 
-This is the root initialization file for the cognitive_automator package. 
-It defines high-level package metadata (such as version and author) and signals to Python that this directory should be treated as a unified module.
+Key Features:
+1. Acts as the root import point for all submodules.
+2. Bridges the various components (GUI, Graph, Nodes, Runtime).
+
+Think of this module as the main lobby of the Cognitive Automator building.
+=============================================================================
 """
 
 __version__ = "1.0.0"

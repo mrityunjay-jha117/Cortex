@@ -1,6 +1,6 @@
 """
 =============================================================================
-SUMMARY OF SERIALIZER MODULE
+ SERIALIZER MODULE
 =============================================================================
 This module acts as the "Save/Load Engine" for the Cognitive Automator. 
 It takes the complex Python objects (like the `ActionGraph` and its nodes) 

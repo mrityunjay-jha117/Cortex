@@ -1,8 +1,18 @@
 """
-serializer/ipc/to_json.py — IPC Serialization
+=============================================================================
+ IPC SERIALIZATION
+=============================================================================
+This module converts Python objects into raw JSON strings rapidly.
+It prepares data to be sent across thread boundaries.
 
-This file provides a highly optimized helper function to encode an `ActionGraph` into a compact, whitespace-free JSON string for IPC transmission.
+Key Features:
+1. Strips unnecessary metadata to keep messages small.
+2. Encodes statuses and graph updates for the UI to consume.
+
+Think of this module as the sender encrypting a fast telegram.
+=============================================================================
 """
+
 from __future__ import annotations
 import json
 from cognitive_automator.graph_model import ActionGraph

@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/dynamic_iterate.py — Dynamic Iterate Executor
+=============================================================================
+ DYNAMIC ITERATE EXECUTOR
+=============================================================================
+This module executes loops over dynamically generated collections of data.
+It handles iteration state for variables defined at runtime.
 
-This file contains the execution logic for the DynamicIterateNode.
-It iterates over a runtime-resolved iterable (like a list) stored dynamically in the execution context, yielding one item per loop cycle until exhausted.
+Key Features:
+1. Manages internal index counters for lists.
+2. Determines when to exit the loop and continue the main graph execution.
+
+Think of this module as the assembly line conveyor belt moving items one by one.
+=============================================================================
 """
+
 from ..base import *
 
 def execute_dynamic_iterate(node: DynamicIterateNode, context: dict[str, Any]) -> NodeResult:

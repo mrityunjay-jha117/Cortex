@@ -1,3 +1,18 @@
+"""
+=============================================================================
+ CORE ACTION GRAPH
+=============================================================================
+This module defines the overarching `ActionGraph` container.
+It aggregates all nodes and edges into a cohesive executable graph.
+
+Key Features:
+1. Holds dictionaries of all nodes and lists of edges.
+2. Provides validation to ensure graph structural integrity (no broken links).
+
+Think of this module as the master blueprint containing the entire visual program.
+=============================================================================
+"""
+
 # Import Any for type hinting (useful for fields where we accept any object before parsing)
 from typing import Any
 # Import uuid to generate unique identifiers for objects (like nodes)

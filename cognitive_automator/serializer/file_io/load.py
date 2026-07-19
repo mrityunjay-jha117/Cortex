@@ -1,8 +1,18 @@
 """
-serializer/file_io/load.py — Load Graph Function
+=============================================================================
+ FILE IO LOAD
+=============================================================================
+This module handles reading `.cogauto`, JSON, or YAML files from disk.
+It parses text and uses Pydantic to reconstruct the full Action Graph.
 
-This file contains the core logic for loading a saved automation graph (JSON or YAML) from disk and reconstructing it into an `ActionGraph` Python object.
+Key Features:
+1. Dynamically maps string representations back into precise Node classes.
+2. Handles file parsing errors and validates structural integrity.
+
+Think of this module as the librarian pulling the blueprints out of storage.
+=============================================================================
 """
+
 from __future__ import annotations
 import json
 from pathlib import Path

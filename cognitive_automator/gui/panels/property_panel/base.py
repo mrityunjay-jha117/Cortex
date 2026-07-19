@@ -1,9 +1,18 @@
 """
-gui/panels/property_panel/base.py — Property Panel Base
+=============================================================================
+ PROPERTY PANEL BASE
+=============================================================================
+This module provides the core framework for the property editor.
+It defines how the panel reacts to node selection and commits changes.
 
-This file defines the core container for the Node Property Panel on the right side of the main window.
-It dynamically clears and rebuilds its UI layout whenever a user selects a different node on the canvas.
+Key Features:
+1. Connects UI form inputs back to the underlying Pydantic node models.
+2. Manages the layout lifecycle when switching between different nodes.
+
+Think of this module as the scaffolding holding the settings dials.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any

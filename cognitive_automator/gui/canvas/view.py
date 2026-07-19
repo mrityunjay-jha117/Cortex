@@ -1,11 +1,22 @@
 """
-gui/canvas/view.py — Canvas Graphics View
+=============================================================================
+ CANVAS VIEW
+=============================================================================
+This module implements the QGraphicsView for the node editor.
+It provides the camera controls, panning, zooming, and interacting with the scene.
 
-This file defines the QGraphicsView widget.
-It provides the interactive viewport into the scene, managing panning (middle-click), zooming (scroll wheel), rubber-band selection, and background grid rendering.
+Key Features:
+1. Handles mouse wheel zooming and middle-click panning.
+2. Translates screen coordinates to logical scene coordinates.
+
+Think of this module as the camera lens looking at the whiteboard.
+=============================================================================
 """
+
 from .base import *
 from .scene import GraphScene
+from .edge import EdgeItem
+from .node import NodeItem
 class GraphView(QGraphicsView):
     def __init__(self, scene: GraphScene, parent: QWidget | None = None) -> None:
         super().__init__(scene, parent)

@@ -1,8 +1,18 @@
 """
-serializer/file_io/save.py — Save Graph Function
+=============================================================================
+ FILE IO SAVE
+=============================================================================
+This module converts live Action Graphs into formatted text files.
+It dumps Pydantic models to dictionaries and writes them as YAML/JSON.
 
-This file contains the core logic for converting a running `ActionGraph` Python object into a serialized format (JSON or YAML) and writing it to the disk.
+Key Features:
+1. Injects `_type` markers so nodes can be safely deserialized later.
+2. Formats outputs cleanly for version control readability.
+
+Think of this module as the archivist placing the blueprints into safe storage.
+=============================================================================
 """
+
 from __future__ import annotations
 import json
 from pathlib import Path

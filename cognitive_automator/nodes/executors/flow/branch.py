@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/branch.py — Branch Node Executor
+=============================================================================
+ BRANCH EXECUTOR
+=============================================================================
+This module executes conditional logic to fork the graph's execution path.
+It evaluates a boolean state and directs flow to either the True or False path.
 
-This file contains the execution logic for the BranchNode.
-It evaluates a boolean condition key stored in the execution context and directs the graph's execution flow down either the TRUE or FALSE edge.
+Key Features:
+1. Reads variables from the runtime context.
+2. Returns specific edge labels to instruct the engine on which path to take.
+
+Think of this module as the train track switch operator.
+=============================================================================
 """
+
 from ..base import *
 
 def execute_branch(node: BranchNode, context: dict[str, Any]) -> NodeResult:

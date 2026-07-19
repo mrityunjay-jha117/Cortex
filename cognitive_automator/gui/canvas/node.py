@@ -1,10 +1,20 @@
 """
-gui/canvas/node.py — Canvas Node Graphics
+=============================================================================
+ CANVAS NODES
+=============================================================================
+This module handles the visual representation of action nodes.
+It draws the rounded rectangles, titles, and icons for each step in the graph.
 
-This file defines the QGraphicsItem for individual nodes.
-It handles rendering the node body, title bar, category-specific coloring, dragging mechanics, and integrates the input/output connection ports (QGraphicsItems).
+Key Features:
+1. Manages drag-and-drop movement within the scene.
+2. Organizes input and output ports visually on the node body.
+
+Think of this module as the physical sticky notes placed on a whiteboard.
+=============================================================================
 """
+
 from .base import *
+from .base import _elide
 from .port import PortItem
 from .edge import EdgeItem
 class NodeItem(QGraphicsObject):
@@ -225,7 +235,6 @@ class NodeItem(QGraphicsObject):
                 
                 painter.drawText(rect, align, port.label)
 
-
     def set_executing(self, executing: bool) -> None:
         self._executing = executing
         self._success = None
@@ -259,7 +268,6 @@ class NodeItem(QGraphicsObject):
             from .scene import GraphScene
             cast_scene: GraphScene = self.scene()  # type: ignore[assignment]
             cast_scene.node_double_clicked.emit(self.node.id)
-
 
     def hoverEnterEvent(self, event: Any) -> None:
         self._is_hovered = True

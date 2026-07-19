@@ -1,9 +1,18 @@
 """
-gui/panels/property_panel/builders/physical.py — Physical Node Builders
+=============================================================================
+ PHYSICAL PROPERTY BUILDERS
+=============================================================================
+This module generates UI forms for physical interaction nodes.
+It handles inputs for coordinates, key presses, and mouse actions.
 
-This file implements UI forms for configuring physical automation nodes.
-It includes fields for X/Y coordinates, keypress designations, PyAutoGUI actions, and interaction durations.
+Key Features:
+1. Validates X/Y coordinate inputs.
+2. Provides dropdowns for specific keyboard keys and mouse buttons.
+
+Think of this module as the remote control for the digital hands.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -30,8 +39,7 @@ from cognitive_automator.graph_model import (
 from cognitive_automator.gui.constants import (
     APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
-
-
+from cognitive_automator.gui.panels.property_panel.helpers import ImageViewer
 
 class PhysicalBuilders:
 

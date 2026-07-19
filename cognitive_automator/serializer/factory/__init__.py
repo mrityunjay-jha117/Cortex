@@ -1,5 +1,15 @@
 """
-serializer/factory/__init__.py — Factory Package
+=============================================================================
+ SERIALIZER FACTORY
+=============================================================================
+This module initializes the factory patterns for creating objects.
+It exposes functions to build clean, empty graphs.
 
-This subpackage contains factory methods for instantiating new, empty graph objects.
+Key Features:
+1. Simplifies imports for factory methods.
+2. Centralizes graph instantiation logic.
+
+Think of this module as the catalog for ordering new components.
+=============================================================================
 """
+

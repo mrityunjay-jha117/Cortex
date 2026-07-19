@@ -1,9 +1,18 @@
 """
-vision.py — Computer Vision and OCR Node Definitions
+=============================================================================
+ COMPUTER VISION NODES
+=============================================================================
+This module defines nodes that process visual information.
+It models screenshot capture, image matching, and OCR tasks.
 
-This file defines schemas for nodes that process visual information from the screen.
-It includes nodes for locating UI elements via traditional image matching (LocateElementNode), performing OCR, and extracting structured data from screen regions using powerful Vision-Language Models.
+Key Features:
+1. Defines properties for regions of interest and confidence thresholds.
+2. Provides schema for nodes that "see" the screen.
+
+Think of this module as the digital eyes of the automator.
+=============================================================================
 """
+
 from typing import Literal, Any
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, LLMProvider, MouseAction

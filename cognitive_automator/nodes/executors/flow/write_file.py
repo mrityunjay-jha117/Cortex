@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/write_file.py — Write File Executor
+=============================================================================
+ WRITE FILE EXECUTOR
+=============================================================================
+This module handles saving text or data to the local filesystem.
+It writes logs, generated text, or serialized states to disk.
 
-This file contains the execution logic for the WriteFileNode.
-It evaluates a Jinja prompt template against the current execution context and writes or appends the resulting string (or formatted JSON) to a local file.
+Key Features:
+1. Resolves file paths relative to the workspace.
+2. Supports append and overwrite modes.
+
+Think of this module as the secretary filing away paperwork into a cabinet.
+=============================================================================
 """
+
 from ..base import *
 
 def execute_write_file(node: WriteFileNode, context: dict[str, Any]) -> NodeResult:

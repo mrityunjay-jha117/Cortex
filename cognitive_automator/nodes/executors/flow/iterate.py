@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/iterate.py — Iterate Executor
+=============================================================================
+ BASIC ITERATE EXECUTOR
+=============================================================================
+This module provides simple iteration over static lists or predefined arrays.
+It handles state injection for the current item in a loop.
 
-This file contains the execution logic for the IterateNode.
-It manages stateful iteration over hardcoded item lists or loaded CSV columns, looping back to the LOOP_BODY edge until items are exhausted.
+Key Features:
+1. Extracts the current element and stores it in context.
+2. Moves to the next item automatically on the next cycle.
+
+Think of this module as dealing cards one by one from a deck.
+=============================================================================
 """
+
 from ..base import *
 from .utils import _load_csv_column
 

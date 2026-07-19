@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/for_loop.py — For Loop Executor
+=============================================================================
+ FOR LOOP EXECUTOR
+=============================================================================
+This module executes standard numeric for-loops (e.g., repeating N times).
+It tracks iterations and directs flow backwards to the loop body or forwards to exit.
 
-This file contains the execution logic for the ForLoopNode.
-It implements a C++ style counter loop (start, end, step) while dynamically resolving data boundaries from incoming data bindings in the graph context.
+Key Features:
+1. Decrements/increments internal counters safely.
+2. Emits loop-body and loop-end edge signals.
+
+Think of this module as a metronome ticking down a set number of beats.
+=============================================================================
 """
+
 from ..base import *
 
 def execute_for_loop(node: ForLoopNode, context: dict[str, Any], graph: ActionGraph) -> NodeResult:

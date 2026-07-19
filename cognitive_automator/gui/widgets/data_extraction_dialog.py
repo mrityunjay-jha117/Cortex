@@ -1,9 +1,18 @@
 """
-gui/widgets/data_extraction_dialog.py — Data Extraction Dialog
+=============================================================================
+ DATA EXTRACTION DIALOG
+=============================================================================
+This module defines a specialized popup for configuring JSON data extraction.
+It allows users to visually build the expected schema for LLM outputs.
 
-This file defines a popup modal for creating structured JSON schemas.
-It allows users to define expected data formats for LLM Extraction nodes using an interactive table instead of writing raw JSON schema.
+Key Features:
+1. Provides a structured UI for defining keys, types, and descriptions.
+2. Prevents users from writing raw JSON schemas by hand.
+
+Think of this module as a form builder for telling the AI what data to fetch.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from PyQt6.QtWidgets import (
@@ -14,7 +23,6 @@ from PyQt6.QtWidgets import (
 from cognitive_automator.graph_model import (
     ClipboardAction, ClipboardNode, LLMExtractionNode, LLMProvider,
 )
-
 
 class DataExtractionDialog(QDialog):
     """Configure a ClipboardRead + LLMExtraction node pair."""

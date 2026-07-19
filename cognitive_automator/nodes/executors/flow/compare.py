@@ -1,9 +1,18 @@
 """
-nodes/executors/flow/compare.py — Compare Node Executor
+=============================================================================
+ COMPARE EXECUTOR
+=============================================================================
+This module performs logical comparisons (e.g., greater than, equals) between values.
+It injects the boolean result back into the runtime state for branching.
 
-This file contains the execution logic for the CompareNode.
-It evaluates a comparison operation (e.g., EQUALS, CONTAINS, NUM_GT) between two runtime operands and routes execution down TRUE or FALSE edges accordingly.
+Key Features:
+1. Evaluates standard operators (==, !=, >, <) on variables.
+2. Supports type coercion to ensure robust comparisons.
+
+Think of this module as the scale weighing two pieces of data against each other.
+=============================================================================
 """
+
 from ..base import *
 
 def execute_compare(node: CompareNode, context: dict[str, Any]) -> NodeResult:

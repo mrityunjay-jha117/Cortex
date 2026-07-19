@@ -1,9 +1,18 @@
 """
-gui/widgets/screen_region_selector.py — Screen Region Selector
+=============================================================================
+ SCREEN REGION SELECTOR
+=============================================================================
+This module implements a full-screen overlay for selecting coordinates.
+It allows users to draw a box on their actual screen to define visual targets.
 
-This file defines a full-screen, translucent overlay used for snipping tools.
-It allows the user to click and drag a bounding box over the desktop to capture targeted screenshots for Vision nodes.
+Key Features:
+1. Captures the current screen state and draws it on a borderless window.
+2. Calculates exact X/Y coordinates and dimensions based on user drag actions.
+
+Think of this module as the digital snipping tool for automation targeting.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from PyQt6.QtCore import Qt, QRect, QPoint, pyqtSignal
@@ -11,7 +20,6 @@ from PyQt6.QtGui import (
     QPainter, QColor, QPen, QBrush, QPaintEvent, QMouseEvent, QKeyEvent,
 )
 from PyQt6.QtWidgets import QApplication, QLabel, QPushButton, QWidget
-
 
 _HANDLE_SIZE = 10
 _HALF = _HANDLE_SIZE // 2
@@ -27,7 +35,6 @@ _HANDLE_CURSORS = [
     Qt.CursorShape.SizeBDiagCursor,
     Qt.CursorShape.SizeHorCursor,
 ]
-
 
 class ScreenRegionSelector(QWidget):
     """Full-screen overlay with a draggable, resizable dotted selection box."""

@@ -1,9 +1,18 @@
 """
-runtime/models.py — Execution Data Models
+=============================================================================
+ RUNTIME MODELS
+=============================================================================
+This module defines data structures used strictly during execution.
+It holds the context dictionary that acts as the graph's memory.
 
-This file defines the data structures and enumerations used to track graph execution state,
-configuration, and UI events.
+Key Features:
+1. Defines `RuntimeContext` for variable storage.
+2. Defines `ExecutionResult` for standardizing node outputs.
+
+Think of this module as the clipboard where the engine takes its notes.
+=============================================================================
 """
+
 from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import Enum

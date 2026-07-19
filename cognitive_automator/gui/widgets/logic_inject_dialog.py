@@ -1,8 +1,18 @@
 """
-gui/widgets/logic_inject_dialog.py — Logic Injector Dialog
+=============================================================================
+ LOGIC INJECT DIALOG
+=============================================================================
+This module provides a dialog for injecting custom logic or Python expressions.
+It offers a localized editor for advanced data manipulation tasks.
 
-This file defines a popup modal for quickly injecting conditional nodes (like Branches) between existing nodes on the canvas.
+Key Features:
+1. Features a monospaced text editor for code or expressions.
+2. Validates basic syntax before applying it to a node.
+
+Think of this module as the backdoor for power users to write custom scripts.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from PyQt6.QtWidgets import (
@@ -14,7 +24,6 @@ from cognitive_automator.graph_model import (
     LLMJudgmentNode, LLMExtractionNode, LLMGenerativeNode,
 )
 from cognitive_automator.gui.constants import MAIN_STYLESHEET
-
 
 class LogicInjectDialog(QDialog):
     def __init__(self, parent: QWidget | None = None) -> None:

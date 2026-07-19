@@ -1,9 +1,18 @@
 """
-gui/panels/property_panel/builders/flow.py — Flow Node Builders
+=============================================================================
+ FLOW PROPERTY BUILDERS
+=============================================================================
+This module generates UI forms specifically for Control Flow nodes.
+It handles properties like wait times, conditions, and loop iterations.
 
-This file implements UI forms for configuring control flow nodes.
-It builds inputs for iteration variables, conditional logic operators, and wait timings.
+Key Features:
+1. Builds editors for branching logic and comparison operators.
+2. Validates numerical inputs for delays and counters.
+
+Think of this module as the control board for the traffic lights.
+=============================================================================
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -30,8 +39,6 @@ from cognitive_automator.graph_model import (
 from cognitive_automator.gui.constants import (
     APP_SURFACE, APP_BORDER, APP_ACCENT, APP_TEXT_DIM, APP_TEXT, APP_BG,
 )
-
-
 
 class FlowBuilders:
 
