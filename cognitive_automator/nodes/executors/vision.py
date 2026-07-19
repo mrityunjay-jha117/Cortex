@@ -4,20 +4,14 @@ def execute_locate_element(node: LocateElementNode, context: dict[str, Any],
                            emit_info: Callable[[str], None] | None = None,
                            dev_mode: bool = False,
                            llm_config: LLMConfig | None = None) -> NodeResult:
-    import tempfile
-    import os
-    import win32api
-    import win32con
-    import ctypes
-    from PIL import ImageGrab
+    import io
+    from PIL import ImageGrab, Image
 
     if not node.reference_image_b64:
         return NodeResult(success=False, error="No reference image set on LocateElementNode")
 
     img_data = base64.b64decode(node.reference_image_b64)
-    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
-        f.write(img_data)
-        tmp_path = f.name
+    needle_img = Image.open(io.BytesIO(img_data))
 
     kwargs = dict(grayscale=node.grayscale, confidence=node.confidence)
     # Only add region if it's actually set, and it must be scaled to physical pixels
@@ -37,7 +31,6 @@ def execute_locate_element(node: LocateElementNode, context: dict[str, Any],
         v_height = win32api.GetSystemMetrics(win32con.SM_CYVIRTUALSCREEN)
 
         haystack = None
-        needle_img = Image.open(tmp_path)
         nw, nh = needle_img.size
 
         while time.monotonic() < deadline:
@@ -110,14 +103,9 @@ def execute_locate_element(node: LocateElementNode, context: dict[str, Any],
                 except (pyautogui.ImageNotFoundException, ValueError):
                     pass
             
-            time.sleep(0.3)
+            time.sleep(0.05)
 
-        # Cleanup primary temp file
-        if os.path.exists(tmp_path):
-            try:
-                os.unlink(tmp_path)
-            except Exception:
-                pass
+        # Cleanup no longer needed since we use in-memory BytesIO
 
         if primary_success:
             # Apply manual offsets to the primary search result

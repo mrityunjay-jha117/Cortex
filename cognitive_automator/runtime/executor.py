@@ -168,16 +168,19 @@ class GraphExecutor:
         visited = set()
         rec_stack = set()
         
+        adj = {nid: [] for nid in self.graph.nodes}
+        for e in self.graph.edges:
+            adj.setdefault(e.source_id, []).append(e)
+
         def dfs(u: str) -> None:
             visited.add(u)
             rec_stack.add(u)
-            for e in self.graph.edges:
-                if e.source_id == u:
-                    v = e.target_id
-                    if v not in visited:
-                        dfs(v)
-                    elif v in rec_stack:
-                        back_edges.add((u, v, e.label))
+            for e in adj.get(u, []):
+                v = e.target_id
+                if v not in visited:
+                    dfs(v)
+                elif v in rec_stack:
+                    back_edges.add((u, v, e.label))
             rec_stack.remove(u)
             
         # Prioritize DFS starting from GlobalStartNodes first, then entry_node_id
@@ -251,7 +254,7 @@ class GraphExecutor:
                 if not node:
                     continue
                     
-                out_edges = [e for e in self.graph.edges if e.source_id == nid]
+                out_edges = adj.get(nid, [])
                 
                 def push_tokens(label_to_exec: str | list[str], skip_others: bool = True) -> None:
                     if isinstance(label_to_exec, str):
@@ -291,7 +294,7 @@ class GraphExecutor:
                         push_tokens([], skip_others=True)
                         continue
                         
-                    import time; time.sleep(0.5)
+                    # Removed hardcoded 0.5s sleep to improve throughput
                     
                     # Custom token logic for loops to prevent DEAD token flooding
                     if isinstance(node, (ForLoopNode, IterateNode, DynamicIterateNode)):
@@ -373,9 +376,14 @@ class GraphExecutor:
         # Add abort check for executors that support it
         kwargs: dict[str, Any] = {}
         import inspect
-        
+        _executor_sig_cache: dict[Callable, inspect.Signature] = getattr(self.__class__, '_executor_sig_cache', {})
+        if not hasattr(self.__class__, '_executor_sig_cache'):
+            self.__class__._executor_sig_cache = _executor_sig_cache
+
         def _call_executor(func: Callable[..., NodeResult], *args: Any, **kwargs: Any) -> NodeResult:
-            sig = inspect.signature(func)
+            if func not in _executor_sig_cache:
+                _executor_sig_cache[func] = inspect.signature(func)
+            sig = _executor_sig_cache[func]
             if "abort_signal" in sig.parameters:
                 kwargs["abort_signal"] = lambda: self._abort
             if "emit_info" in sig.parameters:

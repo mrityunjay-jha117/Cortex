@@ -55,27 +55,25 @@ def execute_navigator(node: NavigatorNode, context: dict[str, Any]) -> NodeResul
         # 1. Optional Focus Step
         if node.reference_image_b64:
             import base64
-            import tempfile
-            import os
+            import io
+            from PIL import Image
             img_data = base64.b64decode(node.reference_image_b64)
-            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as f:
-                f.write(img_data)
-                tmp_path = f.name
+            needle_img = Image.open(io.BytesIO(img_data))
             
             try:
                 # Use standard confidence for focusing
-                loc = pyautogui.locateOnScreen(tmp_path, confidence=node.confidence, grayscale=False)
+                loc = pyautogui.locateOnScreen(needle_img, confidence=node.confidence, grayscale=False)
                 if loc is not None:
                     cx, cy = pyautogui.center(loc)
                     cx += node.x_offset
                     cy += node.y_offset
                     log.info("Navigator: focusing at (%d, %d)", cx, cy)
                     pyautogui.click(cx, cy)
-                    time.sleep(0.3) # Wait for focus
+                    time.sleep(0.1) # Wait for focus
                 else:
                     log.warning("Navigator: focus image not found, proceeding anyway")
-            finally:
-                os.unlink(tmp_path)
+            except pyautogui.ImageNotFoundException:
+                log.warning("Navigator: focus image not found, proceeding anyway")
 
         # 2. Navigation Step
         log.info("Navigator: action=%s repeat=%d", node.action, node.repeat)

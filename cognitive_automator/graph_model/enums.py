@@ -1,5 +1,25 @@
 from enum import Enum
+"""
+Enums are used explicitly here because without them, 
+there is no type safety.
 
+Without Enum (Direct String):
+
+def do_action(action_type: str):
+    if action_type == "click":
+        print("Clicking...")
+    # If someone passes "Click" (Capital C), this will fail!
+
+With Enum:
+
+def do_action(action_type: MouseAction):
+    if action_type == MouseAction.CLICK:
+        print("Clicking...")
+
+Now, there is no room for error when calling this function. 
+This is an industry standard practice to make the code 
+robust and bug-free.
+"""
 class NodeCategory(str, Enum):
     PHYSICAL = "physical"
     VISION = "vision"

@@ -1,3 +1,11 @@
+"""
+llm.py — LLM Node definitions
+
+NOTE on `default_factory`:
+We use `Field(default_factory=list)` and `Field(default_factory=dict)` for mutable fields.
+If we used `input_context_keys: list[str] = []`, Python would create a single list in memory shared by ALL instances of the class. Modifying the list in one node would modify it in all other nodes (the Mutable Default Argument problem).
+Using `default_factory=list` ensures every new node instance gets its own independent, brand-new empty list.
+"""
 from typing import Literal, Any
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, LLMProvider

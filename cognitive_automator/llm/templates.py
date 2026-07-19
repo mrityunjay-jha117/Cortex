@@ -15,10 +15,16 @@ from jinja2 import Environment, StrictUndefined, TemplateError, UndefinedError
 _env = Environment(undefined=StrictUndefined)
 
 import re
+import functools
 
 def _preprocess(template_str: str) -> str:
     """Convert ${var} to {{var}} for Jinja2 compatibility."""
     return re.sub(r"\$\{(.+?)\}", r"{{\1}}", template_str)
+
+@functools.lru_cache(maxsize=256)
+def _get_template(template_str: str):
+    processed_template = _preprocess(template_str)
+    return _env.from_string(processed_template)
 
 def render_prompt(template_str: str, context: dict[str, Any]) -> str:
     """
@@ -29,10 +35,8 @@ def render_prompt(template_str: str, context: dict[str, Any]) -> str:
     if not template_str:
         return ""
     
-    processed_template = _preprocess(template_str)
-
     try:
-        template = _env.from_string(processed_template)
+        template = _get_template(template_str)
         return template.render(**context)
     except UndefinedError as exc:
         raise TemplateRenderError(

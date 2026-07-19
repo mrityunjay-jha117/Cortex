@@ -1,3 +1,9 @@
+"""
+Pydantic's Field function helps enforce type safety and data constraints.
+For example, `age: int = Field(default=18, ge=18)` enforces that the value must be greater than or equal to 18, throwing a validation error for something like `Student(age=10)`.
+
+In this class, we use `default_factory=lambda: str(uuid.uuid4())` to guarantee that every newly instantiated node receives a globally unique ID.
+"""
 import uuid
 from pydantic import BaseModel, Field
 from .enums import NodeCategory, OnErrorAction
