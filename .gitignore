@@ -36,8 +36,8 @@ Thumbs.db
 .env
 *.env
 config.local.*
-/cogauto_Scripts/
-*.cogauto
+/cortex_Scripts/
+*.cortex
 # Logs
 *.log
 
