@@ -11,7 +11,7 @@ from .menu_base import AnimatedMenuBase
 from .menu_build import AnimatedMenuBuild
 from .menu_events import AnimatedMenuEvents
 
-class AnimatedMenu(AnimatedMenuBase, AnimatedMenuBuild, AnimatedMenuEvents):
+class AnimatedMenu(AnimatedMenuBuild, AnimatedMenuEvents, AnimatedMenuBase):
     pass
 
 __all__ = ["AnimatedMenu"]

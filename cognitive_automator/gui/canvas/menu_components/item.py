@@ -11,7 +11,7 @@ from .item_base import AnimatedMenuItemBase
 from .item_paint import AnimatedMenuItemPaint
 from .item_events import AnimatedMenuItemEvents
 
-class AnimatedMenuItem(AnimatedMenuItemBase, AnimatedMenuItemPaint, AnimatedMenuItemEvents):
+class AnimatedMenuItem(AnimatedMenuItemPaint, AnimatedMenuItemEvents, AnimatedMenuItemBase):
     pass
 
 __all__ = ["AnimatedMenuItem"]

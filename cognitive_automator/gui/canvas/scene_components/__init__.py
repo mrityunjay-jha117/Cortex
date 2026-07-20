@@ -12,7 +12,7 @@ from .scene_load import SceneLoadMixin
 from .scene_state import SceneStateMixin
 from .scene_events import SceneEventsMixin
 
-class GraphScene(SceneBaseMixin, SceneLoadMixin, SceneStateMixin, SceneEventsMixin):
+class GraphScene(SceneEventsMixin, SceneStateMixin, SceneLoadMixin, SceneBaseMixin):
     pass
 
 __all__ = ["GraphScene"]

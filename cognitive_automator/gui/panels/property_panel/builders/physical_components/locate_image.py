@@ -12,7 +12,7 @@ from PyQt6.QtCore import Qt, QByteArray
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
 from cognitive_automator.gui.constants import APP_BORDER, APP_TEXT_DIM
-from cognitive_automator.gui.panels.property_panel.helpers import ImageViewer
+from cognitive_automator.gui.panels.property_panel.base_components.image_viewer import ImageViewer
 
 class LocateImageMixin:
     def _build_locate_image(self, node) -> None:
