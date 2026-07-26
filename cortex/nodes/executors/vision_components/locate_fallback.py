@@ -10,7 +10,7 @@ It was refactored to maintain modularity and separation of concerns.
 from .base import *
 
 def run_vlm_fallback(img_b64: str, prompt: str,
-                     provider: LLMProvider, model: str, config: LLMConfig) -> dict[str, tuple[float, float]] | None:
+                     provider: LLMProvider, model: str, config: LLMConfig) -> dict[str, Any] | None:
     from cortex.llm.client import create_client
     import json
     import re

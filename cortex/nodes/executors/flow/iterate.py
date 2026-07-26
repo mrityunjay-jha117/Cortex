@@ -15,6 +15,8 @@ Think of this module as dealing cards one by one from a deck.
 
 from ..base import *
 from .utils import _load_csv_column
+from typing import Any
+from cortex.graph_model import IterateNode, EdgeLabel
 
 def execute_iterate(node: IterateNode, context: dict[str, Any]) -> NodeResult:
     """
@@ -33,16 +35,16 @@ def execute_iterate(node: IterateNode, context: dict[str, Any]) -> NodeResult:
         state["items"] = items
         state["index"] = 0
 
-    items: list[str] = state["items"]
+    items_list: list[str] = state["items"]
     idx: int = state["index"]
 
-    if idx >= len(items):
+    if idx >= len(items_list):
         # Reset state for potential re-run
         context.pop(state_key, None)
         context.pop(node.output_key, None)  # Scope isolation: cleanup iterator
         return NodeResult(success=True, next_edge=EdgeLabel.LOOP_END)
 
-    current_item = items[idx]
+    current_item = items_list[idx]
     state["index"] = idx + 1
     context[state_key] = state
 

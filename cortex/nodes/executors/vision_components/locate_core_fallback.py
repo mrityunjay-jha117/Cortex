@@ -9,6 +9,9 @@ It was refactored to maintain modularity and separation of concerns.
 
 from .base import *
 from typing import Callable
+import base64
+from io import BytesIO
+from cortex.graph_model import LocateElementNode, LLMConfig
 from .locate_fallback import run_vlm_fallback
 
 def handle_locate_fallback(node: LocateElementNode, haystack, v_left, v_top, v_width, v_height,

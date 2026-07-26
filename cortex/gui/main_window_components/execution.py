@@ -46,7 +46,7 @@ class ExecutionMixin:
 
     def _pause_graph(self) -> None:
         if self._worker:
-            if self._act_pause.text().startswith(""):
+            if self._act_pause.text().strip() == "Pause":
                 self._worker.pause()
                 self._act_pause.setText("  Resume")
             else:

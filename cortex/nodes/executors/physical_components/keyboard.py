@@ -8,6 +8,12 @@ It was refactored to maintain modularity and separation of concerns.
 """
 
 from .base import *
+import pyautogui
+import pyperclip
+import sys
+import time
+from cortex.graph_model import KeyboardNode, KeyboardAction
+
 def execute_keyboard(node: KeyboardNode, context: dict[str, Any]) -> NodeResult:
     try:
         from cortex.llm.templates import render_prompt

@@ -8,7 +8,10 @@ It was refactored to maintain modularity and separation of concerns.
 """
 
 from .base import *
-from typing import Callable
+from typing import Callable, Any
+import time
+import pyautogui
+from cortex.graph_model import LocateAndClickNode, MouseAction, LLMConfig
 from .locate_core import execute_locate_element
 
 def _perform_mouse_action(node: LocateAndClickNode, x: int, y: int) -> None:

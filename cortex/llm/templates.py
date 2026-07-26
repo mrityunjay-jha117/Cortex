@@ -18,15 +18,71 @@ from __future__ import annotations
 from typing import Any
 
 from jinja2 import Environment, StrictUndefined, TemplateError, UndefinedError
-
+# StrictUndefined is for hard check agar nhi available toh undefined
 _env = Environment(undefined=StrictUndefined)
 
 import re
 import functools
 
+# Naam ke aage underscore (_) kyun hai?
+# Python me underscore ka matlab hota hai
+# Ye internal helper function hai.
+# Matlab Is function ko file ke bahar se use mat karo.
+# sub->substitute
+# re.sub(
+#     pattern,
+#     replacement,
+#     string
+# )
 def _preprocess(template_str: str) -> str:
     """Convert ${var} to {{var}} for Jinja2 compatibility."""
     return re.sub(r"\$\{(.+?)\}", r"{{\1}}", template_str)
+"""
+ Decorator ek function hota hai jo dusre function ke behavior 
+ ko modify karta hai bina us function ka code badle.
+ jinja2 is used for the template manipulation
+Asli expensive kaam ye hai
+_env.from_string(processed_template)
+Ye sirf string return nahi karta.
+Ye template ko compile karta hai.
+Socho tumhare paas template hai:
+Hello {{name}}
+Your age is {{age}}
+Your city is {{city}}
+Jinja2 ko ye kaam karna padta hai:
+Step 1
+Template ko character by character read karo.
+H
+e
+l
+l
+o
+{
+{
+name
+}
+}
+Step 2
+Samjho
+Hello normal text hai.
+Aur
+{{name}}
+ek variable hai.
+Step 3
+Internal object banao.
+Jinja2 internally kuch aisa banata hai (conceptually):
+[
+    Text("Hello "),
+    Variable("name"),
+    Text("\nYour age is "),
+    Variable("age"),
+    Text("\nYour city is "),
+    Variable("city")
+]
+Ye object baad me render hota hai.
+Ye parsing aur compilation har baar karna padta agar cache na ho.
+ye conversion ka kaam jinja mein specifically from_String ka hai
+"""
 
 @functools.lru_cache(maxsize=256)
 def _get_template(template_str: str):
@@ -44,6 +100,7 @@ def render_prompt(template_str: str, context: dict[str, Any]) -> str:
     
     try:
         template = _get_template(template_str)
+        # this unpacks the context dictionary and gives to template to render
         return template.render(**context)
     except UndefinedError as exc:
         raise TemplateRenderError(

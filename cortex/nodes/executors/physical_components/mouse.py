@@ -8,6 +8,11 @@ It was refactored to maintain modularity and separation of concerns.
 """
 
 from .base import *
+import time
+import pyautogui
+from typing import Any
+from cortex.graph_model import MouseNode, MouseAction
+
 def execute_mouse(node: MouseNode, context: dict[str, Any]) -> NodeResult:
     try:
         # Resolve coordinates — vision override takes priority

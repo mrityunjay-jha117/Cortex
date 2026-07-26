@@ -8,6 +8,10 @@ It was refactored to maintain modularity and separation of concerns.
 """
 
 from .base import *
+import pyperclip
+from typing import Any
+from cortex.graph_model import ClipboardNode, ClipboardAction
+
 def execute_clipboard(node: ClipboardNode, context: dict[str, Any]) -> NodeResult:
     try:
         if node.action == ClipboardAction.READ:

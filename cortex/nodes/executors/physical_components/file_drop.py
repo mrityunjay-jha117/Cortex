@@ -8,6 +8,13 @@ It was refactored to maintain modularity and separation of concerns.
 """
 
 from .base import *
+import pyperclip
+import sys
+import pyautogui
+import time
+from typing import Any
+from cortex.graph_model import FileDropNode
+
 def execute_file_drop(node: FileDropNode, context: dict[str, Any]) -> NodeResult:
     try:
         x, y = node.x_coord, node.y_coord

@@ -74,7 +74,7 @@ class LogPanel(QWidget):
         elif event.status == ExecutionStatus.NODE_INFO:
             fmt.setForeground(QColor("#A0A0A0"))
             self._append(f"  [{event.node_label or event.node_id}] {event.message}", fmt)
-        elif event.status == ExecutionStatus.GRAPH_ABORTED:
+        elif event.status == ExecutionStatus.NODE_RETRYING:
             fmt.setForeground(QColor(APP_WARNING))
             self._append(f"↻  {event.node_label}  {event.message}", fmt)
         elif event.status == ExecutionStatus.GRAPH_COMPLETE:

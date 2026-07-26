@@ -8,7 +8,11 @@ It was refactored to maintain modularity and separation of concerns.
 """
 
 from .base import *
-from typing import Callable
+from typing import Callable, Any
+import base64
+import time
+import pyautogui
+from cortex.graph_model import LocateElementNode, LLMConfig
 from .locate_core_fallback import handle_locate_fallback
 
 def execute_locate_element(node: LocateElementNode, context: dict[str, Any], 
@@ -30,7 +34,7 @@ def execute_locate_element(node: LocateElementNode, context: dict[str, Any],
     kwargs = dict(grayscale=node.grayscale, confidence=node.confidence)
     deadline = time.monotonic() + node.timeout_seconds
     primary_success = False
-    coords = None
+    coords: Any = None
 
     try:
         v_left = win32api.GetSystemMetrics(win32con.SM_XVIRTUALSCREEN)
