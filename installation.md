@@ -1,25 +1,25 @@
-
 ## Prerequisites
 
 - Python 3.11 or higher
-- An OpenAI API Key (or compatible LLM provider) if using LLM nodes
+- An OpenAI API Key (or compatible LLM provider) if using LLM nodes (optional)
 
 ## Installation
 
 1. **Create a virtual environment (recommended)**:
-2. ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-   ```
-3. **Install the package and its dependencies**:
 
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  
+   ```
+
+2. **Install the package and its dependencies**:
    ```bash
    pip install -e .
    ```
-
    _(To install development dependencies like `pytest` and `mypy`, use `pip install -e .[dev]`)_
 
-4. **Environment Setup**:
+3. **Environment Setup**:
+
    Create a `.env` file in the root directory based on your requirements (e.g., setting your `OPENAI_API_KEY`).
 
    ```env
