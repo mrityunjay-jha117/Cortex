@@ -1,254 +1,137 @@
-Traditional automation tools often break when a website redesigns a button, an unexpected pop-up appears, or an app runs inside a remote desktop (RDP/Citrix) where web selectors simply do not exist.
+# Cortex-deterministic automation tool
 
-**Cortex** bridges the gap between traditional UI automation and modern artificial intelligence:
+Traditional UI automation tools break when a website redesigns a button, an unexpected modal pop-up appears, or an enterprise app runs inside a virtual desktop (Citrix/RDP) where DOM selectors do not exist.
 
-* **The Eyes (Computer Vision):** Cortex "sees" the screen using template matching and Optical Character Recognition (OCR), completely independent of fragile HTML DOM code.
-* **The Brain (Large Language Models / VLMs):** Cortex "thinks" and makes dynamic decisions when unexpected scenarios occur, with self-healing capabilities that adapt to UI shifts.
-* **The Hands (Physical Device Control):** Cortex "acts" by commanding the operating system to move the mouse, click, drag, scroll, and type keys just like a real human sitting at the machine.
+**Cortex** is a visual robotic process automation (RPA) and intelligent desktop automation platform. It bridges the gap between deterministic physical automation and multimodal generative AI:
 
-Automations in Cortex are built as **visual node graphs** that are saved as `.cortex` project files and executed by a resilient runtime engine across **Windows, Linux, and macOS**.
+- **The Eyes (Computer Vision):** Cortex "sees" screens using multi-scale OpenCV template matching and Optical Character Recognition (OCR), completely independent of fragile HTML DOM trees.
 
----
+- **The Brain (Multimodal LLMs ):** Cortex "thinks" and makes dynamic decisions when unexpected UI shifts occur, featuring an autonomous **self-healing engine** that re-locates altered elements and updates visual templates on the fly.
 
-## Core USPs (Unique Selling Propositions)
-
-### 1. Token-Based Graph Execution Algorithm
-Unlike standard automation tools that rely on sequential scripts, basic `while/if` recursion, or simple DAG (Directed Acyclic Graph) topological sorts:
-* **Why traditional tools fail:** Standard visual editors struggle with complex control flow like `do-while` loops, conditional branching, or multi-path joins. They either hit Python recursion limits, lock up in infinite loops, or freeze in deadlocks when branches merge.
-* **Why Cortex succeeds:** Cortex uses a **Token-Passing Traversal Engine** (inspired by Petri nets and Kahn’s Algorithm). A node only fires when it has collected all required tokens from its incoming dependencies. When a condition skips a branch, it emits **Ghost Tokens** so downstream joining nodes never get stuck waiting. It handles loops and non-linear paths seamlessly without deep recursion.
-
-### 2. Built-in LLM Reasoning & Self-Healing (The "Brain")
-Standard automation breaks when a UI element moves or changes style. Cortex integrates Large Language Models (LLMs) and Vision-Language Models (VLMs) directly into the execution flow:
-* **Dynamic Decision Making:** Route execution conditionally based on an AI's semantic understanding of screen text or pop-ups.
-* **Auto-Healing Vision:** If a button cannot be located via classic computer vision, Cortex takes a screenshot, prompts a Vision Model to identify the new location, clicks the target, and automatically crops and refreshes the template image in memory for future fast, zero-cost runs.
-
-### 3. Computer Vision & Screen Perception (The "Eyes")
-Modern web and desktop applications frequently update their internal DOM IDs and classes. Cortex bypasses DOM dependencies entirely by reading pixels:
-* **Template Matching:** Finds UI icons, buttons, and custom controls via OpenCV pixel matching.
-* **Optical Character Recognition (OCR):** Reads text directly off the screen across legacy apps, canvas apps, and Citrix/RDP streams.
-* **Multi-Monitor & DPI Awareness:** Automatically handles virtual screen metrics and high-DPI scaling on multi-monitor setups.
-
-### 4. Physical OS-Level Simulation (The "Hands")
-Cortex does not rely on synthetic JavaScript events or headless browser APIs that trigger bot-detection shields:
-* It simulates **real OS hardware events** (mouse clicks, drags, scrolls, keystrokes, modifier shortcuts, clipboard transfers).
-* Inputs are indistinguishable from a physical user, making it ideal for automating protected desktop apps and web portals.
-
-### 5. PyQt6 Visual Node Canvas (No-Code / Low-Code GUI)
-Built with a sleek PyQt6 interface, Cortex lets both technical and non-technical users drag, drop, and wire together automation blocks:
-* Real-time execution visualizer highlights nodes as they run.
-* Dynamic property inspectors allow configuring delays, retries, prompts, and conditions effortlessly.
+- **The Hands (Physical Device Control):** Cortex "acts" by commanding the host operating system to execute sub-pixel mouse movements, clicks, drags, scrolls, keystrokes, and clipboard events indistinguishable from a human operator.
 
 ---
 
-## Technical Jargon Explained (Simply!)
+# Architecture
 
-To understand why Cortex is architecturally powerful, here is a quick breakdown of key technical concepts explained in simple terms:
+![CORTEX](./images/architecture.png)
 
-| Technical Jargon | What It Means | Simple Analogy / Intuition |
-| :--- | :--- | :--- |
-| **Node Graph** | A collection of action blocks (**Nodes**) connected by directional lines (**Edges**). | Like a flowchart where each box is a step (e.g., *Find Button* → *Click* → *Type Text*). |
-| **DAG (Directed Acyclic Graph)** | A graph that flows forward in one direction without accidental infinite loops. | A one-way roadmap where every road moves you toward the destination. |
-| **In-Degree** | The number of prerequisite incoming lines pointing into a specific node. | The number of people who must say *"I'm ready"* before a team meeting can begin. |
-| **Token-Passing Traversal** | An execution method where nodes pass "tokens" (green signals) forward upon completion. | Like a relay race where a runner only sprints after receiving batons from all teammates. |
-| **Ghost Tokens (Skip Tokens)** | A dummy signal sent down a skipped conditional branch (e.g., the *False* branch of an *If* condition). | Like sending an *"I won't be attending"* RSVP so the host knows not to wait for you. |
-| **Back-Edges & DFS** | Lines in a graph that point backward to create intentional loops (e.g., *Retry 3 times* or *Loop over CSV rows*). | A roundabout in a roadmap that allows you to take another lap on purpose without getting lost. |
-| **VLM (Vision-Language Model)** | An AI model that can understand both images and text (e.g., GPT-4o, Claude, Qwen-VL). | An AI with eyes that can look at a screenshot and answer *"Where is the blue submit button?"*. |
-| **Self-Healing** | The ability of the automation to fix its own broken visual selectors on the fly. | A self-repairing car that fixes a loose part while driving so it doesn't break down tomorrow. |
-| **Dependency Injection** | The engine automatically gives a function only the exact tools/variables it asks for. | A chef being handed only the knife and spices needed for the current dish. |
-| **Runtime Context (`_context`)** | A shared memory dictionary where nodes store and read variables across steps. | A communal whiteboard where step 1 writes down an address so step 2 can read and navigate to it. |
+## Cortex System Architecture: A Layer-By-Layer Breakdown
 
----
+The architecture of Cortex is designed like a highly organized, automated factory. Instead of a single messy script trying to do everything at once, the system is broken down into six distinct layers. This separation ensures that the automation is resilient, easy to debug, and capable of handling complex scenarios without crashing. Below is a detailed explanation of each layer in the architecture diagram.
 
-## System Architecture & Visual Process Guide
+## .Cortex INPUT
 
-> **Note for Contributors / Presenters:**  
-> Use the structured visual placeholders below to insert architectural diagrams, workflow screenshots, and schematics when presenting or documenting the system.
+Every automation journey begins with a blueprint. In this system, the blueprint is the `.cortex` file, which is essentially a YAML document. This file acts as the raw input containing all the instructions, variables, and node connections created by the user. The purpose of this layer is to provide a persistent storage format that can be easily shared or version-controlled. By starting with a static text file, the system ensures that the automation logic is completely detached from the runtime environment, meaning you can load, inspect, or modify the workflow before any actual execution occurs.
 
-### Visual Diagram Placeholders
+## Validation
 
-#### Architecture Overview
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                        │
-│                     [ PLACEHOLDER: SYSTEM ARCHITECTURE OVERVIEW ]                      │
-│                                                                                        │
-│   Recommended Graphic: 5-Tier Architecture Diagram                                     │
-│   (Presentation UI ➔ Serialization ➔ Graph Data Model ➔ Runtime Engine ➔ OS Drivers)  │
-│                                                                                        │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
-*Figure 1: High-Level Layered Architecture of Cortex.*
+Cortex uses **Pydantic** as a smart, adaptable validation layer. Because an automation workflow contains many different types of actions (like mouse clicks, keyboard typing, or reading text), Pydantic dynamically applies the correct set of rules based on the specific action type. This ensures the execution environment is completely insulated from malformed data.
 
----
+Pydantic performs several critical functions in this layer:
 
-#### Graph Traversal & Token Lifecycle
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                        │
-│                  [ PLACEHOLDER: TOKEN-PASSING GRAPH TRAVERSAL FLOW ]                   │
-│                                                                                        │
-│   Recommended Graphic: Petri-Net Token Queue & Diamond Convergence                     │
-│   (Active Tokens vs Ghost Skip Tokens resolving joining nodes without deadlocks)       │
-│                                                                                        │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
-*Figure 2: Token-Passing Traversal Mechanism with Ghost Token Propagation.*
+- **Parser and Translator:** The execution engine cannot easily work with raw text (like JSON or YAML). Pydantic parses the incoming text and safely converts it into structured, usable Python data models (objects).
 
----
+  _Example: A Mouse Node_
+  If the raw `.cortex` file contains:
 
-#### Perception & Self-Healing Subsystem
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                        │
-│               [ PLACEHOLDER: COMPUTER VISION & SELF-HEALING VLM PIPELINE ]             │
-│                                                                                        │
-│   Recommended Graphic: Dual-Tier Vision & Auto-Healing Flowchart                       │
-│   (Screen Grab ➔ OpenCV Match ➔ Fallback to VLM ➔ Bounding Box ➔ Auto-Crop & Save)     │
-│                                                                                        │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
-*Figure 3: Dual-Tier Vision Pipeline with Autonomous Template Auto-Healing.*
+  ```yaml
+  type: "mouse_click"
+  x: "500"
+  y: "600"
+  ```
 
----
+  Pydantic reads this and knows it must apply the "mouse click" rules. It automatically converts the serialized strings `"500"` and `"600"` into actual mathematical integers (`500` and `600`), packaging them into a proper `MouseClickNode` Python object ready for the engine to use.
 
-## End-to-End Execution Process (How It Works in Our Current Setup)
+- **Handling Version Mismatches:** If the generator is updated to output a new file format but the execution engine is still on an older version (or vice versa), Pydantic catches the schema mismatch during initialization, preventing incompatible files from loading.
+- **Execution Engine Peace of Mind (Strongly Typed Data):** By acting as a strict security checkpoint at the entry point, Pydantic guarantees that the execution engine only ever deals with completely correct, strongly typed data. This eliminates the need for redundant type-checking during runtime and prevents unpredictable crashes halfway through an automation workflow.
 
-Here is the exact step-by-step breakdown of how a `.cortex` workflow is loaded, analyzed, traversed, and executed on the physical operating system:
+## The Graph Traversal Engine
 
-```
- ┌─────────────────┐      ┌─────────────────────────┐      ┌─────────────────────────┐
- │ 1. Load & Parse │ ───► │ 2. Topology Analysis    │ ───► │ 3. Token-Passing Loop   │
- │ YAML ➔ Pydantic │      │ In-Degree & Back-Edges  │      │ Queue & Ghost Tokens    │
- └─────────────────┘      └─────────────────────────┘      └────────────┬────────────┘
-                                                                        │
- ┌─────────────────┐      ┌─────────────────────────┐                   │
- │ 6. UI Sync      │ ◄─── │ 5. Perception & Action  │ ◄─────────────────┘
- │ Qt Event Bus    │      │ OpenCV / VLM / PyAutoGUI│      4. Dispatch & DI
- └─────────────────┘      └─────────────────────────┘      Registry + Context
-```
+Unlike standard automation tools that rely on sequential scripts or basic graph execution, Cortex handles complex logic (like branching and looping) elegantly without breaking down.
+Cortex uses token based kahn's algorithm traversing the actionGraph;
 
-### Phase 1: Workflow Loading & Deserialization
-1. **File Reading (`cortex/serializer/file_io/load.py`):** The user loads a `.cortex` file, which is a structured YAML document containing graph metadata, LLM configurations, nodes, and edges.
-2. **Polymorphic Model Instantiation (`parse_nodes`):** Cortex uses Pydantic V2. A custom validator inspects the `_type` property of every node (e.g., `LocateElementNode`, `MouseNode`, `BranchNode`) and instantiates the exact strongly-typed Python class.
-3. **Graph Integrity Check:** Before running, `ActionGraph.validate_graph_integrity` checks that all edge endpoints exist, verifies that the entry node is valid, and checks graph connectivity using `networkx`.
+#### Why Normal Kahn's Algorithm Fails on If/Else Blocks
 
-### Phase 2: Topology Preparation & Back-Edge Discovery
-1. **DFS Back-Edge Detection (`execution_graph.py`):** To allow user-defined loops (like retrying a block 5 times or iterating through rows) without infinite recursion, Cortex runs a Depth-First Search (DFS) to identify **back-edges** (edges that loop back up the graph).
-2. **Forward In-Degree Calculation:** Cortex counts how many forward incoming edges each node has. Back-edges are excluded from this initial count so the starting nodes can be identified.
-3. **Queue Initialization:** All root nodes with an in-degree of `0` (including `GlobalStartNode`) are placed into the execution queue.
+Kahn’s algorithm is a classic method to execute dependent tasks in the correct order. It works by counting how many incoming arrows (**In-Degree**) a task has. A task only runs when all its prerequisite tasks are complete.
+However, this standard approach completely fails when you introduce an **If/Else condition**. If a workflow takes the "True" path, the nodes on the "False" path are skipped and never execute. Any downstream task waiting for the "False" path to finish will wait forever. The entire system freezes.
 
-### Phase 3: The Token-Passing Execution Loop (`execution.py`)
-1. **Token Accumulation:** As the queue processes nodes, it tracks how many tokens each node has collected (`node_tokens[node_id]`).
-2. **Firing Condition:** A node only executes when:
-   $$\text{Tokens Received} = \text{Forward In-Degree}$$
-   and at least one of those tokens is an active execution request (`node_exec_requests > 0`).
-3. **Resolving Diamond Deadlocks with Ghost Tokens:** If a `BranchNode` evaluates to *True*, it sends an active `True` token down the *True* branch, but sends a **Ghost Token** (`False`) down the *False* branch. When the two paths converge at a downstream join node, the join node receives all its expected tokens without hanging or executing twice.
-4. **Iterative Loop Handling:** When a loop node finishes an iteration and pushes across a back-edge, the engine temporarily resets that target node's token count, enabling iterative loops safely in a flat loop structure.
-5. **State Interruption & FailSafe:** Between node dispatches, the engine checks `_paused` and `_abort` flags. If the user clicks "Pause", the thread sleeps in non-blocking 100ms intervals. If the user rams the mouse cursor into a screen corner, the `pyautogui.FailSafeException` is caught immediately, cleanly halting execution.
+#### Solving the "Diamond Deadlock" with Ghost Tokens
 
-### Phase 4: Dynamic Dispatch & Dependency Injection (`dispatch.py`)
-1. **Decoupled Registry (`registry.py`):** The node data models do not contain execution code. The engine looks up the node's class in `EXECUTOR_REGISTRY` to find its matching executor function.
-2. **Signature Introspection:** The engine uses Python’s `inspect.signature` to check what arguments the executor function requires. It dynamically injects only the requested dependencies:
-   - `node`: The strongly-typed Pydantic model.
-   - `_context`: The global shared runtime context.
-   - `abort_signal`: A callable lambda checking if the user requested an emergency stop.
-   - `emit_info`: A logging callback to stream live updates to the UI.
-   - `llm_config`: Global API keys and AI model preferences.
-3. **Automatic Retries & Error Edges:** If an executor fails, Cortex checks the node's `retry_count` and `retry_delay`. If all retries are exhausted, it checks for an outgoing edge labeled `error` (allowing visual Try/Catch flows). If no error path exists, it obeys the `on_error` rule (`stop` or `continue`).
+Imagine a diamond-shaped workflow: A starting task splits into Task B (If True) and Task C (If False). Both B and C then connect to a final joining Task D.
+Task D is waiting for 2 incoming signals (In-Degree of 2).
+If the condition is True, Task B runs, but Task C does not. Task D only receives 1 out of 2 signals and waits indefinitely. This freeze is known as a **Diamond Deadlock**.
 
-### Phase 5: Perception, AI Reasoning & Physical Execution
-* **Vision (`locate_core.py`):** Captures multi-monitor desktop screenshots, crops to defined Regions of Interest (ROI), and matches templates using OpenCV.
-* **Self-Healing Fallback (`locate_fallback.py`):** If template matching times out, Cortex sends the screenshot and a natural-language description (e.g., *"Find the orange Submit button"*) to a Multimodal VLM. The VLM returns coordinates, and if `auto_heal` is enabled, Cortex crops the new visual element and updates the node's template in memory.
-* **Physical Actions (`mouse.py`, `keyboard.py`, `clipboard.py`):** Translates logical coordinates and strings into native OS clicks, drags, scrolls, typing, and clipboard pastes.
-* **Context Mutation:** When a node finishes, its return value is stored in `_context[node.output_key]`, making it immediately accessible to downstream nodes (with support for Jinja2 template interpolation like `Hello {{ extracted_name }}`).
+![Diamond Deadlock](./images/diamond-deadlock.png)
+_(Image: A visual representation of the Diamond Deadlock condition and how tokens resolve it)_
 
-### Phase 6: Telemetry & Real-Time GUI Sync
-* The background worker thread communicates with the PyQt6 main thread via Qt Signals (`NODE_STARTED`, `NODE_COMPLETED`, `LOG_EMITTED`, `GRAPH_COMPLETE`).
-* The UI canvas illuminates active nodes in real time, displays live logs, and updates property inspectors without freezing the interface.
+**The Token Solution:**
+Cortex fixes this by introducing a **Token-Passing** system. Think of tokens as relay batons.
+
+- When the condition chooses Task A, it passes an **Active Token** (a green light to execute) to Task B.
+- Crucially, it passes a **Ghost Token** (a skip signal) to the bypassed Task C.
+  Task C receives the Ghost Token, realizes it was skipped, does not execute its action, but gracefully passes a Ghost Token forward to Task D.
+  Task D now receives 1 Active Token (from B) and 1 Ghost Token (from C). Its requirement of 2 signals is met, and it safely executes! The deadlock is broken.
+
+#### How We Address Cycles (Loops)
+
+Standard graph executors often crash on cycles (a loop returning to an earlier step) due to infinite recursion (Stack Overflow).
+Cortex solves this cleanly using a pre-execution **Back-Edge Detection**:
+
+1. Before running, the engine scans the graph and identifies lines that point backwards to form a loop.
+2. It excludes these "back-edges" when counting the required incoming signals for a task.
+3. During execution, when a loop finishes an iteration and travels across a back-edge, the engine instantly bypasses normal token rules and marks the start of the loop as "fully ready" to run again.
+   By using a simple queue list instead of recursive function calls, Cortex can run loops millions of times without crashing.
 
 ---
 
-## Node Categories Overview
+## Dispatch DI registry
 
-Cortex provides a rich library of pre-built nodes categorized into four functional groups:
+With the execution order determined, the system now needs to assign actual code to the data nodes. Think of the **Dispatch DI Registry** as a smart **matchmaker** or directory for the system.
 
-```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 CORTEX NODE LIBRARY                                    │
-├───────────────────┬───────────────────┬───────────────────────┬────────────────────────┤
-│   Flow Control    │ Physical Actions  │ Vision & Perception   │ AI & Cognitive         │
-├───────────────────┼───────────────────┼───────────────────────┼────────────────────────┤
-│ Global Start / End│ Mouse Move/Click  │ Locate Element        │ LLM Prompt / Reasoning │
-│ Branch (If/Else)  │ Keyboard Type     │ Locate & Click        │ VLM Visual Fallback    │
-│ Compare Condition │ Shortcut / Hotkey │ Screen OCR (Text)     │ Structured JSON Extract│
-│ For / Iterate Loop│ Drag & Drop       │ Screenshot Capture    │ Auto-Heal Refresher    │
-│ CSV Read / Write  │ Clipboard I/O     │ Multi-Region Crop     │ Natural Language Logic │
-└───────────────────┴───────────────────┴───────────────────────┴────────────────────────┤
-```
+Here is what it does in simple terms:
 
-1. **Flow Nodes (`cortex.nodes.executors.flow`)**: Orchestrate branching logic, loops, delays, file reading/writing, and CSV data processing.
-2. **Physical Nodes (`cortex.nodes.executors.physical_components`)**: Perform native mouse actions, keystrokes, clipboard manipulation, and OS file dropping.
-3. **Vision Nodes (`cortex.nodes.executors.vision_components`)**: Locate images, recognize on-screen text via OCR, and handle multi-monitor DPI scaling.
-4. **LLM Nodes (`cortex.nodes.executors.llm`)**: Provide AI-driven reasoning, semantic judgment, screen interpretation, and autonomous error recovery.
+1. **Finding the Right Tool (The Registry):** Instead of hardwiring exactly which code handles which task, Cortex looks it up in a central directory. If you want to add a new type of task later, you just add it to this directory without having to rewrite the core engine.
+2. **Giving Only What's Needed (Dependency Injection):** When a piece of code is chosen for a task, Cortex gives it _only_ the specific tools it needs (like a specific file or a piece of memory). Think of it like giving a chef exactly the ingredients they need for one recipe, rather than the whole grocery store. It keeps things clean and fast.
 
----
+## Action
 
-## Prerequisites
+This is the physical execution layer where virtual instructions translate into real-world computer interactions. It acts as the system's body by combining a perception system (the "eyes") with physical actuators (the "hands").
 
-* **Python:** Version `3.11` or higher
-* **Operating System:** Windows 10/11, macOS, or Linux
-* **LLM API Key (Optional):** OpenAI, OpenRouter, or compatible API keys for cognitive and self-healing features.
+Rather than relying on website code like HTML or DOM elements, which can easily break, this layer isolates the operating system's environment from the underlying logic of the workflow.
 
----
+### How OpenCV and PyAutoGUI Work Together
 
-## Installation
+You might wonder how Cortex actually locates and clicks elements. It relies on a seamless collaboration between two specific tools:
 
-1. **Clone the repository and set up a virtual environment:**
-   ```bash
-   git clone https://github.com/mrityunjay-jha117/automator.git cortex
-   cd cortex
-   python -m venv venv
-   
-   # Windows:
-   venv\Scripts\activate
-   # macOS / Linux:
-   source venv/bin/activate
-   ```
+1. **Screen Capture:** PyAutoGUI takes a high-speed screenshot of your entire display.
+2. **The Search (OpenCV):** Instead of checking pixels one by one, the screenshot is passed to OpenCV. Using advanced mathematics, OpenCV scans the image and pinpoints the exact coordinates of your target element in milliseconds.
+3. **The Action (PyAutoGUI):** Once the coordinates are found, PyAutoGUI takes control. It tells your operating system to move the actual mouse cursor to the target and executes human-like clicks, drags, or keystrokes.
 
-2. **Install dependencies in editable mode:**
-   ```bash
-   pip install -e .
-   ```
-   *(To install testing and linting tools: `pip install -e .[dev]`)*
+### Autonomous Self-Healing
 
-3. **Configure Environment Variables:**  
-   Create a `.env` file in the project root:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key_here
-   OPENROUTER_API_KEY=your_openrouter_api_key_here
-   ```
+Traditional visual automation bots are fragile. If a website changes a button's design, or shifts an element by a few pixels, the bot fails and crashes. A human operator then has to manually capture new screenshots to fix it.
+
+Cortex solves this by acting more like a human user:
+
+- **The Fast Look (OpenCV):** By default, Cortex quickly scans the screen for the exact image. If it finds the target, it interacts with it instantly.
+- **The Smart Look (AI Fallback):** If the interface has been updated and the exact image is missing, Cortex does not crash. It pauses, takes a screenshot of the entire page, and asks a smart Vision AI: _"The original button is missing. Can you find the new one?"_ By understanding the context of the screen, the AI locates the updated button.
+- **The Auto-Heal (Updating Memory):** Once the AI finds the new button, Cortex automatically crops a picture of this new element and updates its own visual memory. The next time the process runs, it already knows what the new button looks like and skips the AI entirely.
+
+**The Result:** Your automation repairs its own broken workflows in real-time. This eliminates manual maintenance, prevents unexpected crashes, and avoids recurring AI API costs.
 
 ---
 
-## Running Cortex
+## UI Feedback
 
-To launch the visual node editor:
+While the heavy lifting of the automation runs entirely in the background, the user needs to know what is happening. The UI feedback layer bridges the gap between the invisible background engine and the user interface using an asynchronous event bus.
 
-```bash
-# Via python module
-python -m cortex
+### Powered by PyQt6 Signals and Slots
 
-# Or via installed console script
-cortex
-```
+Under the hood, this event bus is built entirely on **PyQt6's Signals and Slots** mechanism. Because GUI frameworks can crash if the interface is updated directly from a background process, Cortex uses a robust threading architecture to safely communicate state changes:
 
-From the GUI, you can:
-- Drag and drop nodes from the library or right-click radial menu.
-- Connect input and output ports to build your automation graph.
-- Configure properties and test individual nodes in real time.
-- Click **Run** to execute the automation with live visual feedback.
-- Save and load `.cortex` workflow files anytime.
+1. **The Worker Thread:** The execution engine runs on a dedicated background `QThread`. Whenever a node starts, finishes, or throws an error, this worker thread safely broadcasts telemetry by emitting custom `pyqtSignal` events.
+2. **The GUI Slots:** The main thread (the frontend canvas) connects to these signals using slots.
+3. **Asynchronous Updates:** When the engine emits a telemetry signal, the PyQt6 event loop processes it natively on the main thread.
 
----
-
-<!-- GOAL_COMPLETE -->
+This strictly one-way, asynchronous communication allows the interface to highlight active nodes, animate data flow, and display live logs in real time. Because the backend execution and the frontend rendering are decoupled via these signals, the application remains completely smooth and responsive, no matter how intensely the background engine is working.

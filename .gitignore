@@ -40,6 +40,8 @@ config.local.*
 *.cortex
 # Logs
 *.log
+canvas.excalidraw
+*/.excalidraw
 
 # Scripts
 refactor_*.py
